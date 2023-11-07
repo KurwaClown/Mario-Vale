@@ -4,12 +4,19 @@ public class Game {
     private final int targetFPS = 60;
     private final long targetFrameTime = 1000 / targetFPS;
 
+
+    private boolean isPaused = false;
+
+    private int coins = 0;
+
+    private int score = 0;
+
     public void gameLoop(){
         System.out.println("Running game at " + targetFPS + " FPS");
         long previousTime = System.currentTimeMillis();
         long lag = 0;
+
         while (isRunning) {
-            System.out.println("test");
             long currentTime = System.currentTimeMillis();
             long deltaTime = currentTime - previousTime;
             previousTime = currentTime;
@@ -33,7 +40,35 @@ public class Game {
         }
     }
 
+
+
     private void updateGameLogic() {
+    }
+
+    public void pauseGame() {
+        isPaused = true;
+    }
+
+    public void resumeGame() {
+        isPaused = false;
+    }
+
+    public void quitGame() {
+        isRunning = false;
+    }
+
+    public void increaseCoinsCount(){
+        coins++;
+    }
+
+    public void increaseScore(int amount){
+        score+=amount;
+    }
+
+    public void gameOver(){
+        System.out.println("Game over!");
+        System.out.println("Score: " + score);
+        System.out.println("Coins: " + coins);
     }
 
 }

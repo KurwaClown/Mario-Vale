@@ -1,15 +1,15 @@
 public class Game {
 
-    private boolean isRunning;
+    private boolean isRunning = true;
     private final int targetFPS = 60;
-    private final int targetFrameTime = 1000 / targetFPS;
-
-
+    private final long targetFrameTime = 1000 / targetFPS;
 
     public void gameLoop(){
+        System.out.println("Running game at " + targetFPS + " FPS");
         long previousTime = System.currentTimeMillis();
         long lag = 0;
         while (isRunning) {
+            System.out.println("test");
             long currentTime = System.currentTimeMillis();
             long deltaTime = currentTime - previousTime;
             previousTime = currentTime;
@@ -31,7 +31,6 @@ public class Game {
                 }
             }
         }
-
     }
 
     private void updateGameLogic() {

@@ -10,8 +10,6 @@ public class Game {
     private final static int WIDTH = 1268;
     private final static int HEIGHT = 708;
 
-    private boolean isPaused = false;
-
     private int coins = 0;
     private int score = 0;
 
@@ -27,7 +25,7 @@ public class Game {
 
 
     public Game() {
-        this.gameState = GameState.MENU;
+        this.gameState = GameState.PLAYING;
         this.inputManager = new InputManager(this);
         this.userInterface = new UserInterface(this, WIDTH, HEIGHT);
         this.camera = new Camera();
@@ -87,11 +85,13 @@ public class Game {
     }
 
     public void pauseGame() {
-        isPaused = true;
+        this.gameState = GameState.PAUSED;
+        System.out.println("Game paused");
     }
 
     public void resumeGame() {
-        isPaused = false;
+        this.gameState = GameState.PLAYING;
+        System.out.println("Game resumed");
     }
 
     public void quitGame() {
@@ -115,4 +115,5 @@ public class Game {
     public Mario getMario() {
         return mario;
     }
+
 }

@@ -1,10 +1,14 @@
 import javax.swing.*;
+import java.awt.*;
 
 public class Game {
 
     private boolean isRunning = true;
     private final int targetFPS = 60;
     private final long targetFrameTime = 1000 / targetFPS;
+
+    private final static int WIDTH = 1268;
+    private final static int HEIGHT = 708;
 
     private boolean isPaused = false;
 
@@ -25,7 +29,7 @@ public class Game {
     public Game() {
         this.gameState = GameState.MENU;
         this.inputManager = new InputManager(this);
-        this.userInterface = new UserInterface(this);
+        this.userInterface = new UserInterface(this, WIDTH, HEIGHT);
         this.camera = new Camera();
         this.mario = new Mario();
 
@@ -33,6 +37,7 @@ public class Game {
         JFrame frame = new JFrame("Mario'Vale");
         frame.add(userInterface);
         frame.addKeyListener(inputManager);
+        frame.setMinimumSize(new Dimension(WIDTH, HEIGHT));
         frame.pack();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setResizable(false);

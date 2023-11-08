@@ -4,12 +4,23 @@ public class Game {
     private final int targetFPS = 60;
     private final long targetFrameTime = 1000 / targetFPS;
 
-
     private boolean isPaused = false;
 
     private int coins = 0;
-
     private int score = 0;
+
+    private GameState gameState;
+
+    private InputManager inputManager;
+
+    private Mario mario;
+
+
+    public Game() {
+        this.gameState = GameState.MENU;
+        this.inputManager = new InputManager(this);
+        this.mario = new Mario();
+    }
 
     public void gameLoop(){
         System.out.println("Running game at " + targetFPS + " FPS");
@@ -40,9 +51,16 @@ public class Game {
         }
     }
 
-
-
     private void updateGameLogic() {
+
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
+
+    public GameState getGameState() {
+        return gameState;
     }
 
     public void pauseGame() {
@@ -71,4 +89,7 @@ public class Game {
         System.out.println("Coins: " + coins);
     }
 
+    public Mario getMario() {
+        return mario;
+    }
 }

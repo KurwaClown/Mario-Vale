@@ -1,3 +1,5 @@
+import javax.swing.*;
+
 public class Game {
 
     private boolean isRunning = true;
@@ -26,6 +28,16 @@ public class Game {
         this.userInterface = new UserInterface(this);
         this.camera = new Camera();
         this.mario = new Mario();
+
+
+        JFrame frame = new JFrame("Mario'Vale");
+        frame.add(userInterface);
+        frame.addKeyListener(inputManager);
+        frame.pack();
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     public void gameLoop(){

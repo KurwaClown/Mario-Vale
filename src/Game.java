@@ -13,12 +13,18 @@ public class Game {
 
     private InputManager inputManager;
 
+    private UserInterface userInterface;
+
+    private Camera camera;
+
     private Mario mario;
 
 
     public Game() {
         this.gameState = GameState.MENU;
         this.inputManager = new InputManager(this);
+        this.userInterface = new UserInterface(this);
+        this.camera = new Camera();
         this.mario = new Mario();
     }
 

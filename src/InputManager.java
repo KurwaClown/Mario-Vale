@@ -15,22 +15,29 @@ public class InputManager implements KeyListener {
         GameState gameState = game.getGameState();
 
 
-        if (keyCode == KeyEvent.VK_ESCAPE) {
-            if (gameState == GameState.PAUSED) {
-                game.resumeGame();
-            } else if (gameState == GameState.PLAYING) {
-                game.pauseGame();
-            } else if (gameState == GameState.MENU){
-                game.quitGame();
-            }
-        }
-
 //  TODO: Implement Mario Actions
         if (gameState == GameState.PLAYING) {
             if (keyCode == KeyEvent.VK_SPACE) {
                 System.out.println("Jumping");
+            } else if (keyCode == KeyEvent.VK_Q) {
+                System.out.println("Moving left");
+            } else if (keyCode == KeyEvent.VK_D) {
+                System.out.println("Moving right");
+            } else if(keyCode == KeyEvent.VK_E){
+                System.out.println("Attacking");
+            } else if(keyCode == KeyEvent.VK_ESCAPE){
+                game.pauseGame();
+            }
+        } else if (gameState == GameState.PAUSED) {
+            if (keyCode == KeyEvent.VK_ESCAPE) {
+                game.resumeGame();
+            }
+        } else if (gameState == GameState.MENU) {
+            if (keyCode == KeyEvent.VK_ESCAPE) {
+                game.quitGame();
             }
         }
+
     }
 
     @Override

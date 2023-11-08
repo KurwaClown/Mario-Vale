@@ -43,37 +43,36 @@ public class Game {
         frame.setVisible(true);
     }
 
-    public void gameLoop(){
-        System.out.println("Running game at " + targetFPS + " FPS");
-        long previousTime = System.currentTimeMillis();
-        long lag = 0;
-
-        while (isRunning) {
-            long currentTime = System.currentTimeMillis();
-            long deltaTime = currentTime - previousTime;
-            previousTime = currentTime;
-
-            lag += deltaTime;
-
-            while (lag >= targetFrameTime) {
-                updateGameLogic();
-                lag -= targetFrameTime;
-            }
-
-            long sleepTime = targetFrameTime - lag;
-
-            if (sleepTime > 0) {
-                try {
-                    Thread.sleep(sleepTime);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
+//    public void gameLoop(){
+//        System.out.println("Running game at " + targetFPS + " FPS");
+//        long previousTime = System.currentTimeMillis();
+//        long lag = 0;
+//
+//        while (isRunning) {
+//            long currentTime = System.currentTimeMillis();
+//            long deltaTime = currentTime - previousTime;
+//            previousTime = currentTime;
+//
+//            lag += deltaTime;
+//
+//            while (lag >= targetFrameTime) {
+//                updateGameLogic();
+//                lag -= targetFrameTime;
+//            }
+//
+//            long sleepTime = targetFrameTime - lag;
+//
+//            if (sleepTime > 0) {
+//                try {
+//                    Thread.sleep(sleepTime);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//    }
 
     private void updateGameLogic() {
-
     }
 
     public void setGameState(GameState gameState) {

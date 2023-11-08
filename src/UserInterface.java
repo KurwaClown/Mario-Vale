@@ -1,17 +1,25 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class UserInterface extends JPanel{
+public class UserInterface extends JPanel {
 
     private Game game;
 
-    public UserInterface(Game game, int width, int height){
+    public UserInterface(Game game, int width, int height) {
 
         this.game = game;
 
         this.setMinimumSize(new Dimension(width, height));
         this.setSize(new Dimension(width, height));
         this.setVisible(true);
+
+        paintComponent(this.getGraphics());
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+
+
     }
 
 }

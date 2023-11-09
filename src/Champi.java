@@ -1,9 +1,10 @@
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
-public class Champi extends JPanel {
+public class Champi extends GameObject {
     private final int champiSpeed = 1;
     private int direction =1;
     private int coordX;
@@ -13,9 +14,8 @@ public class Champi extends JPanel {
     private int charge;
     private int chargeSpeed=10;
 
-    public Champi() {
-        setPreferredSize(new Dimension(600, 400));
-        this.coordX = 80;
+    public Champi(int x, int y, BufferedImage sprite){
+        super(x, y, sprite);
         getRandom();
         if (getRandom()<3){
             isRugbyman =true;
@@ -23,10 +23,6 @@ public class Champi extends JPanel {
         else{
             isRugbyman=false;
         }
-
-
-        setFocusable(true);
-        requestFocusInWindow();
     }
 
     public void moove() {

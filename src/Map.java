@@ -53,7 +53,7 @@ public class Map {
         for (Champi champi : champis) {
             champi.draw(g);
         }
-        for (Block brick : blocks){
+        for (Block block : blocks){
             block.draw(g);
         }
         for (Plant plant : plants){
@@ -78,7 +78,7 @@ public class Map {
         for (Champi champi : champis) {
             champi.moveObject();
         }
-        for (Block block : bricks){
+        for (Block block : blocks){
             block.moveObject();
         }
         for (Plant plant : plants){

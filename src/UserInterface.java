@@ -16,7 +16,7 @@ public class UserInterface extends JPanel {
 
 
         try {
-            backgroundImage = ImageIO.read(new File("/img/map.png"));
+            backgroundImage = ImageIO.read(new File("./img/map.png"));
             backgroundImage = backgroundImage.getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH);
         } catch (IOException e) {
             e.printStackTrace();

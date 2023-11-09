@@ -134,7 +134,7 @@ public class Game {
     }
 
     private void checkRightCollisions() {
-        List<Block> bricks = map.getBricks();
+        List<Block> bricks = map.getBlocks();
 
         Rectangle marioRightHitbox = mario.getRightCollision();
 
@@ -148,7 +148,7 @@ public class Game {
     }
 
     private void checkLeftCollisions() {
-        List<Block> bricks = map.getBricks();
+        List<Block> bricks = map.getBlocks();
 
         Rectangle marioLeftHitbox = mario.getLeftCollision();
 
@@ -162,7 +162,7 @@ public class Game {
     }
 
     private void checkTopCollisions() {
-        List<Block> bricks = map.getBricks();
+        List<Block> bricks = map.getBlocks();
 
         Rectangle marioTopHitbox = mario.getTopCollision();
 
@@ -176,7 +176,7 @@ public class Game {
     }
 
     private void checkBottomCollisions() {
-        List<Block> bricks = map.getBricks();
+        List<Block> bricks = map.getBlocks();
 
         Rectangle marioBottomHitBox = mario.getBottomCollision();
 

@@ -17,19 +17,20 @@ public class UserInterface extends JPanel {
 
         try {
             backgroundImage = ImageIO.read(new File("./img/map.png"));
-            backgroundImage = backgroundImage.getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+    
         this.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                backgroundImage = backgroundImage.getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH);
+                if (getWidth() > 0 && getHeight() > 0) {
+                    backgroundImage = backgroundImage.getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH);
+                }
                 repaint();
             }
         });
-
+    
         setFocusable(true);
     }
 

@@ -190,4 +190,8 @@ public class Game {
 
         //TODO: Check collisions with ennemies and map ground
     }
+    public static void main(String[] args) {
+        Game game = new Game();
+    }
 }
+    

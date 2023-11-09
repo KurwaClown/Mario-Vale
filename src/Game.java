@@ -1,5 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Game {
 
@@ -32,7 +35,7 @@ public class Game {
         this.map = new Map();
         this.userInterface = new UserInterface(map);
         this.camera = new Camera();
-        this.mario = new Mario();
+        this.mario = new Mario(50, 0, new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB));
 
 
         JFrame frame = new JFrame("Mario'Vale");
@@ -76,6 +79,10 @@ public class Game {
 //    }
 
     private void updateGameLogic() {
+        if (gameState == GameState.PLAYING) {
+            checkCollisions();
+            userInterface.updateGame();
+        }
     }
 
     public void setGameState(GameState gameState) {
@@ -118,4 +125,69 @@ public class Game {
         return mario;
     }
 
+
+    private void checkCollisions(){
+        checkBottomCollisions();
+        checkTopCollisions();
+        checkLeftCollisions();
+        checkRightCollisions();
+    }
+
+    private void checkRightCollisions() {
+        List<Block> bricks = map.getBricks();
+
+        Rectangle marioRightHitbox = mario.getRightCollision();
+
+        for (Block brick : bricks) {
+            Rectangle blockLeftHitbox = brick.getLeftCollision();
+            if (marioRightHitbox.intersects(blockLeftHitbox)) {
+                mario.setX(brick.getX() - mario.getSpriteDimension().width - 1); // Adding one to be over the block
+                mario.setVelX(0);
+            }
+        }
+    }
+
+    private void checkLeftCollisions() {
+        List<Block> bricks = map.getBricks();
+
+        Rectangle marioLeftHitbox = mario.getLeftCollision();
+
+        for (Block brick : bricks) {
+            Rectangle blockRightHitbox = brick.getRightCollision();
+            if (marioLeftHitbox.intersects(blockRightHitbox)) {
+                mario.setX(brick.getX() + brick.getSpriteDimension().width + 1); // Adding one to be over the block
+                mario.setVelX(0);
+            }
+        }
+    }
+
+    private void checkTopCollisions() {
+        List<Block> bricks = map.getBricks();
+
+        Rectangle marioTopHitbox = mario.getTopCollision();
+
+        for (Block brick : bricks) {
+            Rectangle blockBottomHitBox = brick.getBottomCollision();
+            if (marioTopHitbox.intersects(blockBottomHitBox)) {
+                mario.setY(brick.getY() + mario.getSpriteDimension().height + 1); // Adding one to be over the block
+                mario.setVelY(0);
+            }
+        }
+    }
+
+    private void checkBottomCollisions() {
+        List<Block> bricks = map.getBricks();
+
+        Rectangle marioBottomHitBox = mario.getBottomCollision();
+
+        for (Block brick : bricks) {
+            Rectangle blockTopHitbox = brick.getTopCollision();
+            if (marioBottomHitBox.intersects(blockTopHitbox)) {
+                mario.setY(brick.getY() - mario.getSpriteDimension().height - 1); // Adding one to be over the block
+                mario.setVelY(0);
+            }
+        }
+
+        //TODO: Check collisions with ennemies and map ground
+    }
 }

@@ -31,16 +31,16 @@ public class Map {
     public void addBrick(Brick brick){
         bricks.add(brick);
     }
-    public void addBrick(Plant plant){
+    public void addPlant(Plant plant){
         plants.add(plant);
     }
-    public void addBrick(Turtle turtle){
+    public void addTurtle(Turtle turtle){
         turtles.add(turtle);
     }
-    public void addBrick(Powerup powerup){
+    public void addPowerup(Powerup powerup){
         powerups.add(powerup);
     }
-    public void addBrick(Flag flag){
+    public void addFlag(Flag flag){
         flags.add(flag);
     }
     

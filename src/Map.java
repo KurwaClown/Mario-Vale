@@ -8,7 +8,7 @@ public class Map {
     private List<Brick> bricks;
     private List<Turtle> turtles;
     private List<Plant> plants;
-    private List<Powerup> powerups;
+    private List<PowerUp> powerups;
     private List<Flag> flags;
 
 
@@ -37,7 +37,7 @@ public class Map {
     public void addTurtle(Turtle turtle){
         turtles.add(turtle);
     }
-    public void addPowerup(Powerup powerup){
+    public void addPowerup(PowerUp powerup){
         powerups.add(powerup);
     }
     public void addFlag(Flag flag){

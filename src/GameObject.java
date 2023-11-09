@@ -2,15 +2,15 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class GameObject {
-    private double x, y;
-    private double velX, velY;
+    protected double x, y;
+    protected double velX, velY;
     private final double gravity = 0.38f;
 
 
     private Dimension spriteDimension; // Dimension encapsulate width and height
     private BufferedImage sprite;
 
-    private boolean jumping, falling;
+    protected boolean jumping, falling;
 
     public GameObject(double xLocation, double yLocation, BufferedImage sprite){
         this.x = xLocation;
@@ -37,12 +37,21 @@ public class GameObject {
 
 
     public void moveObject(){
-        if (velY >=  0 && jumping) {
-            velY += gravity;
+        if(jumping && velY <= 0){ //After the apex of the jump
+            jumping = false;
+            falling = true;
+        }
+        else if(jumping){ // At jumping time
+            velY = velY - gravity;
+            y = y - velY;
         }
 
-        x += velX;
-        y += velY;
+        if(falling){ // When falling after apex
+            y = y + velY;
+            velY = velY + gravity;
+        }
+
+        x = x + velX;
     }
 
 }

@@ -54,4 +54,19 @@ public class GameObject {
         x = x + velX;
     }
 
+    public void setVelX(double velX) {
+        this.velX = velX;
+    }
+
+    public double getVelX() {
+        return velX;
+    }
+
+    public void setVelY(double velY) {
+        this.velY = velY;
+    }
+
+    public double getVelY() {
+        return velY;
+    }
 }

@@ -16,7 +16,7 @@ public class GameObject {
         this.x = xLocation;
         this.y = yLocation;
         this.sprite = sprite;
-        this.spriteDimension = new Dimension(sprite.getWidth(null), sprite.getHeight(null));
+        this.spriteDimension = new Dimension(sprite.getWidth(), sprite.getHeight());
 
         this.velX = 0;
         this.velY = 0;
@@ -54,6 +54,21 @@ public class GameObject {
         x = x + velX;
     }
 
+    public Rectangle getBottomCollision(){
+        return new Rectangle((int)x, (int)y + spriteDimension.height, spriteDimension.width, 5);
+    }
+
+    public Rectangle getTopCollision(){
+        return new Rectangle((int)x, (int)y, spriteDimension.width, 5);
+    }
+
+    public Rectangle getLeftCollision(){
+        return new Rectangle((int)x, (int)y, 5, spriteDimension.height);
+    }
+
+    public Rectangle getRightCollision(){
+        return new Rectangle((int)x + spriteDimension.width, (int)y, 5, spriteDimension.height);
+    }
     public void setVelX(double velX) {
         this.velX = velX;
     }

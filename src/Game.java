@@ -19,6 +19,8 @@ public class Game {
 
     private UserInterface userInterface;
 
+    private Map map;
+
     private Camera camera;
 
     private Mario mario;
@@ -27,7 +29,8 @@ public class Game {
     public Game() {
         this.gameState = GameState.PLAYING;
         this.inputManager = new InputManager(this);
-        this.userInterface = new UserInterface(this, WIDTH, HEIGHT);
+        this.map = new Map();
+        this.userInterface = new UserInterface(map);
         this.camera = new Camera();
         this.mario = new Mario();
 

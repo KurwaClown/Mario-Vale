@@ -62,7 +62,7 @@ public class Map {
         for (Turtle turtle : turtles){
             turtle.draw(g);
         }
-        for (Powerup powerup : powerups){
+        for (PowerUp powerup : powerups){
             powerup.draw(g);
         }
         for (Flag flag : flags){
@@ -87,7 +87,7 @@ public class Map {
         for (Turtle turtle : turtles){
             turtle.moveObject();
         }
-        for (Powerup powerup : powerups){
+        for (PowerUp powerup : powerups){
             powerup.moveObject();
         }
         for (Flag flag : flags){

@@ -73,25 +73,25 @@ public class Map {
 
     public void update() {
         for (Mario mario : marios) {
-            mario.update();
+            mario.moveObject();
         }
         for (Champi champi : champis) {
-            champi.update();
+            champi.moveObject();
         }
         for (Brick brick : bricks){
-            brick.update();
+            brick.moveObject();
         }
         for (Plant plant : plants){
-            plant.update();
+            plant.moveObject();
         }
         for (Turtle turtle : turtles){
-            turtle.update();
+            turtle.moveObject();
         }
         for (Powerup powerup : powerups){
-            powerup.update();
+            powerup.moveObject();
         }
         for (Flag flag : flags){
-            flag.update();
+            flag.moveObject();
         }
 
     }

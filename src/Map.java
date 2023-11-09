@@ -5,7 +5,7 @@ import java.util.List;
 public class Map {
     private List<Mario> marios; 
     private List<Champi> champis; 
-    private List<Brick> bricks;
+    private List<Block> blocks;
     private List<Turtle> turtles;
     private List<Plant> plants;
     private List<PowerUp> powerups;
@@ -15,7 +15,7 @@ public class Map {
     public Map() {
         marios = new ArrayList<>();
         champis = new ArrayList<>();
-        bricks = new ArrayList<>();
+        blocks = new ArrayList<>();
         plants = new ArrayList<>();
         turtles = new ArrayList<>();
         powerups = new ArrayList<>();
@@ -28,8 +28,8 @@ public class Map {
     public void addChampi(Champi champi) {
         champis.add(champi);
     }
-    public void addBrick(Brick brick){
-        bricks.add(brick);
+    public void addBlocks(Block block){
+        blocks.add(block);
     }
     public void addPlant(Plant plant){
         plants.add(plant);
@@ -53,8 +53,8 @@ public class Map {
         for (Champi champi : champis) {
             champi.draw(g);
         }
-        for (Brick brick : bricks){
-            brick.draw(g);
+        for (Block brick : blocks){
+            block.draw(g);
         }
         for (Plant plant : plants){
             plant.draw(g);
@@ -78,8 +78,8 @@ public class Map {
         for (Champi champi : champis) {
             champi.moveObject();
         }
-        for (Brick brick : bricks){
-            brick.moveObject();
+        for (Block block : bricks){
+            block.moveObject();
         }
         for (Plant plant : plants){
             plant.moveObject();
@@ -94,5 +94,26 @@ public class Map {
             flag.moveObject();
         }
 
+    }
+    public List<Block> getBlocks(){
+        return blocks;
+    }
+        public List<Mario> getMarios(){
+        return marios;
+    }
+        public List<Champi> getChampis(){
+        return champis;
+    }
+        public List<Plant> getPlants(){
+        return plants;
+    }
+        public List<Turtle> getTurtles(){
+        return turtles;
+    }
+        public List<PowerUp> getPowerUps(){
+        return powerups;
+    }
+        public List<Flag> getFlags(){
+        return flags;
     }
 }

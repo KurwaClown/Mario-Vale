@@ -108,4 +108,8 @@ public class GameObject {
     public double getY() {
         return y;
     }
+
+    public Dimension getSpriteDimension() {
+        return spriteDimension;
+    }
 }

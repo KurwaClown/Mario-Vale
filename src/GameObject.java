@@ -8,15 +8,13 @@ public class GameObject {
 
 
     private Dimension spriteDimension; // Dimension encapsulate width and height
-    private BufferedImage sprite;
+    protected BufferedImage sprite;
 
     protected boolean jumping, falling;
 
-    public GameObject(double xLocation, double yLocation, BufferedImage sprite){
+    public GameObject(double xLocation, double yLocation){
         this.x = xLocation;
         this.y = yLocation;
-        this.sprite = sprite;
-        this.spriteDimension = new Dimension(sprite.getWidth(), sprite.getHeight());
 
         this.velX = 0;
         this.velY = 0;

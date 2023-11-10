@@ -16,45 +16,50 @@ public class Champi extends GameObject {
     private int chargeTime=60;
     private int charge;
     private int chargeSpeed=10;
+    
 
-    private String spritePath = "";
     public Champi(int x, int y){
-        super(x, y, "champi");
-
-
+        super(x, y);
         getRandom();
         if (getRandom()<3){
             isRugbyman =true;
+            sprite=Ressource.getImage("champiRugby");
         }
         else{
             isRugbyman=false;
+            sprite= Ressource.getImage("champi");
         }
     }
 
-    public void moove() {
-        if (isRugbyman == false){
-        coordX += champiSpeed * direction; 
-        if (coordX <= 0 || coordX >= 100) {
-            direction *= -1; 
-        }
-    }
-        else{
-        coordX += champiSpeed * direction; 
-        if (coordX <= 0 || coordX >= 100) {
-            direction *= -1; 
-            counterCharge++;
-            if (counterCharge==2){
-                charge = chargeTime;
-                while(charge > 0)
-                    coordX += chargeSpeed;
-                    charge--;
-            }
-            counterCharge=0;
-                
-                
+    public void move() {
+        if (!isRugbyman) {
+            coordX += champiSpeed * direction; 
+            if (coordX <= 0 || coordX >= 100) {  
+                direction *= -1;  
             }
         }
+        else {
+            if (charge > 0) {
+                coordX += chargeSpeed;
+                charge--;
+            } else {
+               
+                coordX += champiSpeed * direction;
+                if (coordX <= 0 || coordX >= 100) {  
+                    direction *= -1;  
+                    counterCharge++;
+                    if (counterCharge >= 2) {
+                        charge = chargeTime;
+                        counterCharge = 0;
+                    }
+                }
+            }
+        }
     }
+    public void disappear(){
+        yLocation = 3000;
+    }
+    
     public int getRandom(){
         Random rand = new Random();
         return rand.nextInt(10);

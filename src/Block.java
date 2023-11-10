@@ -9,4 +9,10 @@ public abstract class Block extends GameObject{
     public Block(double xLocation, double yLocation, String name) {
         super(xLocation, yLocation, name);
     }
-}
+        public void transform(){
+            sprite = Ressource.getImage("deadBrick");
+        }
+    }
+
+    
+

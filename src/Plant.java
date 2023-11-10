@@ -7,11 +7,6 @@ public class Plant extends GameObject{
 
     private String spritePath = "";
     public Plant(double xLocation, double yLocation) {
-        super(xLocation, yLocation);
-        try {
-            sprite = ImageIO.read(new File(spritePath));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        super(xLocation, yLocation, "plant");
     }
 }

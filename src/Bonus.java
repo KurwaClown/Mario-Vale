@@ -7,13 +7,7 @@ public class Bonus extends Block{
 
 
     public Bonus(double xLocation, double yLocation) {
-        super(xLocation, yLocation);
-        spritePath = "src/resources/bonus.png";
-        try {
-            sprite = ImageIO.read(new File(spritePath));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        super(xLocation, yLocation, "bonus");
     }
 
 }

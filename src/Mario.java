@@ -10,6 +10,15 @@ import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JDialog;
 import javax.swing.Timer;
+
+import Block.Block;
+import Block.Bonus;
+import Block.BonusBrick;
+import Block.Brick;
+import Ennemy.Champi;
+import Ennemy.Plant;
+import Ennemy.Turtle;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -28,7 +37,11 @@ public class Mario  implements GameObject{
     private double velY = 0;
     private double rotationAngle = 0;
 
-    public Mario() {
+    public Mario(int X, int Y) {
+        super(X, Y);
+
+        sprite = Ressource.getImage("./img/mario1.png");
+
 
     }
     public void jump(GameEngine engine) {
@@ -55,6 +68,23 @@ public class Mario  implements GameObject{
             }
         }
     }
+    public void powerup(GameEngine engine, PowerUp jersey){
+        if (this.collide(jersey)){
+            isRugbyman = true;
+            updateImage();
+            Timer timer = new Timer(12000, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    isRugbyman = false;
+                    updateImage(); 
+                    ((Timer)e.getSource()).stop(); 
+                }
+            });
+            timer.setRepeats(false); 
+            timer.start(); 
+        }
+    }
+
     public void attack(GameEngine engine, Enemy enemy){
          int timingCharge =30;
          int regenCharge=300;
@@ -133,6 +163,13 @@ public void die(Object enemy){
         if (this.collide(enemy)&& (horizontalHit)){
             gameover
         }
+    }
+}
+public void updateImage() {
+    if (isRugbyman){
+        sprite = Ressources.getImage("./img/marioRugby.png");  
+    } else {
+        sprite = Ressources.getImage("./img/mario1.png");  
     }
 }
 }

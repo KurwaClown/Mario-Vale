@@ -4,10 +4,10 @@ import java.io.IOException;
 
 public abstract class Enemy extends GameObject{
 
-    public Enemy(double xLocation, double yLocation) {
-        super(xLocation, yLocation);
+    public Enemy(double xLocation, double yLocation, String spriteName) {
+        super(xLocation, yLocation, spriteName);
     }
     public void disappear(){
-        yLocation = 3000;
+        y = 3000;
     }
 }

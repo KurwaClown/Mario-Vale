@@ -139,9 +139,9 @@ public class Mario extends GameObject {
 //}
     public void updateImage() {
         if (isRugbyman) {
-            sprite = Ressources.getImage("marioStade");
+            sprite = Ressource.getImage("marioStade");
         } else {
-            sprite = Ressources.getImage("mario");
+            sprite = Ressource.getImage("mario");
         }
     }
 }

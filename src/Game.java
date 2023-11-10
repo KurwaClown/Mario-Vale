@@ -35,7 +35,7 @@ public class Game {
         this.map = new Map();
         this.userInterface = new UserInterface(map);
         this.camera = new Camera();
-        this.mario = new Mario(50, 0, new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB));
+        this.mario = new Mario(50, 0);
 
 
         JFrame frame = new JFrame("Mario'Vale");

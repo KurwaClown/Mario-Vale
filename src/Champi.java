@@ -11,7 +11,7 @@ public class Champi extends GameObject {
     private final int champiSpeed = 1;
     private int direction =1;
     private int coordX;
-    private boolean isRugbyman;
+    private boolean isRugbyman = false;
     private int counterCharge=0;
     private int chargeTime=60;
     private int charge;
@@ -19,15 +19,10 @@ public class Champi extends GameObject {
     
 
     public Champi(int x, int y){
-        super(x, y);
-        getRandom();
+        super(x, y, "champi");
         if (getRandom()<3){
-            isRugbyman =true;
+            isRugbyman = true;
             sprite=Ressource.getImage("champiRugby");
-        }
-        else{
-            isRugbyman=false;
-            sprite= Ressource.getImage("champi");
         }
     }
 
@@ -57,7 +52,7 @@ public class Champi extends GameObject {
         }
     }
     public void disappear(){
-        yLocation = 3000;
+        y = 3000;
     }
     
     public int getRandom(){

@@ -10,6 +10,6 @@ public class Brick extends GameObject{
         sprite = Ressource.getImage("brick");
     }
     public void disappear(){
-        yLocation = 3000;
+        y = 3000;
     }
 }

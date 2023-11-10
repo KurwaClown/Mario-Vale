@@ -6,16 +6,16 @@ public class GameObject {
     protected double velX, velY;
     private final double gravity = 0.38f;
 
-
+    protected String name;
     private Dimension spriteDimension; // Dimension encapsulate width and height
     protected BufferedImage sprite;
 
     protected boolean jumping, falling;
 
-    public GameObject(double xLocation, double yLocation){
+    public GameObject(double xLocation, double yLocation, String name){
         this.x = xLocation;
         this.y = yLocation;
-
+        this.sprite = Ressource.getImage(name);
         this.velX = 0;
         this.velY = 0;
     }

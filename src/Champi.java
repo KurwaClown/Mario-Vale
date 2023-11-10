@@ -53,6 +53,9 @@ public class Champi extends GameObject {
             }
         }
     }
+    public void disappear(){
+        yLocation = 3000;
+    }
     
     public int getRandom(){
         Random rand = new Random();

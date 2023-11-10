@@ -42,7 +42,15 @@ public class InputManager implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent event) {
-
+        int keyCode = event.getKeyCode();
+        GameState gameState = game.getGameState();
+        if (gameState == GameState.PLAYING) {
+            if (keyCode == KeyEvent.VK_Q) {
+                game.getMario().stop(false);
+            } else if (keyCode == KeyEvent.VK_D) {
+                game.getMario().stop(true);
+            }
+        }
     }
 
     @Override

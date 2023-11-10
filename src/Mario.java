@@ -30,7 +30,7 @@ public class Mario extends GameObject {
         }
     }
 
-    private void stop(boolean toRight) {
+    public void stop(boolean toRight) {
         if(toRight && getVelX() > 0) {
             System.out.println("Stopping to the right");
             setVelX(0);

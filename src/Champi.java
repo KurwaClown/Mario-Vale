@@ -1,7 +1,10 @@
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
 public class Champi extends GameObject {
@@ -14,8 +17,17 @@ public class Champi extends GameObject {
     private int charge;
     private int chargeSpeed=10;
 
-    public Champi(int x, int y, BufferedImage sprite){
-        super(x, y, sprite);
+    private String spritePath = "";
+    public Champi(int x, int y){
+        super(x, y);
+
+        try {
+            sprite = ImageIO.read(new File(spritePath));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
         getRandom();
         if (getRandom()<3){
             isRugbyman =true;

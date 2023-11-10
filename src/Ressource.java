@@ -26,7 +26,7 @@ public class Ressource {
             images.put("champiRugby", ImageIO.read(Ressource.class.getResource("./img/champiRugby.png")));
             images.put("marioStade", ImageIO.read(Ressource.class.getResource("./img/marioStade.png")));
             images.put("flag", ImageIO.read(Ressource.class.getResource("./img/flag.png")));
-            //images.put("", ImageIO.read(Ressource.class.getResource("./img/turtle.png")));
+            images.put("coin", ImageIO.read(Ressource.class.getResource("./img/coin.png")));
 
         } catch (IOException e) {
             e.printStackTrace();

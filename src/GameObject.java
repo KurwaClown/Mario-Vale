@@ -6,6 +6,7 @@ public class GameObject {
     protected double velX, velY;
     private final double gravity = 0.38f;
 
+    private final int GROUND_LEVEL = 858;
     private Dimension spriteDimension; // Dimension encapsulate width and height
     protected BufferedImage sprite;
 
@@ -15,6 +16,7 @@ public class GameObject {
         this.x = xLocation;
         this.y = yLocation;
         this.sprite = Ressource.getImage(name);
+        this.spriteDimension = new Dimension(sprite.getWidth(), sprite.getHeight());
         this.velX = 0;
         this.velY = 0;
     }
@@ -34,6 +36,7 @@ public class GameObject {
 
 
     public void moveObject(){
+        System.out.println("Moving object");
         if(jumping && velY <= 0){ //After the apex of the jump
             jumping = false;
             falling = true;
@@ -46,6 +49,11 @@ public class GameObject {
         if(falling){ // When falling after apex
             y = y + velY;
             velY = velY + gravity;
+            if(y + spriteDimension.height >= GROUND_LEVEL) {
+                velY = 0;
+                y= GROUND_LEVEL - spriteDimension.height;
+                falling = false;
+            }
         }
 
         x = x + velX;

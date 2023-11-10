@@ -7,4 +7,7 @@ public class Coin extends GameObject{
     public Coin(double xLocation, double yLocation) {
         super(xLocation, yLocation, "coin");
     }
+    public void disappear(){
+        yLocation = 3000;
+    }
 }

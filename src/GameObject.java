@@ -6,7 +6,6 @@ public class GameObject {
     protected double velX, velY;
     private final double gravity = 0.38f;
 
-    protected String name;
     private Dimension spriteDimension; // Dimension encapsulate width and height
     protected BufferedImage sprite;
 

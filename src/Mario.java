@@ -29,6 +29,16 @@ public class Mario extends GameObject {
             setVelX(-5);
         }
     }
+
+    private void stop(boolean toRight) {
+        if(toRight && getVelX() > 0) {
+            System.out.println("Stopping to the right");
+            setVelX(0);
+        } else if(!toRight && getVelX() < 0) {
+            System.out.println("Stopping to the left");
+            setVelX(0);
+        }
+    }
 //    public void fall(){
 //        if (isJumping()) {
 //            marioY -= velY;

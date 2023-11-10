@@ -7,12 +7,6 @@ public class BonusBrick extends Block {
 
     String spritePath = "";
     public BonusBrick(double xLocation, double yLocation) {
-        super(xLocation, yLocation);
-        spritePath = "src/resources/bonus_brick.png";
-        try {
-            sprite = ImageIO.read(new File(spritePath));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        super(xLocation, yLocation, "brick");
     }
 }

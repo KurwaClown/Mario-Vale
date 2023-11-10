@@ -19,13 +19,7 @@ public class Champi extends GameObject {
 
     private String spritePath = "";
     public Champi(int x, int y){
-        super(x, y);
-
-        try {
-            sprite = ImageIO.read(new File(spritePath));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        super(x, y, "champi");
 
 
         getRandom();

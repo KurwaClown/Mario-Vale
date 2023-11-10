@@ -1,7 +1,12 @@
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class BonusBrick extends Block {
-    public BonusBrick(double xLocation, double yLocation, BufferedImage sprite) {
-        super(xLocation, yLocation, sprite);
+
+    String spritePath = "";
+    public BonusBrick(double xLocation, double yLocation) {
+        super(xLocation, yLocation, "brick");
     }
 }

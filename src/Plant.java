@@ -1,7 +1,12 @@
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class Plant extends GameObject{
-    public Plant(double xLocation, double yLocation, BufferedImage sprite) {
-        super(xLocation, yLocation, sprite);
+
+    private String spritePath = "";
+    public Plant(double xLocation, double yLocation) {
+        super(xLocation, yLocation, "plant");
     }
 }

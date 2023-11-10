@@ -22,8 +22,10 @@ public class Mario extends GameObject {
 
     public void move(boolean toRight) {
         if(toRight) {
+            System.out.println("Moving to the right");
             setVelX(5);
         } else {
+            System.out.println("Moving to the left");
             setVelX(-5);
         }
     }
@@ -139,9 +141,9 @@ public class Mario extends GameObject {
 //}
     public void updateImage() {
         if (isRugbyman) {
-            sprite = Ressources.getImage("marioStade");
+            sprite = Ressource.getImage("marioStade");
         } else {
-            sprite = Ressources.getImage("mario");
+            sprite = Ressource.getImage("mario");
         }
     }
 }

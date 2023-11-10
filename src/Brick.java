@@ -7,5 +7,9 @@ public class Brick extends GameObject{
 
     public Brick(double xLocation, double yLocation) {
         super(xLocation, yLocation, "brick");
+        sprite = Ressource.getImage("brick");
+    }
+    public void disappear(){
+        yLocation = 3000;
     }
 }

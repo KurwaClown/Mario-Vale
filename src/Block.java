@@ -1,11 +1,12 @@
 import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class Coin extends GameObject{
+public abstract class Block extends GameObject{
 
-    private String spritePath = "";
-    public Coin(double xLocation, double yLocation) {
+    protected String spritePath;
+    public Block(double xLocation, double yLocation) {
         super(xLocation, yLocation);
         try {
             sprite = ImageIO.read(new File(spritePath));

@@ -7,6 +7,7 @@ public class Turtle extends GameObject{
     public Turtle (double xLocation, double yLocation) {
         super(xLocation, yLocation);
                  this.hp = 2;
+                 sprite = Ressource.getImage("turtle");
 
     }
     public void move(Block block){

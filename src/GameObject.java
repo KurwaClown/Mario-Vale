@@ -86,10 +86,16 @@ public class GameObject {
         return jumping;
     }
 
+    public void setJumping(boolean jumping) {
+        this.jumping = jumping;
+    }
     public boolean isFalling() {
         return falling;
     }
 
+    public void setFalling(boolean falling) {
+        this.falling = falling;
+    }
     public void setX(double x) {
         this.x = x;
     }

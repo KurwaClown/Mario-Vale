@@ -10,8 +10,8 @@ public class Game {
     private final int targetFPS = 60;
     private final long targetFrameTime = 1000 / targetFPS;
 
-    private final static int WIDTH = 1268;
-    private final static int HEIGHT = 708;
+    private final static int WIDTH = 1335;
+    private final static int HEIGHT = 930;
 
     private int coins = 0;
     private int score = 0;
@@ -35,8 +35,9 @@ public class Game {
         this.map = new Map();
         this.userInterface = new UserInterface(map);
         this.camera = new Camera();
-        this.mario = new Mario(50, 0);
+        this.mario = new Mario(50, 700);
 
+        map.addMario(mario);
 
         JFrame frame = new JFrame("Mario'Vale");
         frame.add(userInterface);
@@ -46,37 +47,42 @@ public class Game {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
+        frame.setFocusable(true);
         frame.setVisible(true);
+
+        Thread gameThread = new Thread(this::gameLoop);
+
+        gameThread.start();
     }
 
-//    public void gameLoop(){
-//        System.out.println("Running game at " + targetFPS + " FPS");
-//        long previousTime = System.currentTimeMillis();
-//        long lag = 0;
-//
-//        while (isRunning) {
-//            long currentTime = System.currentTimeMillis();
-//            long deltaTime = currentTime - previousTime;
-//            previousTime = currentTime;
-//
-//            lag += deltaTime;
-//
-//            while (lag >= targetFrameTime) {
-//                updateGameLogic();
-//                lag -= targetFrameTime;
-//            }
-//
-//            long sleepTime = targetFrameTime - lag;
-//
-//            if (sleepTime > 0) {
-//                try {
-//                    Thread.sleep(sleepTime);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//    }
+    public void gameLoop(){
+        System.out.println("Running game at " + targetFPS + " FPS");
+        long previousTime = System.currentTimeMillis();
+        long lag = 0;
+
+        while (isRunning) {
+            long currentTime = System.currentTimeMillis();
+            long deltaTime = currentTime - previousTime;
+            previousTime = currentTime;
+
+            lag += deltaTime;
+
+            while (lag >= targetFrameTime) {
+                updateGameLogic();
+                lag -= targetFrameTime;
+            }
+
+            long sleepTime = targetFrameTime - lag;
+
+            if (sleepTime > 0) {
+                try {
+                    Thread.sleep(sleepTime);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
     private void updateGameLogic() {
         if (gameState == GameState.PLAYING) {

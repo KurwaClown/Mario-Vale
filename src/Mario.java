@@ -6,12 +6,8 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 public class Mario extends GameObject {
-    private boolean isRugbyman = true;
-    private boolean interact = false;
+    private boolean isRugbyman = false;
 
-    private boolean lookingRight = true;
-    private double velY = 0;
-    private double rotationAngle = 0;
 
     public Mario(int x, int y) {
         super(x, y, "mario");
@@ -25,7 +21,11 @@ public class Mario extends GameObject {
     }
 
     public void move(boolean toRight) {
-        lookingRight = toRight;
+        if(toRight) {
+            setVelX(5);
+        } else {
+            setVelX(-5);
+        }
     }
 //    public void fall(){
 //        if (isJumping()) {
@@ -40,41 +40,41 @@ public class Mario extends GameObject {
 //    }
 
     //TODO: Handle power up in Game
-    public void powerup(PowerUp powerUp) {
-        if (this.collide(powerUp)) {
-            isRugbyman = true;
-            updateImage();
-            Timer timer = new Timer(12000, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    isRugbyman = false;
-                    updateImage();
-                    ((Timer) e.getSource()).stop();
-                }
-            });
-            timer.setRepeats(false);
-            timer.start();
-        }
-    }
-
-    public void attack(Enemy enemy) {
-        int timingCharge = 30;
-        int regenCharge = 300;
-        if (isRugbyman == true) {
-            if (interact && regenCharge == 300) {
-                while (timingCharge > 0) {
-                    velX = 10;
-                    timingCharge--;
-
-                }
-                regenCharge++;
-
-                if (this.collide(enemy)) {
-                    enemy.die();
-                }
-            }
-        }
-    }
+//    public void powerup(PowerUp powerUp) {
+//        if (this.collide(powerUp)) {
+//            isRugbyman = true;
+//            updateImage();
+//            Timer timer = new Timer(12000, new ActionListener() {
+//                @Override
+//                public void actionPerformed(ActionEvent e) {
+//                    isRugbyman = false;
+//                    updateImage();
+//                    ((Timer) e.getSource()).stop();
+//                }
+//            });
+//            timer.setRepeats(false);
+//            timer.start();
+//        }
+//    }
+//
+//    public void attack(Enemy enemy) {
+//        int timingCharge = 30;
+//        int regenCharge = 300;
+//        if (isRugbyman == true) {
+//            if (interact && regenCharge == 300) {
+//                while (timingCharge > 0) {
+//                    velX = 10;
+//                    timingCharge--;
+//
+//                }
+//                regenCharge++;
+//
+//                if (this.collide(enemy)) {
+//                    enemy.die();
+//                }
+//            }
+//        }
+//    }
 //public void Flag(Flag flag) {
 //    int numClicks=0;
 //    if (interact && this.collide(flag)) {

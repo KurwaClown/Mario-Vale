@@ -9,6 +9,6 @@ public class Coin extends GameObject{
         sprite = Ressource.getImage("coin");
     }
     public void disappear(){
-        yLocation = 3000;
+        y = 3000;
     }
 }

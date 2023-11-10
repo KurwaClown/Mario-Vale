@@ -7,6 +7,6 @@ public class Jersey extends GameObject{
         sprite = Ressource.getImage("jersey");
     }
     public void disappear(){
-        yLocation = 3000;
+        y = 3000;
     }
 }

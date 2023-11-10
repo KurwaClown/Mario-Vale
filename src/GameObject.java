@@ -6,7 +6,6 @@ public class GameObject {
     protected double velX, velY;
     private final double gravity = 0.38f;
 
-    protected String name;
     private Dimension spriteDimension; // Dimension encapsulate width and height
     protected BufferedImage sprite;
 
@@ -87,10 +86,16 @@ public class GameObject {
         return jumping;
     }
 
+    public void setJumping(boolean jumping) {
+        this.jumping = jumping;
+    }
     public boolean isFalling() {
         return falling;
     }
 
+    public void setFalling(boolean falling) {
+        this.falling = falling;
+    }
     public void setX(double x) {
         this.x = x;
     }

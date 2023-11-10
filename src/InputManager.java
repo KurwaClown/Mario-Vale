@@ -18,11 +18,11 @@ public class InputManager implements KeyListener {
 //  TODO: Implement Mario Actions
         if (gameState == GameState.PLAYING) {
             if (keyCode == KeyEvent.VK_SPACE) {
-                System.out.println("Jumping");
+                game.getMario().jump();
             } else if (keyCode == KeyEvent.VK_Q) {
-                System.out.println("Moving left");
+                game.getMario().move(false);
             } else if (keyCode == KeyEvent.VK_D) {
-                System.out.println("Moving right");
+                game.getMario().move(true);
             } else if(keyCode == KeyEvent.VK_E){
                 System.out.println("Attacking");
             } else if(keyCode == KeyEvent.VK_ESCAPE){

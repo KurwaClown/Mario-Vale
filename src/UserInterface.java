@@ -1,37 +1,14 @@
-import javax.swing.JPanel;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import javax.imageio.ImageIO;
-import java.io.File;
-import java.io.IOException;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class UserInterface extends JPanel {
-    private Image backgroundImage;
+    private BufferedImage backgroundImage;
     private Map gameMap; 
 
     public UserInterface(Map map) {
         gameMap = map; 
-
-
-        try {
-            backgroundImage = ImageIO.read(new File("./img/map.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    
-        this.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                if (getWidth() > 0 && getHeight() > 0) {
-                    backgroundImage = backgroundImage.getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH);
-                }
-                repaint();
-            }
-        });
-    
-        setFocusable(true);
+        backgroundImage = Ressource.getImage("map");
     }
 
     @Override

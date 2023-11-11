@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
-
+// initializing the window and base variables
 public class Game {
 
     private boolean isRunning = true;
@@ -28,7 +28,7 @@ public class Game {
 
     private Mario mario;
 
-
+// Management of the game and adding object on the map
     public Game() {
         this.gameState = GameState.PLAYING;
         this.inputManager = new InputManager(this);
@@ -58,7 +58,7 @@ public class Game {
 
         gameThread.start();
     }
-
+    //Game loop 60Hz managing the lag
     public void gameLoop(){
         System.out.println("Running game at " + targetFPS + " FPS");
         long previousTime = System.currentTimeMillis();
@@ -87,7 +87,7 @@ public class Game {
             }
         }
     }
-
+    //Logics of the Game
     private void updateGameLogic() {
         if (gameState == GameState.PLAYING) {
             checkCollisions();
@@ -145,7 +145,7 @@ public class Game {
         camera.moveCam(xOffset, 0);
 
     }
-
+    // Collision management
     private void checkCollisions(){
         checkBottomCollisions();
         checkTopCollisions();
@@ -174,8 +174,6 @@ public class Game {
             }
         }
     }
-    // Similar logic would apply for checkLeftCollisions, checkTopCollisions, and checkBottomCollisions.
-
 
     private void checkLeftCollisions() {
         List<Block> blocks = map.getBlocks();
@@ -207,7 +205,7 @@ public class Game {
             Rectangle blockBottomHitBox = block.getBottomCollision();
             if (marioTopHitbox.intersects(blockBottomHitBox)) {
                 Rectangle intersection = marioTopHitbox.intersection(blockBottomHitBox);
-                mario.setY(mario.getY() + intersection.height); // Adjust by intersection height
+                mario.setY(mario.getY() + intersection.height); 
                 mario.setVelY(0);
                 if (block instanceof Brick) {
                     Brick brick = (Brick) block;
@@ -226,7 +224,7 @@ public class Game {
             Rectangle blockTopHitbox = block.getTopCollision();
             if (marioBottomHitBox.intersects(blockTopHitbox)) {
                 Rectangle intersection = marioBottomHitBox.intersection(blockTopHitbox);
-                mario.setY(mario.getY() - intersection.height); // Adjust by intersection height
+                mario.setY(mario.getY() - intersection.height); 
                 mario.setVelY(0);
 
             }
@@ -236,7 +234,7 @@ public class Game {
             Rectangle blockTopHitbox = enemy.getTopCollision();
             if (marioBottomHitBox.intersects(blockTopHitbox)) {
                 Rectangle intersection = marioBottomHitBox.intersection(blockTopHitbox);
-                mario.setY(mario.getY() - intersection.height); // Adjust by intersection height
+                mario.setY(mario.getY() - intersection.height); 
                 mario.setVelY(0);
                 enemy.disappear();
                 mario.setFalling(false);
@@ -246,8 +244,6 @@ public class Game {
         }
     }
 
-
-        //TODO: Check collisions with ennemies and map ground
     public static void main(String[] args) {
         Game game = new Game();
     }

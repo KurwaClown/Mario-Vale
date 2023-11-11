@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-
+// Base window, painting all the elements of the map
 public class UserInterface extends JPanel {
     private Map gameMap; 
 

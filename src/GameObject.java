@@ -15,7 +15,7 @@ public class GameObject {
     public GameObject(double xLocation, double yLocation, String name){
         this.x = xLocation;
         this.y = yLocation;
-        this.sprite = Ressource.getImage(name);
+        this.sprite = Ressource.getImage(name); //picking the Sprite in Ressource.java
         this.spriteDimension = new Dimension(sprite.getWidth(), sprite.getHeight());
         this.velX = 0;
         this.velY = 0;
@@ -57,7 +57,7 @@ public class GameObject {
 
         x = x + velX;
     }
-
+    // Creating Rectangle to check collisions (cf Game.java => Collisions management)
     public Rectangle getBottomCollision(){
         return new Rectangle((int)x, (int)y + spriteDimension.height, spriteDimension.width, 5);
     }

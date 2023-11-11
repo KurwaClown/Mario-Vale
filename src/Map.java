@@ -2,7 +2,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
-
+// creating List to stocks the objects that will be paint on the map
 public class Map {
     private List<Mario> marios; 
     private List<Champi> champis; 
@@ -26,7 +26,7 @@ public class Map {
         this.camera = camera;
         backgroundImage = Ressource.getImage("map");
     }
-
+    // add to the lists
     public void addMario(Mario mario) {
         marios.add(mario);
     }
@@ -50,7 +50,7 @@ public class Map {
     }
     
 
-
+    // draw objects in the lists
     public void draw(Graphics g) {
         g.translate(-(int)camera.getX(), -(int)camera.getY());
         for (int i = 0; i < 10; i++) {g.drawImage(backgroundImage, i*backgroundImage.getWidth(), 0, null);}
@@ -77,7 +77,7 @@ public class Map {
         }
 
     }
-
+    // update each frame of the loop
     public void update() {
         for (Mario mario : marios) {
             mario.moveObject();

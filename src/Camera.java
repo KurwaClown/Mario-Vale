@@ -1,5 +1,5 @@
 import java.awt.*;
-
+// Creating a Class that will move as Mario go ahead
 public class Camera {
     private double x = 0;
     private double y = 0;

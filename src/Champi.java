@@ -17,7 +17,7 @@ public class Champi extends Enemy {
     private int charge;
     private int chargeSpeed=10;
     
-
+    // Create th champi
     public Champi(int x, int y){
         super(x, y, "champi");
         if (getRandom()<3){
@@ -25,7 +25,7 @@ public class Champi extends Enemy {
             sprite=Ressource.getImage("champiRugby");
         }
     }
-
+    // Implementing the automatic moves and the ability to charge
     public void move() {
         if (!isRugbyman) {
             coordX += champiSpeed * direction; 
@@ -54,7 +54,7 @@ public class Champi extends Enemy {
     public void disappear(){
         y = 3000;
     }
-    
+    // Random use to create a champi or a RugbyChampi
     public int getRandom(){
         Random rand = new Random();
         return rand.nextInt(10);

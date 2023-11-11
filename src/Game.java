@@ -228,6 +228,8 @@ public class Game {
                 Rectangle intersection = marioBottomHitBox.intersection(blockTopHitbox);
                 mario.setY(mario.getY() - intersection.height); // Adjust by intersection height
                 mario.setVelY(0);
+                mario.setFalling(false);
+                mario.setJumping(false);
 
             }
         }

@@ -36,7 +36,6 @@ public class GameObject {
 
 
     public void moveObject(){
-        System.out.println("Moving object");
         if(jumping && velY <= 0){ //After the apex of the jump
             jumping = false;
             falling = true;

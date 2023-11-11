@@ -32,13 +32,16 @@ public class Game {
     public Game() {
         this.gameState = GameState.PLAYING;
         this.inputManager = new InputManager(this);
-        this.map = new Map();
-        this.userInterface = new UserInterface(map);
         this.camera = new Camera();
+        this.map = new Map(camera);
+        this.userInterface = new UserInterface(map);
         this.mario = new Mario(50, 700);
 
         map.addMario(mario);
-        map.addChampi(new Champi(100, 700));
+        for (int i = 0; i < 100; i++) {
+            map.addBlocks(new Brick(200 * i, 600));
+        }
+        map.addChampi(new Champi(2000, 700));
 
         JFrame frame = new JFrame("Mario'Vale");
         frame.add(userInterface);
@@ -89,6 +92,7 @@ public class Game {
         if (gameState == GameState.PLAYING) {
             checkCollisions();
             userInterface.updateGame();
+            updateCamera();
         }
     }
 
@@ -132,6 +136,14 @@ public class Game {
         return mario;
     }
 
+    private void updateCamera() {
+        double xOffset = 0;
+
+        if (mario.getVelX() > 0 && mario.getX() - 600 > camera.getX()) xOffset = mario.getVelX();
+
+        camera.moveCam(xOffset, 0);
+
+    }
 
     private void checkCollisions(){
         checkBottomCollisions();
@@ -162,6 +174,7 @@ public class Game {
         for (Block brick : bricks) {
             Rectangle blockRightHitbox = brick.getRightCollision();
             if (marioLeftHitbox.intersects(blockRightHitbox)) {
+                System.out.println("Collision");
                 mario.setX(brick.getX() + brick.getSpriteDimension().width + 1); // Adding one to be over the block
                 mario.setVelX(0);
             }

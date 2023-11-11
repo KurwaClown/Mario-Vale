@@ -209,7 +209,8 @@ public class Game {
                 Rectangle intersection = marioTopHitbox.intersection(blockBottomHitBox);
                 mario.setY(mario.getY() + intersection.height); // Adjust by intersection height
                 mario.setVelY(0);
-                if(block instanceof Brick brick){
+                if (block instanceof Brick) {
+                    Brick brick = (Brick) block;
                     brick.disappear();
                 }
             }
@@ -238,6 +239,9 @@ public class Game {
                 mario.setY(mario.getY() - intersection.height); // Adjust by intersection height
                 mario.setVelY(0);
                 enemy.disappear();
+                mario.setFalling(false);
+                mario.setJumping(false);
+                mario.jump();
             }
         }
     }

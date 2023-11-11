@@ -64,11 +64,11 @@ public class GameObject {
     }
 
     public Rectangle getTopCollision(){
-        return new Rectangle((int)x, (int)y, spriteDimension.width, -5);
+        return new Rectangle((int)x, (int)(y + 5), spriteDimension.width, 5);
     }
-
+    
     public Rectangle getLeftCollision(){
-        return new Rectangle((int)x, (int)y, -5, spriteDimension.height);
+        return new Rectangle((int)(x + 5), (int)y, 5, spriteDimension.height);
     }
 
     public Rectangle getRightCollision(){

@@ -7,7 +7,6 @@ public class Brick extends Block{
 
     public Brick(double xLocation, double yLocation) {
         super(xLocation, yLocation, "brick");
-        sprite = Ressource.getImage("brick");
     }
     public void disappear(){
         y = 3000;

@@ -39,6 +39,10 @@ public class Game {
 
         map.addMario(mario);
         map.addChampi(new Champi(100, 700));
+        map.addBlocks(new Brick(200, 600));
+        map.addBlocks(new Brick(600, 550));
+        map.addBlocks(new Brick(450, 800));
+
 
         JFrame frame = new JFrame("Mario'Vale");
         frame.add(userInterface);
@@ -142,61 +146,70 @@ public class Game {
 
     private void checkRightCollisions() {
         List<Block> bricks = map.getBlocks();
-
         Rectangle marioRightHitbox = mario.getRightCollision();
-
+    
         for (Block brick : bricks) {
             Rectangle blockLeftHitbox = brick.getLeftCollision();
             if (marioRightHitbox.intersects(blockLeftHitbox)) {
-                mario.setX(brick.getX() - mario.getSpriteDimension().width - 1); // Adding one to be over the block
+                Rectangle intersection = marioRightHitbox.intersection(blockLeftHitbox);
+                mario.setX(mario.getX() - intersection.width); // Adjust by intersection width
                 mario.setVelX(0);
             }
         }
     }
+    // Similar logic would apply for checkLeftCollisions, checkTopCollisions, and checkBottomCollisions.
+    
 
     private void checkLeftCollisions() {
         List<Block> bricks = map.getBlocks();
-
         Rectangle marioLeftHitbox = mario.getLeftCollision();
-
+    
         for (Block brick : bricks) {
             Rectangle blockRightHitbox = brick.getRightCollision();
             if (marioLeftHitbox.intersects(blockRightHitbox)) {
-                mario.setX(brick.getX() + brick.getSpriteDimension().width + 1); // Adding one to be over the block
+                Rectangle intersection = marioLeftHitbox.intersection(blockRightHitbox);
+                mario.setX(mario.getX() + intersection.width); // Adjust by intersection width
                 mario.setVelX(0);
             }
         }
     }
+    
 
     private void checkTopCollisions() {
         List<Block> bricks = map.getBlocks();
-
         Rectangle marioTopHitbox = mario.getTopCollision();
-
+    
         for (Block brick : bricks) {
             Rectangle blockBottomHitBox = brick.getBottomCollision();
             if (marioTopHitbox.intersects(blockBottomHitBox)) {
-                mario.setY(brick.getY() + mario.getSpriteDimension().height + 1); // Adding one to be over the block
+                Rectangle intersection = marioTopHitbox.intersection(blockBottomHitBox);
+                mario.setY(mario.getY() + intersection.height); // Adjust by intersection height
                 mario.setVelY(0);
+                if(brick instanceof Brick){
+                    ((Brick) brick).disappear();
+                }
             }
         }
     }
+    
 
     private void checkBottomCollisions() {
         List<Block> bricks = map.getBlocks();
-
         Rectangle marioBottomHitBox = mario.getBottomCollision();
-
+    
         for (Block brick : bricks) {
             Rectangle blockTopHitbox = brick.getTopCollision();
             if (marioBottomHitBox.intersects(blockTopHitbox)) {
-                mario.setY(brick.getY() - mario.getSpriteDimension().height - 1); // Adding one to be over the block
+                Rectangle intersection = marioBottomHitBox.intersection(blockTopHitbox);
+                mario.setY(mario.getY() - intersection.height); // Adjust by intersection height
                 mario.setVelY(0);
+                
             }
         }
+    }
+    
 
         //TODO: Check collisions with ennemies and map ground
-    }
     public static void main(String[] args) {
         Game game = new Game();
     }

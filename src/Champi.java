@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 
-public class Champi extends GameObject {
+public class Champi extends Enemy {
     private final int champiSpeed = 1;
     private int direction =1;
     private int coordX;

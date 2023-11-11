@@ -123,4 +123,8 @@ public class GameObject {
     public Dimension getSpriteDimension() {
         return spriteDimension;
     }
+
+    public void UpdateSpriteDimension() {
+        this.spriteDimension = new Dimension(sprite.getWidth(), sprite.getHeight());
+    }
 }

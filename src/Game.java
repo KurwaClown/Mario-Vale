@@ -38,6 +38,7 @@ public class Game {
         this.mario = new Mario(50, 700);
 
         map.addMario(mario);
+        map.addChampi(new Champi(100, 700));
 
         JFrame frame = new JFrame("Mario'Vale");
         frame.add(userInterface);

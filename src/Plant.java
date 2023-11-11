@@ -4,30 +4,30 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 
-public class Plant extends GameObject{
+public class Plant extends Enemy{
 private int counter = 0;
 public boolean isOut=false;
 public int direction =1;
     public Plant(double xLocation, double yLocation) {
-        super(xLocation, yLocation);
+        super(xLocation, yLocation, "plant");
     }
     public void goingUpandDown(){
         if(counter % 60==0){
             Random rand = new Random();
             int test = rand.nextInt(2);
             if (test ==1 && isOut ==false){
-                yLocation += 50;
+                y += 50;
             }
             else if (test ==1 && isOut ==true){
-                yLocation -=50
+                y -=50;
             }
         }
 
     }
-    public void move(Block block){
-        xLocation += velX * direction;
-        if (this.collide(block)){
-            direction = direction *(-1);
-        }
-    }
+//    public void move(Block block){
+//        xLocation += velX * direction;
+//        if (this.collide(block)){
+//            direction = direction *(-1);
+//        }
+//    }
 }

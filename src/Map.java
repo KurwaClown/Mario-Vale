@@ -11,8 +11,9 @@ public class Map {
     private List<PowerUp> powerups;
     private List<Flag> flags;
 
+    private Camera camera;
 
-    public Map() {
+    public Map(Camera camera) {
         marios = new ArrayList<>();
         champis = new ArrayList<>();
         blocks = new ArrayList<>();
@@ -20,6 +21,7 @@ public class Map {
         turtles = new ArrayList<>();
         powerups = new ArrayList<>();
         flags = new ArrayList<>();
+        this.camera = camera;
     }
 
     public void addMario(Mario mario) {
@@ -47,6 +49,7 @@ public class Map {
 
 
     public void draw(Graphics g) {
+        g.translate(-(int)camera.getX(), -(int)camera.getY());
         for (Mario mario : marios) {
             mario.draw(g);
         }

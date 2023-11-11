@@ -43,7 +43,7 @@ public class Champi extends Enemy {
                 if (coordX <= 0 || coordX >= 100) {  
                     direction *= -1;  
                     counterCharge++;
-                    if (counterCharge >= 2) {
+                    if (counterCharge >= 3) {
                         charge = chargeTime;
                         counterCharge = 0;
                     }

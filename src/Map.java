@@ -1,4 +1,5 @@
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +12,10 @@ public class Map {
     private List<PowerUp> powerups;
     private List<Flag> flags;
 
+    private BufferedImage backgroundImage;
+    private Camera camera;
 
-    public Map() {
+    public Map(Camera camera) {
         marios = new ArrayList<>();
         champis = new ArrayList<>();
         blocks = new ArrayList<>();
@@ -20,6 +23,8 @@ public class Map {
         turtles = new ArrayList<>();
         powerups = new ArrayList<>();
         flags = new ArrayList<>();
+        this.camera = camera;
+        backgroundImage = Ressource.getImage("map");
     }
 
     public void addMario(Mario mario) {
@@ -47,6 +52,8 @@ public class Map {
 
 
     public void draw(Graphics g) {
+        g.translate(-(int)camera.getX(), -(int)camera.getY());
+        for (int i = 0; i < 10; i++) {g.drawImage(backgroundImage, i*backgroundImage.getWidth(), 0, null);}
         for (Mario mario : marios) {
             mario.draw(g);
         }

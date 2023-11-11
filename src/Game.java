@@ -41,7 +41,7 @@ public class Game {
         for (int i = 0; i < 100; i++) {
             map.addBlocks(new Brick(200 * i, 600));
         }
-        map.addChampi(new Champi(2000, 700));
+        map.addChampi(new Champi(2000, 750));
 
         JFrame frame = new JFrame("Mario'Vale");
         frame.add(userInterface);
@@ -127,6 +127,7 @@ public class Game {
     }
 
     public void gameOver(){
+        gameState = GameState.GAMEOVER;
         System.out.println("Game over!");
         System.out.println("Score: " + score);
         System.out.println("Coins: " + coins);
@@ -164,6 +165,14 @@ public class Game {
                 mario.setVelX(0);
             }
         }
+
+        for (Enemy enemy : map.getChampis()) {
+            Rectangle blockTopHitbox = enemy.getTopCollision();
+            if (marioRightHitbox.intersects(blockTopHitbox)) {
+
+                gameOver();
+            }
+        }
     }
     // Similar logic would apply for checkLeftCollisions, checkTopCollisions, and checkBottomCollisions.
 
@@ -178,6 +187,13 @@ public class Game {
                 Rectangle intersection = marioLeftHitbox.intersection(blockRightHitbox);
                 mario.setX(mario.getX() + intersection.width); // Adjust by intersection width
                 mario.setVelX(0);
+            }
+        }
+
+        for (Enemy enemy : map.getChampis()) {
+            Rectangle blockTopHitbox = enemy.getTopCollision();
+            if (marioLeftHitbox.intersects(blockTopHitbox)) {
+                gameOver();
             }
         }
     }
@@ -212,6 +228,16 @@ public class Game {
                 mario.setY(mario.getY() - intersection.height); // Adjust by intersection height
                 mario.setVelY(0);
 
+            }
+        }
+
+        for (Enemy enemy : map.getChampis()) {
+            Rectangle blockTopHitbox = enemy.getTopCollision();
+            if (marioBottomHitBox.intersects(blockTopHitbox)) {
+                Rectangle intersection = marioBottomHitBox.intersection(blockTopHitbox);
+                mario.setY(mario.getY() - intersection.height); // Adjust by intersection height
+                mario.setVelY(0);
+                enemy.disappear();
             }
         }
     }

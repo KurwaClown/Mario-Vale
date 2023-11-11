@@ -11,7 +11,7 @@ public class Camera {
         x = x + xOffset;
         y = y + yOffset;
 
-        System.out.println("Camera location = (" + x + ", " + y + ")");
+        //System.out.println("Camera location = (" + x + ", " + y + ")");
     }
 
     public double getX() {

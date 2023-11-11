@@ -3,6 +3,11 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.Timer;
+import java.awt.event.ActionEvent;
+import javax.swing.Timer;
+import java.awt.event.ActionListener;
+
 // initializing the window and base variables
 public class Game {
 
@@ -22,13 +27,15 @@ public class Game {
 
     private UserInterface userInterface;
 
+    private Jersey jersey;
+
     private Map map;
 
     private Camera camera;
 
     private Mario mario;
 
-// Management of the game and adding object on the map
+    // Management of the game and adding object on the map
     public Game() {
         this.gameState = GameState.PLAYING;
         this.inputManager = new InputManager(this);
@@ -42,6 +49,7 @@ public class Game {
             map.addBlocks(new Brick(200 * i, 600));
         }
         map.addChampi(new Champi(2000, 750));
+        map.addBlocks(new Bonus(300, 600));
 
         JFrame frame = new JFrame("Mario'Vale");
         frame.add(userInterface);
@@ -58,8 +66,9 @@ public class Game {
 
         gameThread.start();
     }
-    //Game loop 60Hz managing the lag
-    public void gameLoop(){
+
+    // Game loop 60Hz managing the lag
+    public void gameLoop() {
         System.out.println("Running game at " + targetFPS + " FPS");
         long previousTime = System.currentTimeMillis();
         long lag = 0;
@@ -87,7 +96,8 @@ public class Game {
             }
         }
     }
-    //Logics of the Game
+
+    // Logics of the Game
     private void updateGameLogic() {
         if (gameState == GameState.PLAYING) {
             checkCollisions();
@@ -118,15 +128,15 @@ public class Game {
         isRunning = false;
     }
 
-    public void increaseCoinsCount(){
+    public void increaseCoinsCount() {
         coins++;
     }
 
-    public void increaseScore(int amount){
-        score+=amount;
+    public void increaseScore(int amount) {
+        score += amount;
     }
 
-    public void gameOver(){
+    public void gameOver() {
         gameState = GameState.GAMEOVER;
         System.out.println("Game over!");
         System.out.println("Score: " + score);
@@ -140,13 +150,15 @@ public class Game {
     private void updateCamera() {
         double xOffset = 0;
 
-        if (mario.getVelX() > 0 && mario.getX() - 600 > camera.getX()) xOffset = mario.getVelX();
+        if (mario.getVelX() > 0 && mario.getX() - 600 > camera.getX())
+            xOffset = mario.getVelX();
 
         camera.moveCam(xOffset, 0);
 
     }
+
     // Collision management
-    private void checkCollisions(){
+    private void checkCollisions() {
         checkBottomCollisions();
         checkTopCollisions();
         checkLeftCollisions();
@@ -154,6 +166,8 @@ public class Game {
     }
 
     private void checkRightCollisions() {
+        List<PowerUp> powerups = map.getPowerUps();
+
         List<Block> blocks = map.getBlocks();
         Rectangle marioRightHitbox = mario.getRightCollision();
 
@@ -173,6 +187,30 @@ public class Game {
                 gameOver();
             }
         }
+        for (PowerUp powerup : powerups) {
+            Rectangle powerupLeftHitBox = powerup.getLeftCollision();
+            if (marioRightHitbox.intersects(powerupLeftHitBox)) {
+                Rectangle intersection1 = marioRightHitbox.intersection(powerupLeftHitBox);
+                mario.setY(mario.getY() + intersection1.height);
+                if (powerup instanceof Jersey) {
+                    Jersey jersey = (Jersey) powerup;
+                    mario.setIsRugbymanTrue();
+                    mario.updateImage();
+                    Timer timer = new Timer(12000, new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            mario.setIsRugbymanFalse();
+                            mario.updateImage();
+                            ((Timer) e.getSource()).stop();
+                        }
+                    });
+                    timer.setRepeats(false);
+                    timer.start();
+
+                }
+            }
+        }
+
     }
 
     private void checkLeftCollisions() {
@@ -196,25 +234,55 @@ public class Game {
         }
     }
 
-
     private void checkTopCollisions() {
         List<Block> blocks = map.getBlocks();
+        List<PowerUp> powerups = map.getPowerUps();
         Rectangle marioTopHitbox = mario.getTopCollision();
 
         for (Block block : blocks) {
             Rectangle blockBottomHitBox = block.getBottomCollision();
             if (marioTopHitbox.intersects(blockBottomHitBox)) {
                 Rectangle intersection = marioTopHitbox.intersection(blockBottomHitBox);
-                mario.setY(mario.getY() + intersection.height); 
+                mario.setY(mario.getY() + intersection.height);
                 mario.setVelY(0);
                 if (block instanceof Brick) {
                     Brick brick = (Brick) block;
                     brick.disappear();
                 }
+                if (block instanceof Bonus) {
+                    Bonus bonus = (Bonus) block;
+                    if (this.jersey == null) {
+                        this.jersey = new Jersey(1000, 10000); // Set the initial position off-screen or hidden
+                    }
+                    bonus.displayBonus(this.jersey);
+                    map.addPowerup(this.jersey);
+                }
+                for (PowerUp powerup : powerups) {
+                    Rectangle powerupBottomHitBox = powerup.getBottomCollision();
+                    if (marioTopHitbox.intersects(powerupBottomHitBox)) {
+                        Rectangle intersection1 = marioTopHitbox.intersection(powerupBottomHitBox);
+                        mario.setY(mario.getY() + intersection1.height);
+                        if (powerup instanceof Jersey) {
+                            Jersey jersey = (Jersey) powerup;
+                            mario.setIsRugbymanTrue();
+                            mario.updateImage();
+                            Timer timer = new Timer(12000, new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    mario.setIsRugbymanFalse();
+                                    mario.updateImage();
+                                    ((Timer) e.getSource()).stop();
+                                }
+                            });
+                            timer.setRepeats(false);
+                            timer.start();
+
+                        }
+                    }
+                }
             }
         }
     }
-
 
     private void checkBottomCollisions() {
         List<Block> blocks = map.getBlocks();
@@ -224,7 +292,7 @@ public class Game {
             Rectangle blockTopHitbox = block.getTopCollision();
             if (marioBottomHitBox.intersects(blockTopHitbox)) {
                 Rectangle intersection = marioBottomHitBox.intersection(blockTopHitbox);
-                mario.setY(mario.getY() - intersection.height); 
+                mario.setY(mario.getY() - intersection.height);
                 mario.setVelY(0);
                 mario.setFalling(false);
                 mario.setJumping(false);
@@ -236,7 +304,7 @@ public class Game {
             Rectangle blockTopHitbox = enemy.getTopCollision();
             if (marioBottomHitBox.intersects(blockTopHitbox)) {
                 Rectangle intersection = marioBottomHitBox.intersection(blockTopHitbox);
-                mario.setY(mario.getY() - intersection.height); 
+                mario.setY(mario.getY() - intersection.height);
                 mario.setVelY(0);
                 enemy.disappear();
                 mario.setFalling(false);
@@ -250,4 +318,3 @@ public class Game {
         Game game = new Game();
     }
 }
-    

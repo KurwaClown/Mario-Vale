@@ -39,6 +39,12 @@ public class Mario extends GameObject {
             setVelX(0);
         }
     }
+    public void setIsRugbymanTrue(){
+        isRugbyman=true;
+    }
+        public void setIsRugbymanFalse(){
+        isRugbyman=false;
+    }
 //    public void fall(){
 //        if (isJumping()) {
 //            marioY -= velY;

@@ -7,5 +7,6 @@ public abstract class PowerUp extends GameObject{
 
     public PowerUp(double xLocation, double yLocation, String spriteName) {
         super(xLocation, yLocation, spriteName);
+        setY(3000);
     }
 }

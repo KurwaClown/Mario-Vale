@@ -153,11 +153,11 @@ public class Game {
     }
 
     private void checkRightCollisions() {
-        List<Block> bricks = map.getBlocks();
+        List<Block> blocks = map.getBlocks();
         Rectangle marioRightHitbox = mario.getRightCollision();
 
-        for (Block brick : bricks) {
-            Rectangle blockLeftHitbox = brick.getLeftCollision();
+        for (Block block : blocks) {
+            Rectangle blockLeftHitbox = block.getLeftCollision();
             if (marioRightHitbox.intersects(blockLeftHitbox)) {
                 Rectangle intersection = marioRightHitbox.intersection(blockLeftHitbox);
                 mario.setX(mario.getX() - intersection.width); // Adjust by intersection width
@@ -169,11 +169,11 @@ public class Game {
 
 
     private void checkLeftCollisions() {
-        List<Block> bricks = map.getBlocks();
+        List<Block> blocks = map.getBlocks();
         Rectangle marioLeftHitbox = mario.getLeftCollision();
 
-        for (Block brick : bricks) {
-            Rectangle blockRightHitbox = brick.getRightCollision();
+        for (Block block : blocks) {
+            Rectangle blockRightHitbox = block.getRightCollision();
             if (marioLeftHitbox.intersects(blockRightHitbox)) {
                 Rectangle intersection = marioLeftHitbox.intersection(blockRightHitbox);
                 mario.setX(mario.getX() + intersection.width); // Adjust by intersection width
@@ -184,17 +184,17 @@ public class Game {
 
 
     private void checkTopCollisions() {
-        List<Block> bricks = map.getBlocks();
+        List<Block> blocks = map.getBlocks();
         Rectangle marioTopHitbox = mario.getTopCollision();
 
-        for (Block brick : bricks) {
-            Rectangle blockBottomHitBox = brick.getBottomCollision();
+        for (Block block : blocks) {
+            Rectangle blockBottomHitBox = block.getBottomCollision();
             if (marioTopHitbox.intersects(blockBottomHitBox)) {
                 Rectangle intersection = marioTopHitbox.intersection(blockBottomHitBox);
                 mario.setY(mario.getY() + intersection.height); // Adjust by intersection height
                 mario.setVelY(0);
-                if(brick instanceof Brick){
-                    ((Brick) brick).disappear();
+                if(block instanceof Brick brick){
+                    brick.disappear();
                 }
             }
         }
@@ -202,11 +202,11 @@ public class Game {
 
 
     private void checkBottomCollisions() {
-        List<Block> bricks = map.getBlocks();
+        List<Block> blocks = map.getBlocks();
         Rectangle marioBottomHitBox = mario.getBottomCollision();
 
-        for (Block brick : bricks) {
-            Rectangle blockTopHitbox = brick.getTopCollision();
+        for (Block block : blocks) {
+            Rectangle blockTopHitbox = block.getTopCollision();
             if (marioBottomHitBox.intersects(blockTopHitbox)) {
                 Rectangle intersection = marioBottomHitBox.intersection(blockTopHitbox);
                 mario.setY(mario.getY() - intersection.height); // Adjust by intersection height

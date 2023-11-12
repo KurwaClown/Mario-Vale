@@ -5,29 +5,16 @@ import java.util.List;
 
 // creating List to stocks the objects that will be paint on the map
 public class Map {
-    private List<Mario> marios;
-
-    private List<Enemy> enemies = new ArrayList<>();
-    private List<Champi> champis;
-    private List<Block> blocks;
-    private List<Turtle> turtles;
-    private List<Plant> plants;
-    private List<PowerUp> powerups;
-    private List<Flag> flags;
-
-    private BufferedImage backgroundImage;
-    private Camera camera;
+    private final List<Mario> marios = new ArrayList<>();
+    private final List<Enemy> enemies = new ArrayList<>();
+    private final List<Block> blocks = new ArrayList<>();
+    private final List<PowerUp> powerups = new ArrayList<>();
+    private final List<Flag> flags = new ArrayList<>();
+    private final BufferedImage backgroundImage = Ressource.getImage("map");
+    private final Camera camera;
 
     public Map(Camera camera) {
-        marios = new ArrayList<>();
-        champis = new ArrayList<>();
-        blocks = new ArrayList<>();
-        plants = new ArrayList<>();
-        turtles = new ArrayList<>();
-        powerups = new ArrayList<>();
-        flags = new ArrayList<>();
         this.camera = camera;
-        backgroundImage = Ressource.getImage("map");
     }
 
     // add to the lists
@@ -50,7 +37,6 @@ public class Map {
     public void addEnemy(Enemy enemy) {
         enemies.add(enemy);
     }
-
 
     // draw objects in the lists
     public void draw(Graphics g) {

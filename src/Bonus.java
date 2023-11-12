@@ -1,6 +1,6 @@
 public class Bonus extends Block {
 
-    PowerUp containedPowerUp;
+    private final PowerUp containedPowerUp;
 
     public Bonus(double xLocation, double yLocation, PowerUp containedPowerUp) {
         super(xLocation, yLocation, "bonus");

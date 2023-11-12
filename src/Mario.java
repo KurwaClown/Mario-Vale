@@ -9,6 +9,7 @@ public class Mario extends GameObject {
 
     private int regenCharge = 300;
     private int timingCharge = 30;
+
     public Mario(int x, int y) {
         super(x, y, "mario");
         sprites = new BufferedImage[2];
@@ -26,43 +27,33 @@ public class Mario extends GameObject {
     }
 
     public void move(boolean toRight) {
-        if(toRight) {
+        if (toRight) {
             System.out.println("Moving to the right");
             setVelX(5);
-            if (System.currentTimeMillis() - lastSpriteChangeTime > ANIMATION_TIME) {
-                currentSpriteIndex = (currentSpriteIndex + 1) % sprites.length;
-                lastSpriteChangeTime = System.currentTimeMillis();
-            }
-               else {
-            currentSpriteIndex = 0;
-            }
         } else {
             System.out.println("Moving to the left");
             setVelX(-5);
-            if (System.currentTimeMillis() - lastSpriteChangeTime > ANIMATION_TIME) {
-                currentSpriteIndex = (currentSpriteIndex + 1) % sprites.length;
-                lastSpriteChangeTime = System.currentTimeMillis();
-            
-        } else {
-            currentSpriteIndex = 0;
         }
-        }
+
+
     }
+
     public BufferedImage getCurrentSprite() {
         return sprites[currentSpriteIndex];
     }
 
     public void stop(boolean toRight) {
-        if(toRight && getVelX() > 0) {
+        if (toRight && getVelX() > 0) {
             System.out.println("Stopping to the right");
             setVelX(0);
-        } else if(!toRight && getVelX() < 0) {
+        } else if (!toRight && getVelX() < 0) {
             System.out.println("Stopping to the left");
             setVelX(0);
         }
     }
-    public void setIsRugbyman(boolean isRugbyman){
-        this.isRugbyman=isRugbyman;
+
+    public void setIsRugbyman(boolean isRugbyman) {
+        this.isRugbyman = isRugbyman;
     }
 
 
@@ -90,7 +81,7 @@ public class Mario extends GameObject {
                 velX = 10;
                 timingCharge--;
                 regenCharge = 0;
-                if(timingCharge == 0) {
+                if (timingCharge == 0) {
                     velX = 0;
                     timingCharge = 30;
                 }
@@ -142,22 +133,23 @@ public class Mario extends GameObject {
             sprite = Ressource.getImage("mario");
         }
     }
+
     public void update() {
-        if(regenCharge < 300) regenCharge++;
-        if(isRugbyman) return;
+        if (regenCharge < 300) regenCharge++;
+        if (isRugbyman) return;
         if (getVelX() != 0) {
             long currentTime = System.currentTimeMillis();
             long timeSinceLastChange = currentTime - lastSpriteChangeTime;
-            
+
             if (timeSinceLastChange > ANIMATION_TIME) {
                 currentSpriteIndex = (currentSpriteIndex + 1) % sprites.length;
                 lastSpriteChangeTime = currentTime - (timeSinceLastChange - ANIMATION_TIME);
-                
+
             }
         } else {
             currentSpriteIndex = 0;
         }
-    
+
         sprite = getCurrentSprite();
     }
 }

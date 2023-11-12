@@ -17,6 +17,7 @@ public class Mario extends GameObject {
         sprites[1] = Ressource.getImage("mario1");
         currentSpriteIndex = 0;
         lastSpriteChangeTime = System.currentTimeMillis();
+        setFalling(true);
     }
 
     public void jump() {

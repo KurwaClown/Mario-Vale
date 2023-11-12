@@ -13,6 +13,7 @@ public class Champi extends Enemy {
         }
     }
     // Implementing the automatic moves and the ability to charge
+    @Override
     public void update() {
         if (isRugbyman && regenCharge == 60) {
             velX = 10;

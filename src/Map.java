@@ -78,7 +78,7 @@ public class Map {
             flag.moveObject();
         }
         for (Enemy enemy : enemies) {
-            //TODO: Add update method to Enemy
+            enemy.update();
             enemy.moveObject();
         }
 

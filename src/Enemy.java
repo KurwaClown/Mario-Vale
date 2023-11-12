@@ -9,6 +9,8 @@ public abstract class Enemy extends GameObject{
         y = 3000;
     }
 
+    public void update(){}
+
     public void inverseVelX(){
         setVelX(-getVelX());
     }

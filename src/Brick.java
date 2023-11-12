@@ -11,4 +11,9 @@ public class Brick extends Block{
     public void disappear(){
         y = 3000;
     }
+
+    @Override
+    public void hit() {
+        disappear();
+    }
 }

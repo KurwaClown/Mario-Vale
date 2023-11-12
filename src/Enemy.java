@@ -1,7 +1,7 @@
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
-// creating an asbtract class that will be extended by all the enemies of the game
+// creating an abstract class that will be extended by all the enemies of the game
 public abstract class Enemy extends GameObject{
 
     public Enemy(double xLocation, double yLocation, String spriteName) {
@@ -10,5 +10,9 @@ public abstract class Enemy extends GameObject{
     }
     public void disappear(){
         y = 3000;
+    }
+
+    public void inverseVelX(){
+        setVelX(-getVelX());
     }
 }

@@ -12,7 +12,8 @@ public class Mario extends GameObject {
     private long lastSpriteChangeTime;
     private static final long ANIMATION_TIME = 500;
 
-
+    private int regenCharge = 300;
+    private int timingCharge = 30;
     public Mario(int x, int y) {
         super(x, y, "mario");
         sprites = new BufferedImage[2];
@@ -101,24 +102,23 @@ public class Mario extends GameObject {
 //        }
 //    }
 //
-//    public void attack(Enemy enemy) {
-//        int timingCharge = 30;
-//        int regenCharge = 300;
-//        if (isRugbyman == true) {
-//            if (interact && regenCharge == 300) {
-//                while (timingCharge > 0) {
-//                    velX = 10;
-//                    timingCharge--;
-//
-//                }
-//                regenCharge++;
-//
-//                if (this.collide(enemy)) {
-//                    enemy.die();
-//                }
-//            }
-//        }
-//    }
+    public void attack() {
+
+
+        if (isRugbyman == true) {
+            if (regenCharge == 300) {
+                velX = 10;
+                timingCharge--;
+                regenCharge = 0;
+                if(timingCharge == 0) {
+                    velX = 0;
+                    timingCharge = 30;
+                }
+            }
+
+        }
+
+    }
 //public void Flag(Flag flag) {
 //    int numClicks=0;
 //    if (interact && this.collide(flag)) {
@@ -189,7 +189,8 @@ public class Mario extends GameObject {
         }
     }
     public void update() {
-
+        if(regenCharge < 300) regenCharge++;
+        if(isRugbyman) return;
         if (getVelX() != 0) {
             long currentTime = System.currentTimeMillis();
             long timeSinceLastChange = currentTime - lastSpriteChangeTime;

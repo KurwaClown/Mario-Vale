@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 // Base window, painting all the elements of the map
 public class UserInterface extends JPanel {
-    private Map gameMap; 
+    private final Map gameMap;
 
     public UserInterface(Map map) {
         gameMap = map;

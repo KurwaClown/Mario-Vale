@@ -2,7 +2,7 @@ import java.awt.image.BufferedImage;
 
 public class Mario extends GameObject {
     private boolean isRugbyman = false;
-    private BufferedImage[] sprites;
+    private final BufferedImage[] sprites;
     private int currentSpriteIndex;
     private long lastSpriteChangeTime;
     private static final long ANIMATION_TIME = 500;
@@ -98,9 +98,7 @@ public class Mario extends GameObject {
 //    }
 //
     public void attack() {
-
-
-        if (isRugbyman == true) {
+        if (isRugbyman) {
             if (regenCharge == 300) {
                 velX = 10;
                 timingCharge--;
@@ -110,10 +108,9 @@ public class Mario extends GameObject {
                     timingCharge = 30;
                 }
             }
-
         }
-
     }
+
 //public void Flag(Flag flag) {
 //    int numClicks=0;
 //    if (interact && this.collide(flag)) {

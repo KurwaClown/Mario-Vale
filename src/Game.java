@@ -10,7 +10,6 @@ public class Game {
     private int coins = 0;
     private int score = 0;
     private GameState gameState;
-    private final InputManager inputManager;
     private final UserInterface userInterface;
     private final Map map;
     private final Camera camera;
@@ -21,7 +20,6 @@ public class Game {
     // Management of the game and adding object on the map
     public Game() {
         this.gameState = GameState.PLAYING;
-        this.inputManager = new InputManager(this);
         this.camera = new Camera();
         this.map = new Map(camera);
         this.userInterface = new UserInterface(map);
@@ -31,14 +29,14 @@ public class Game {
         for (int i = 0; i < 100; i++) {
             map.addBlocks(new Brick(200 * i, 600));
         }
-        map.addChampi(new Champi(800, 750));
+        map.addEnemy(new Champi(800, 750));
         map.addBlocks(new Bonus(1000, 600, new Jersey()));
         map.addBlocks(new Brick(600, 750));
         map.addBlocks(new Brick(1000, 750));
 
         JFrame frame = new JFrame("Mario'Vale");
         frame.add(userInterface);
-        frame.addKeyListener(inputManager);
+        frame.addKeyListener(new InputManager(this));
         frame.setMinimumSize(new Dimension(WIDTH, HEIGHT));
         frame.pack();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -174,7 +172,7 @@ public class Game {
         Rectangle marioHitbox = getGameObjectHitbox(mario, direction, false);
 
         //TODO: check for all enemies
-        for (Enemy enemy : map.getChampis()) {
+        for (Enemy enemy : map.getEnemies()) {
             Rectangle enemyHitbox = getGameObjectHitbox(enemy, direction, true);
             if (marioHitbox.intersects(enemyHitbox)) {
                 Rectangle intersection = marioHitbox.intersection(enemyHitbox);
@@ -216,7 +214,7 @@ public class Game {
 
     public void checkEnnemyBlockCollisions() {
         //TODO: check for all enemies
-        for (Enemy enemy : map.getChampis()) {
+        for (Enemy enemy : map.getEnemies()) {
             boolean enemyLookingRight = enemy.getVelX() > 0;
             Rectangle champiHitbox = enemyLookingRight ? getGameObjectHitbox(enemy, Direction.RIGHT, false)
                     : getGameObjectHitbox(enemy, Direction.LEFT, false);

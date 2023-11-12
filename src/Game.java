@@ -3,9 +3,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.Timer;
 import java.awt.event.ActionEvent;
-import javax.swing.Timer;
 import java.awt.event.ActionListener;
 
 // initializing the window and base variables
@@ -35,6 +33,8 @@ public class Game {
 
     private Mario mario;
 
+    private Champi champi;
+
     // Management of the game and adding object on the map
     public Game() {
         this.gameState = GameState.PLAYING;
@@ -48,8 +48,10 @@ public class Game {
         for (int i = 0; i < 100; i++) {
             map.addBlocks(new Brick(200 * i, 600));
         }
-        map.addChampi(new Champi(2000, 750));
+        map.addChampi(new Champi(600, 750));
         map.addBlocks(new Bonus(300, 600));
+        map.addBlocks(new Brick(400, 750));
+        map.addBlocks(new Brick(800, 750));
 
         JFrame frame = new JFrame("Mario'Vale");
         frame.add(userInterface);
@@ -103,7 +105,7 @@ public class Game {
             checkCollisions();
             userInterface.updateGame();
             updateCamera();
-            
+
         }
     }
 
@@ -168,17 +170,26 @@ public class Game {
 
     private void checkRightCollisions() {
         List<PowerUp> powerups = map.getPowerUps();
-
         List<Block> blocks = map.getBlocks();
+        List<Champi> champis =map.getChampis();
         Rectangle marioRightHitbox = mario.getRightCollision();
 
         for (Block block : blocks) {
             Rectangle blockLeftHitbox = block.getLeftCollision();
             if (marioRightHitbox.intersects(blockLeftHitbox)) {
                 Rectangle intersection = marioRightHitbox.intersection(blockLeftHitbox);
-                mario.setX(mario.getX() - intersection.width); // Adjust by intersection width
+                mario.setX(mario.getX() - intersection.width);
                 mario.setVelX(0);
             }
+                for (Champi champi : champis) {
+                Rectangle champiRightHitBox = champi.getRightCollision();                                                  
+                if (champiRightHitBox.intersects(blockLeftHitbox)) {
+                    Rectangle intersection1 = champiRightHitBox.intersection(blockLeftHitbox);
+                    champi.setX(champi.getX() - intersection1.width);
+                    champi.setVelX(champi.getVelX() * (-1));
+                }
+            }
+
         }
 
         for (Enemy enemy : map.getChampis()) {
@@ -216,21 +227,54 @@ public class Game {
 
     private void checkLeftCollisions() {
         List<Block> blocks = map.getBlocks();
-        Rectangle marioLeftHitbox = mario.getLeftCollision();
+        List<PowerUp> powerups = map.getPowerUps();
+        List<Champi> champis = map.getChampis();
+        Rectangle marioLeftHitBox = mario.getLeftCollision();
 
         for (Block block : blocks) {
             Rectangle blockRightHitbox = block.getRightCollision();
-            if (marioLeftHitbox.intersects(blockRightHitbox)) {
-                Rectangle intersection = marioLeftHitbox.intersection(blockRightHitbox);
-                mario.setX(mario.getX() + intersection.width); // Adjust by intersection width
+            if (marioLeftHitBox.intersects(blockRightHitbox)) {
+                Rectangle intersection = marioLeftHitBox.intersection(blockRightHitbox);
+                mario.setX(mario.getX() + intersection.width);
                 mario.setVelX(0);
+            }
+            for (Champi champi : champis) {
+                Rectangle champiLeftHitBox = champi.getLeftCollision();                                                  
+                if (champiLeftHitBox.intersects(blockRightHitbox)) {
+                    Rectangle intersection1 = champiLeftHitBox.intersection(blockRightHitbox);
+                    champi.setX(champi.getX() + intersection1.width);
+                    champi.setVelX(champi.getVelX() * (-1));
+                }
             }
         }
 
         for (Enemy enemy : map.getChampis()) {
             Rectangle blockTopHitbox = enemy.getTopCollision();
-            if (marioLeftHitbox.intersects(blockTopHitbox)) {
+            if (marioLeftHitBox.intersects(blockTopHitbox)) {
                 gameOver();
+            }
+        }
+        for (PowerUp powerup : powerups) {
+            Rectangle powerupRightHitBox = powerup.getRightCollision();
+            if (marioLeftHitBox.intersects(powerupRightHitBox)) {
+                Rectangle intersection1 = marioLeftHitBox.intersection(powerupRightHitBox);
+                mario.setY(mario.getY() + intersection1.height);
+                if (powerup instanceof Jersey) {
+                    Jersey jersey = (Jersey) powerup;
+                    mario.setIsRugbymanTrue();
+                    mario.updateImage();
+                    Timer timer = new Timer(12000, new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            mario.setIsRugbymanFalse();
+                            mario.updateImage();
+                            ((Timer) e.getSource()).stop();
+                        }
+                    });
+                    timer.setRepeats(false);
+                    timer.start();
+
+                }
             }
         }
     }
@@ -287,6 +331,7 @@ public class Game {
 
     private void checkBottomCollisions() {
         List<Block> blocks = map.getBlocks();
+        List<PowerUp> powerups = map.getPowerUps();
         Rectangle marioBottomHitBox = mario.getBottomCollision();
 
         for (Block block : blocks) {
@@ -311,6 +356,29 @@ public class Game {
                 mario.setFalling(false);
                 mario.setJumping(false);
                 mario.jump();
+            }
+        }
+        for (PowerUp powerup : powerups) {
+            Rectangle powerupTopHitBox = powerup.getTopCollision();
+            if (marioBottomHitBox.intersects(powerupTopHitBox)) {
+                Rectangle intersection = marioBottomHitBox.intersection(powerupTopHitBox);
+                mario.setY(mario.getY() + intersection.height);
+                if (powerup instanceof Jersey) {
+                    Jersey jersey = (Jersey) powerup;
+                    mario.setIsRugbymanTrue();
+                    mario.updateImage();
+                    Timer timer = new Timer(12000, new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            mario.setIsRugbymanFalse();
+                            mario.updateImage();
+                            ((Timer) e.getSource()).stop();
+                        }
+                    });
+                    timer.setRepeats(false);
+                    timer.start();
+
+                }
             }
         }
     }

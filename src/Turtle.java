@@ -1,8 +1,3 @@
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
 public class Turtle extends GameObject{
     public int xInit;
     private int direction = 1;

@@ -1,6 +1,3 @@
-import javax.imageio.ImageIO;
-import java.io.File;
-import java.io.IOException;
 // creating an abstract class that will be extended by all the enemies of the game
 public abstract class Enemy extends GameObject{
 

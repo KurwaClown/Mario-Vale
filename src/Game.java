@@ -11,8 +11,6 @@ public class Game {
 
     private boolean isRunning = true;
     private final int targetFPS = 60;
-    private final long targetFrameTime = 1000 / targetFPS;
-
     private final static int WIDTH = 1335;
     private final static int HEIGHT = 930;
 
@@ -21,19 +19,18 @@ public class Game {
 
     private GameState gameState;
 
-    private InputManager inputManager;
+    private final InputManager inputManager;
 
-    private UserInterface userInterface;
+    private final UserInterface userInterface;
 
     private Jersey jersey;
 
-    private Map map;
+    private final Map map;
 
-    private Camera camera;
+    private final Camera camera;
 
-    private Mario mario;
+    private final Mario mario;
 
-    private Champi champi;
 
     // Management of the game and adding object on the map
     public Game() {
@@ -48,10 +45,8 @@ public class Game {
         for (int i = 0; i < 100; i++) {
             map.addBlocks(new Brick(200 * i, 600));
         }
-        map.addChampi(new Champi(600, 750));
+        map.addChampi(new Champi(800, 750));
         map.addBlocks(new Bonus(300, 600));
-        map.addBlocks(new Brick(400, 750));
-        map.addBlocks(new Brick(800, 750));
 
         JFrame frame = new JFrame("Mario'Vale");
         frame.add(userInterface);
@@ -69,11 +64,12 @@ public class Game {
         gameThread.start();
     }
 
-    // Game loop 60Hz managing the lag
+    // Game loop 60Hz
     public void gameLoop() {
         System.out.println("Running game at " + targetFPS + " FPS");
         long previousTime = System.currentTimeMillis();
         long lag = 0;
+        long targetFrameTime = 1000 / targetFPS;
 
         while (isRunning) {
             long currentTime = System.currentTimeMillis();
@@ -105,16 +101,7 @@ public class Game {
             checkCollisions();
             userInterface.updateGame();
             updateCamera();
-
         }
-    }
-
-    public void setGameState(GameState gameState) {
-        this.gameState = gameState;
-    }
-
-    public GameState getGameState() {
-        return gameState;
     }
 
     public void pauseGame() {
@@ -130,15 +117,6 @@ public class Game {
     public void quitGame() {
         isRunning = false;
     }
-
-    public void increaseCoinsCount() {
-        coins++;
-    }
-
-    public void increaseScore(int amount) {
-        score += amount;
-    }
-
     public void gameOver() {
         gameState = GameState.GAMEOVER;
         System.out.println("Game over!");
@@ -146,8 +124,12 @@ public class Game {
         System.out.println("Coins: " + coins);
     }
 
-    public Mario getMario() {
-        return mario;
+    public void increaseCoinsCount() {
+        coins++;
+    }
+
+    public void increaseScore(int amount) {
+        score += amount;
     }
 
     private void updateCamera() {
@@ -383,6 +365,12 @@ public class Game {
         }
     }
 
+    public Mario getMario() {
+        return mario;
+    }
+    public GameState getGameState() {
+        return gameState;
+    }
     public static void main(String[] args) {
         Game game = new Game();
     }

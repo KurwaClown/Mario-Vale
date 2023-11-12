@@ -197,10 +197,10 @@ public class Game {
 
             if (marioHitbox.intersects(powerUpHitbox)) {
                 if (powerup instanceof Jersey) {
-                    mario.setIsRugbymanTrue();
+                    mario.setIsRugbyman(true);
                     mario.updateImage();
                     Timer timer = new Timer(12000, e -> {
-                        mario.setIsRugbymanFalse();
+                        mario.setIsRugbyman(false);
                         mario.updateImage();
                         ((Timer) e.getSource()).stop();
                     });

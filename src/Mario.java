@@ -61,23 +61,10 @@ public class Mario extends GameObject {
             setVelX(0);
         }
     }
-    public void setIsRugbymanTrue(){
-        isRugbyman=true;
+    public void setIsRugbyman(boolean isRugbyman){
+        this.isRugbyman=isRugbyman;
     }
-        public void setIsRugbymanFalse(){
-        isRugbyman=false;
-    }
-//    public void fall(){
-//        if (isJumping()) {
-//            marioY -= velY;
-//            velY -= gravity;
-//            if (marioY >= 150) {
-//                marioY = 150;
-//                isJumping = false;
-//                velY = 0;
-//            }
-//        }
-//    }
+
 
     //TODO: Handle power up in Game
 //    public void powerup(PowerUp powerUp) {
@@ -148,31 +135,6 @@ public class Mario extends GameObject {
 //    }
 //}
 
-    //public void coins(Coin coin){
-//    if (this.collide(coin)){
-//        coin.disappear;
-//    }
-//}
-//public void bricks(Block block){
-//    if (this.collide(block) && block instanceof BonusBrick){
-//        block.transform();
-//        block.powerup();
-//    }
-//    if (this.collide(block)&& block instanceof Brick){
-//        block.transform();
-//    }
-//    if (this.collide(block)&& block instanceof Bonus){
-//        block.powerup();
-//        block.transfrom();
-//    }
-//}
-//public void die(Object enemy){
-//    if (enemy instanceof Champi || enemy instanceof Turtle || enemy instanceof Plant){
-//        if (this.collide(enemy)&& (horizontalHit)){
-//            gameover
-//        }
-//    }
-//}
     public void updateImage() {
         if (isRugbyman) {
             sprite = Ressource.getImage("marioStade");

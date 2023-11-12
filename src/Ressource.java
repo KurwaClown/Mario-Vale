@@ -14,7 +14,9 @@ public class Ressource {
 
     private static void loadImages() {
         try {
-            images.put("mario", ImageIO.read(Ressource.class.getResource("./img/mario1.png")));
+            images.put("mario", ImageIO.read(Ressource.class.getResource("./img/mario_running1.png")));
+            images.put("mario1", ImageIO.read(Ressource.class.getResource("./img/mario_running2.png")));
+            images.put("mario2", ImageIO.read(Ressource.class.getResource("./img/mario1.png")));
             images.put("champi", ImageIO.read(Ressource.class.getResource("./img/champi.png")));
             images.put("turtle", ImageIO.read(Ressource.class.getResource("./img/turtle.png")));
             images.put("plant", ImageIO.read(Ressource.class.getResource("./img/plant.png")));

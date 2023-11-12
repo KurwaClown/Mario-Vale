@@ -7,10 +7,19 @@ import java.awt.image.BufferedImage;
 
 public class Mario extends GameObject {
     private boolean isRugbyman = false;
+    private BufferedImage[] sprites;
+    private int currentSpriteIndex;
+    private long lastSpriteChangeTime;
+    private static final long ANIMATION_TIME = 500;
 
 
     public Mario(int x, int y) {
         super(x, y, "mario");
+        sprites = new BufferedImage[2];
+        sprites[0] = Ressource.getImage("mario");
+        sprites[1] = Ressource.getImage("mario1");
+        currentSpriteIndex = 0;
+        lastSpriteChangeTime = System.currentTimeMillis();
     }
 
     public void jump() {
@@ -24,10 +33,27 @@ public class Mario extends GameObject {
         if(toRight) {
             System.out.println("Moving to the right");
             setVelX(5);
+            if (System.currentTimeMillis() - lastSpriteChangeTime > ANIMATION_TIME) {
+                currentSpriteIndex = (currentSpriteIndex + 1) % sprites.length;
+                lastSpriteChangeTime = System.currentTimeMillis();
+            }
+               else {
+            currentSpriteIndex = 0;
+            }
         } else {
             System.out.println("Moving to the left");
             setVelX(-5);
+            if (System.currentTimeMillis() - lastSpriteChangeTime > ANIMATION_TIME) {
+                currentSpriteIndex = (currentSpriteIndex + 1) % sprites.length;
+                lastSpriteChangeTime = System.currentTimeMillis();
+            
+        } else {
+            currentSpriteIndex = 0;
         }
+        }
+    }
+    public BufferedImage getCurrentSprite() {
+        return sprites[currentSpriteIndex];
     }
 
     public void stop(boolean toRight) {
@@ -161,5 +187,22 @@ public class Mario extends GameObject {
         } else {
             sprite = Ressource.getImage("mario");
         }
+    }
+    public void update() {
+
+        if (getVelX() != 0) {
+            long currentTime = System.currentTimeMillis();
+            long timeSinceLastChange = currentTime - lastSpriteChangeTime;
+            
+            if (timeSinceLastChange > ANIMATION_TIME) {
+                currentSpriteIndex = (currentSpriteIndex + 1) % sprites.length;
+                lastSpriteChangeTime = currentTime - (timeSinceLastChange - ANIMATION_TIME);
+                
+            }
+        } else {
+            currentSpriteIndex = 0;
+        }
+    
+        sprite = getCurrentSprite();
     }
 }

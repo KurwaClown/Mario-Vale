@@ -81,6 +81,7 @@ public class Map {
     public void update() {
         for (Mario mario : marios) {
             mario.moveObject();
+            mario.update();
         }
         for (Champi champi : champis) {
             champi.moveObject();

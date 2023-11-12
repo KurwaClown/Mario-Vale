@@ -103,6 +103,7 @@ public class Game {
             checkCollisions();
             userInterface.updateGame();
             updateCamera();
+            
         }
     }
 

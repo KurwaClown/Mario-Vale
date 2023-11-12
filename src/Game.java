@@ -1,36 +1,23 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.List;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 // initializing the window and base variables
 public class Game {
-
     private boolean isRunning = true;
-    private final int targetFPS = 60;
+    private final int TARGET_FPS = 60;
     private final static int WIDTH = 1335;
     private final static int HEIGHT = 930;
-
     private int coins = 0;
     private int score = 0;
-
     private GameState gameState;
-
     private final InputManager inputManager;
-
     private final UserInterface userInterface;
-
-    private Jersey jersey;
-
     private final Map map;
-
     private final Camera camera;
-
     private final Mario mario;
 
+    private enum Direction {LEFT, RIGHT, TOP, BOTTOM}
 
     // Management of the game and adding object on the map
     public Game() {
@@ -46,7 +33,9 @@ public class Game {
             map.addBlocks(new Brick(200 * i, 600));
         }
         map.addChampi(new Champi(800, 750));
-        map.addBlocks(new Bonus(300, 600));
+        map.addBlocks(new Bonus(1000, 600, new Jersey()));
+        map.addBlocks(new Brick(600, 750));
+        map.addBlocks(new Brick(1000, 750));
 
         JFrame frame = new JFrame("Mario'Vale");
         frame.add(userInterface);
@@ -66,10 +55,10 @@ public class Game {
 
     // Game loop 60Hz
     public void gameLoop() {
-        System.out.println("Running game at " + targetFPS + " FPS");
+        System.out.println("Running game at " + TARGET_FPS + " FPS");
         long previousTime = System.currentTimeMillis();
         long lag = 0;
-        long targetFrameTime = 1000 / targetFPS;
+        long targetFrameTime = 1000 / TARGET_FPS;
 
         while (isRunning) {
             long currentTime = System.currentTimeMillis();
@@ -117,6 +106,7 @@ public class Game {
     public void quitGame() {
         isRunning = false;
     }
+
     public void gameOver() {
         gameState = GameState.GAMEOVER;
         System.out.println("Game over!");
@@ -144,114 +134,78 @@ public class Game {
 
     // Collision management
     private void checkCollisions() {
-        checkBottomCollisions();
-        checkTopCollisions();
-        checkLeftCollisions();
-        checkRightCollisions();
+        for (Direction direction : Direction.values()) {
+            checkBlockCollisions(direction);
+            checkEnemyCollisions(direction);
+            checkPowerupCollisions(direction);
+        }
+        checkEnnemyBlockCollisions();
     }
 
-    private void checkRightCollisions() {
-        List<PowerUp> powerups = map.getPowerUps();
-        List<Block> blocks = map.getBlocks();
-        List<Champi> champis =map.getChampis();
-        Rectangle marioRightHitbox = mario.getRightCollision();
+    private void checkBlockCollisions(Direction direction) {
+        Rectangle marioHitbox = getGameObjectHitbox(mario, direction, false);
 
-        for (Block block : blocks) {
-            Rectangle blockLeftHitbox = block.getLeftCollision();
-            if (marioRightHitbox.intersects(blockLeftHitbox)) {
-                Rectangle intersection = marioRightHitbox.intersection(blockLeftHitbox);
-                mario.setX(mario.getX() - intersection.width);
-                mario.setVelX(0);
-            }
-                for (Champi champi : champis) {
-                Rectangle champiRightHitBox = champi.getRightCollision();                                                  
-                if (champiRightHitBox.intersects(blockLeftHitbox)) {
-                    Rectangle intersection1 = champiRightHitBox.intersection(blockLeftHitbox);
-                    champi.setX(champi.getX() - intersection1.width);
-                    champi.setVelX(champi.getVelX() * (-1));
+        for (Block block : map.getBlocks()) {
+            Rectangle blockHitbox = getGameObjectHitbox(block, direction, true);
+
+            if (marioHitbox.intersects(blockHitbox)) {
+                Rectangle intersection = marioHitbox.intersection(blockHitbox);
+                if (direction == Direction.LEFT) {
+                    mario.setX(mario.getX() + intersection.width);
+                } else if (direction == Direction.RIGHT) {
+                    mario.setX(mario.getX() - intersection.width);
+                } else if (direction == Direction.TOP) {
+                    mario.setY(mario.getY() + intersection.height);
+                    mario.setVelY(0);
+                    if (block instanceof Bonus bonus) map.addPowerup(bonus.getContainedPowerUp());
+                    block.hit();
+                } else {
+                    mario.setY(mario.getY() - intersection.height);
+                    mario.setVelY(0);
+                    mario.setFalling(false);
+                    mario.setJumping(false);
                 }
             }
 
+
         }
-
-        for (Enemy enemy : map.getChampis()) {
-            Rectangle blockTopHitbox = enemy.getTopCollision();
-            if (marioRightHitbox.intersects(blockTopHitbox)) {
-
-                gameOver();
-            }
-        }
-        for (PowerUp powerup : powerups) {
-            Rectangle powerupLeftHitBox = powerup.getLeftCollision();
-            if (marioRightHitbox.intersects(powerupLeftHitBox)) {
-                Rectangle intersection1 = marioRightHitbox.intersection(powerupLeftHitBox);
-                mario.setY(mario.getY() + intersection1.height);
-                if (powerup instanceof Jersey) {
-                    Jersey jersey = (Jersey) powerup;
-                    mario.setIsRugbymanTrue();
-                    mario.updateImage();
-                    Timer timer = new Timer(12000, new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            mario.setIsRugbymanFalse();
-                            mario.updateImage();
-                            ((Timer) e.getSource()).stop();
-                        }
-                    });
-                    timer.setRepeats(false);
-                    timer.start();
-
-                }
-            }
-        }
-
     }
 
-    private void checkLeftCollisions() {
-        List<Block> blocks = map.getBlocks();
-        List<PowerUp> powerups = map.getPowerUps();
-        List<Champi> champis = map.getChampis();
-        Rectangle marioLeftHitBox = mario.getLeftCollision();
+    private void checkEnemyCollisions(Direction direction) {
+        Rectangle marioHitbox = getGameObjectHitbox(mario, direction, false);
 
-        for (Block block : blocks) {
-            Rectangle blockRightHitbox = block.getRightCollision();
-            if (marioLeftHitBox.intersects(blockRightHitbox)) {
-                Rectangle intersection = marioLeftHitBox.intersection(blockRightHitbox);
-                mario.setX(mario.getX() + intersection.width);
-                mario.setVelX(0);
-            }
-            for (Champi champi : champis) {
-                Rectangle champiLeftHitBox = champi.getLeftCollision();                                                  
-                if (champiLeftHitBox.intersects(blockRightHitbox)) {
-                    Rectangle intersection1 = champiLeftHitBox.intersection(blockRightHitbox);
-                    champi.setX(champi.getX() + intersection1.width);
-                    champi.setVelX(champi.getVelX() * (-1));
+        //TODO: check for all enemies
+        for (Enemy enemy : map.getChampis()) {
+            Rectangle enemyHitbox = getGameObjectHitbox(enemy, direction, true);
+            if (marioHitbox.intersects(enemyHitbox)) {
+                Rectangle intersection = marioHitbox.intersection(enemyHitbox);
+                if (direction == Direction.TOP || direction == Direction.LEFT || direction == Direction.RIGHT)
+                    gameOver();
+                else {
+                    mario.setY(mario.getY() - intersection.height);
+                    enemy.disappear();
+                    mario.setFalling(false);
+                    mario.setJumping(false);
+                    mario.jump();
                 }
             }
         }
+    }
 
-        for (Enemy enemy : map.getChampis()) {
-            Rectangle blockTopHitbox = enemy.getTopCollision();
-            if (marioLeftHitBox.intersects(blockTopHitbox)) {
-                gameOver();
-            }
-        }
-        for (PowerUp powerup : powerups) {
-            Rectangle powerupRightHitBox = powerup.getRightCollision();
-            if (marioLeftHitBox.intersects(powerupRightHitBox)) {
-                Rectangle intersection1 = marioLeftHitBox.intersection(powerupRightHitBox);
-                mario.setY(mario.getY() + intersection1.height);
+    private void checkPowerupCollisions(Direction direction) {
+        Rectangle marioHitbox = getGameObjectHitbox(mario, direction, false);
+
+        for (PowerUp powerup : map.getPowerUps()) {
+            Rectangle powerUpHitbox = getGameObjectHitbox(powerup, direction, true);
+
+            if (marioHitbox.intersects(powerUpHitbox)) {
                 if (powerup instanceof Jersey) {
-                    Jersey jersey = (Jersey) powerup;
                     mario.setIsRugbymanTrue();
                     mario.updateImage();
-                    Timer timer = new Timer(12000, new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            mario.setIsRugbymanFalse();
-                            mario.updateImage();
-                            ((Timer) e.getSource()).stop();
-                        }
+                    Timer timer = new Timer(12000, e -> {
+                        mario.setIsRugbymanFalse();
+                        mario.updateImage();
+                        ((Timer) e.getSource()).stop();
                     });
                     timer.setRepeats(false);
                     timer.start();
@@ -261,116 +215,44 @@ public class Game {
         }
     }
 
-    private void checkTopCollisions() {
-        List<Block> blocks = map.getBlocks();
-        List<PowerUp> powerups = map.getPowerUps();
-        Rectangle marioTopHitbox = mario.getTopCollision();
+    public void checkEnnemyBlockCollisions() {
+        //TODO: check for all enemies
+        for (Enemy enemy : map.getChampis()) {
+            boolean enemyLookingRight = enemy.getVelX() > 0;
+            Rectangle champiHitbox = enemyLookingRight ? getGameObjectHitbox(enemy, Direction.RIGHT, false)
+                    : getGameObjectHitbox(enemy, Direction.LEFT, false);
 
-        for (Block block : blocks) {
-            Rectangle blockBottomHitBox = block.getBottomCollision();
-            if (marioTopHitbox.intersects(blockBottomHitBox)) {
-                Rectangle intersection = marioTopHitbox.intersection(blockBottomHitBox);
-                mario.setY(mario.getY() + intersection.height);
-                mario.setVelY(0);
-                if (block instanceof Brick) {
-                    Brick brick = (Brick) block;
-                    brick.disappear();
-                }
-                if (block instanceof Bonus) {
-                    Bonus bonus = (Bonus) block;
-                    if (this.jersey == null) {
-                        this.jersey = new Jersey(1000, 10000); // Set the initial position off-screen or hidden
-                    }
-                    bonus.displayBonus(this.jersey);
-                    map.addPowerup(this.jersey);
-                }
-                for (PowerUp powerup : powerups) {
-                    Rectangle powerupBottomHitBox = powerup.getBottomCollision();
-                    if (marioTopHitbox.intersects(powerupBottomHitBox)) {
-                        Rectangle intersection1 = marioTopHitbox.intersection(powerupBottomHitBox);
-                        mario.setY(mario.getY() + intersection1.height);
-                        if (powerup instanceof Jersey) {
-                            Jersey jersey = (Jersey) powerup;
-                            mario.setIsRugbymanTrue();
-                            mario.updateImage();
-                            Timer timer = new Timer(12000, new ActionListener() {
-                                @Override
-                                public void actionPerformed(ActionEvent e) {
-                                    mario.setIsRugbymanFalse();
-                                    mario.updateImage();
-                                    ((Timer) e.getSource()).stop();
-                                }
-                            });
-                            timer.setRepeats(false);
-                            timer.start();
+            for (Block block : map.getBlocks()) {
+                Rectangle blockHitbox = enemyLookingRight ? getGameObjectHitbox(block, Direction.RIGHT, true)
+                        : getGameObjectHitbox(block, Direction.LEFT, true);
 
-                        }
-                    }
+                if (champiHitbox.intersects(blockHitbox)) {
+                    Rectangle intersection = champiHitbox.intersection(blockHitbox);
+                    double newX = enemyLookingRight ? enemy.getX() - intersection.width : enemy.getX() + intersection.width;
+                    enemy.setX(newX);
+                    enemy.inverseVelX();
                 }
             }
         }
     }
 
-    private void checkBottomCollisions() {
-        List<Block> blocks = map.getBlocks();
-        List<PowerUp> powerups = map.getPowerUps();
-        Rectangle marioBottomHitBox = mario.getBottomCollision();
-
-        for (Block block : blocks) {
-            Rectangle blockTopHitbox = block.getTopCollision();
-            if (marioBottomHitBox.intersects(blockTopHitbox)) {
-                Rectangle intersection = marioBottomHitBox.intersection(blockTopHitbox);
-                mario.setY(mario.getY() - intersection.height);
-                mario.setVelY(0);
-                mario.setFalling(false);
-                mario.setJumping(false);
-
-            }
-        }
-
-        for (Enemy enemy : map.getChampis()) {
-            Rectangle blockTopHitbox = enemy.getTopCollision();
-            if (marioBottomHitBox.intersects(blockTopHitbox)) {
-                Rectangle intersection = marioBottomHitBox.intersection(blockTopHitbox);
-                mario.setY(mario.getY() - intersection.height);
-                mario.setVelY(0);
-                enemy.disappear();
-                mario.setFalling(false);
-                mario.setJumping(false);
-                mario.jump();
-            }
-        }
-        for (PowerUp powerup : powerups) {
-            Rectangle powerupTopHitBox = powerup.getTopCollision();
-            if (marioBottomHitBox.intersects(powerupTopHitBox)) {
-                Rectangle intersection = marioBottomHitBox.intersection(powerupTopHitBox);
-                mario.setY(mario.getY() + intersection.height);
-                if (powerup instanceof Jersey) {
-                    Jersey jersey = (Jersey) powerup;
-                    mario.setIsRugbymanTrue();
-                    mario.updateImage();
-                    Timer timer = new Timer(12000, new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            mario.setIsRugbymanFalse();
-                            mario.updateImage();
-                            ((Timer) e.getSource()).stop();
-                        }
-                    });
-                    timer.setRepeats(false);
-                    timer.start();
-
-                }
-            }
-        }
+    private Rectangle getGameObjectHitbox(GameObject object, Direction direction, boolean isOpposite) {
+        return switch (direction) {
+            case LEFT -> isOpposite ? object.getRightCollision() : object.getLeftCollision();
+            case RIGHT -> isOpposite ? object.getLeftCollision() : object.getRightCollision();
+            case BOTTOM -> isOpposite ? object.getTopCollision() : object.getBottomCollision();
+            case TOP -> isOpposite ? object.getBottomCollision() : object.getTopCollision();
+        };
     }
 
     public Mario getMario() {
         return mario;
     }
+
     public GameState getGameState() {
         return gameState;
     }
+
     public static void main(String[] args) {
         Game game = new Game();
     }

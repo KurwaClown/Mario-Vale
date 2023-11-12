@@ -5,8 +5,12 @@ import java.io.IOException;
 
 public abstract class PowerUp extends GameObject{
 
-    public PowerUp(double xLocation, double yLocation, String spriteName) {
-        super(xLocation, yLocation, spriteName);
-        setY(3000);
+    public PowerUp(String spriteName) {
+        super(-100, -3000, spriteName);
+    }
+
+    public void setLocation(Block block){
+        x= block.x;
+        y= block.y -96;
     }
 }

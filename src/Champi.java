@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class Champi extends Enemy {
     private boolean isRugbyman = false;
-    private int regenCharge=60;
+    private int regenCharge=300;
     private int timingCharge=30;
 
     public Champi(int x, int y){
@@ -15,15 +15,20 @@ public class Champi extends Enemy {
     // Implementing the automatic moves and the ability to charge
     @Override
     public void update() {
-        if (isRugbyman && regenCharge == 60) {
-            velX = 10;
-            timingCharge--;
-            regenCharge = 0;
-            if (timingCharge == 0) {
-                velX = 0;
-                timingCharge = 30;
-            }
-        }
+        //TODO: Fix rugbyman
+//        if (isRugbyman && regenCharge == 300) {
+//            setVelX(10);
+//            timingCharge--;
+//            regenCharge = 0;
+//            if (timingCharge == 0) {
+//                velX = 0;
+//                timingCharge = 30;
+//            }
+//
+//        }
+//        if(regenCharge<300){
+//            regenCharge++;
+//        }
     }
 
     // Random use to create a champi or a RugbyChampi

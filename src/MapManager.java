@@ -4,18 +4,20 @@ import java.io.IOException;
 public class MapManager {
     private Mario mario;
     private Map map;
+
+    String csvFilePath;
     private Champi champi;
-    public MapManager(Camera camera, Mario mario){
+    public MapManager(Camera camera, Mario mario, String csvFilePath){
         this.map = new Map(camera);
         this.mario = mario;
         map.addMario(mario);
+        this.csvFilePath = csvFilePath;
     }
-    public void loadMapFromCSV(String csvFilePath) {
+    public void loadMapFromCSV() {
         try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] values = line.split(","); // Remplacez la virgule par le délimiteur utilisé dans votre CSV
-                // Supposons que le format CSV est: type,x,y,[paramètres optionnels]
+                String[] values = line.split(",");
                 String type = values[0];
                 int x = Integer.parseInt(values[1]);
                 int y = Integer.parseInt(values[2]);
@@ -32,11 +34,9 @@ public class MapManager {
                         map.addEnemy(new Champi(x, y));
                         break;
                     case "Bonus":
-                        // Supposons que le quatrième valeur est le type de bonus
                         String bonusType = values[3];
-                        map.addBlocks(new Bonus(x, y, new Jersey())); // Remplacez par le bon type de bonus
+                        map.addBlocks(new Bonus(x, y, new Jersey()));
                         break;
-                    // Ajoutez d'autres cas selon les types d'objets de votre jeu
                 }
             }
         } catch (IOException e) {
@@ -46,6 +46,11 @@ public class MapManager {
 
     public Map getMap() {
         return this.map;
+    }
+    public void reset(Camera camera){
+        this.map = new Map(camera);
+        mario.reset();
+        loadMapFromCSV();
     }
 }
 

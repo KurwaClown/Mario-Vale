@@ -25,11 +25,11 @@ public class Game {
         this.gameState = GameState.PLAYING;
         this.camera = new Camera();
         this.mario = new Mario(50, 700);
-        this.mapManager = new MapManager(camera, mario);
+        this.mapManager = new MapManager(camera, mario, "C:\\Users\\coraa\\IdeaProjects\\T-JAV-501-TLS_7\\out\\production\\T-JAV-501-TLS_7\\mapcsv\\map1.csv");
         this.map = mapManager.getMap();
         this.userInterface = new UserInterface(map);
 
-        mapManager.loadMapFromCSV("C:\\Users\\coraa\\IdeaProjects\\T-JAV-501-TLS_7\\out\\production\\T-JAV-501-TLS_7\\mapcsv\\map1.csv");
+        mapManager.loadMapFromCSV();
 
         JFrame frame = new JFrame("Mario'Vale");
         frame.add(userInterface);
@@ -250,7 +250,12 @@ public class Game {
         return gameState;
     }
 
+    public void reset(){
+        mapManager.reset(camera);
+    }
+
     public static void main(String[] args) {
         Game game = new Game();
     }
+
 }

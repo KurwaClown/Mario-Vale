@@ -27,10 +27,10 @@ public class Game {
         this.mario = new Mario(50, 700);
 
         map.addMario(mario);
-        for (int i = 0; i < 100; i++) {
-            map.addBlocks(new Brick(400 * i, 550));
-        }
-        map.addEnemy(new Champi(800, 800));
+//        for (int i = 0; i < 100; i++) {
+//            map.addBlocks(new Brick(400 * i, 550));
+//        }
+        map.addEnemy(new Turtle(800, 800));
         map.addBlocks(new Bonus(200, 650, new Jersey()));
         map.addBlocks(new Brick(600, 800));
         map.addBlocks(new Brick(1000, 800));
@@ -183,7 +183,7 @@ public class Game {
                     gameOver();
                 else {
                     mario.setY(mario.getY() - intersection.height);
-                    enemy.disappear();
+                    enemy.attacked();
                     mario.setFalling(false);
                     mario.setJumping(false);
                     mario.jump();
@@ -199,7 +199,7 @@ public class Game {
             Rectangle powerUpHitbox = getGameObjectHitbox(powerup, direction, true);
 
             if (marioHitbox.intersects(powerUpHitbox)) {
-                System.out.println(direction);
+                powerup.disappear();
                 if (powerup instanceof Jersey) {
                     mario.setIsRugbyman(true);
                     mario.updateImage();

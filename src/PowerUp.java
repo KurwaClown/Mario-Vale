@@ -8,4 +8,8 @@ public abstract class PowerUp extends GameObject{
         x= block.x;
         y= block.y -96;
     }
+
+    public void disappear(){
+        y = 3000;
+    }
 }

@@ -4,7 +4,4 @@ public class Jersey extends PowerUp{
         super("jersey");
     }
 
-    public void disappear(){
-        y = 3000;
-    }
 }

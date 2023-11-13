@@ -5,6 +5,10 @@ public abstract class Enemy extends GameObject{
         super(xLocation, yLocation, spriteName);
         setVelX(-3.5);
     }
+
+    public void attacked(){
+        this.disappear();
+    }
     public void disappear(){
         y = 3000;
     }

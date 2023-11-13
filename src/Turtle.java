@@ -1,25 +1,27 @@
-public class Turtle extends GameObject{
-    public int xInit;
-    private int direction = 1;
-    private int hp;
+public class Turtle extends Enemy{
+    private boolean isShell = false;
+
     public Turtle (double xLocation, double yLocation) {
         super(xLocation, yLocation, "turtle");
-                 this.hp = 2;
+
     }
-//    public void move(Block block){
-//        x += direction* velX;
-//         if (this.collide(block)){
-//            direction = direction *(-1);
-//         }
-//    }
-//    public void shell(Mario mario){
-//        if (mario.collideFromTop(this) && hp==2){
-//            sprite = Ressource.getImage("shell");
-//            hp -=1;
-//        }
-//        else if (mario.collideFromTop(this) && hp==1){
-//            this.y = 3000;
-//        }
-//    }
+
+    @Override
+    public void attacked(){
+        if (!isShell){
+            transformInShell();
+        }
+        else if(Math.abs(this.getVelX()) < 8){
+            this.setVelX(8);
+        } else {
+            this.setVelX(0);
+        }
+    }
+
+    public void transformInShell(){
+        sprite = Ressource.getImage("shell");
+        isShell = true;
+        setVelX(0);
+    }
 }
 

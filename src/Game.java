@@ -15,6 +15,8 @@ public class Game {
     private final Camera camera;
     private final Mario mario;
 
+    private MapManager mapManager;
+
 
     private enum Direction {LEFT, RIGHT, TOP, BOTTOM}
 
@@ -22,18 +24,12 @@ public class Game {
     public Game() {
         this.gameState = GameState.PLAYING;
         this.camera = new Camera();
-        this.map = new Map(camera);
-        this.userInterface = new UserInterface(map);
         this.mario = new Mario(50, 700);
+        this.mapManager = new MapManager(camera, mario);
+        this.map = mapManager.getMap();
+        this.userInterface = new UserInterface(map);
 
-        map.addMario(mario);
-        for (int i = 0; i < 100; i++) {
-            map.addBlocks(new Brick(400 * i, 550));
-        }
-        map.addEnemy(new Champi(800, 800));
-        map.addBlocks(new Bonus(200, 650, new Jersey()));
-        map.addBlocks(new Brick(600, 800));
-        map.addBlocks(new Brick(1000, 800));
+        mapManager.loadMapFromCSV("C:\\Users\\coraa\\IdeaProjects\\T-JAV-501-TLS_7\\out\\production\\T-JAV-501-TLS_7\\mapcsv\\map1.csv");
 
         JFrame frame = new JFrame("Mario'Vale");
         frame.add(userInterface);

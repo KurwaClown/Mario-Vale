@@ -28,7 +28,10 @@ public class Mario extends GameObject {
         lastSpriteChangeTime = System.currentTimeMillis();
         setFalling(true);
     }
-
+    public void reset(){
+        setX(50);
+        setY(700);
+    }
     public void jump() {
         if (!isJumping() && !isFalling()) {
             forceJump();

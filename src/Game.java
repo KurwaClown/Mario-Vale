@@ -26,14 +26,7 @@ public class Game {
         this.userInterface = new UserInterface(map);
         this.mario = new Mario(50, 700);
 
-        map.addMario(mario);
-//        for (int i = 0; i < 100; i++) {
-//            map.addBlocks(new Brick(400 * i, 550));
-//        }
-        map.addEnemy(new Turtle(800, 800));
-        map.addBlocks(new Bonus(200, 650, new Jersey()));
-        map.addBlocks(new Brick(600, 800));
-        map.addBlocks(new Brick(1000, 800));
+        mapManager.loadMapFromCSV();
 
         JFrame frame = new JFrame("Mario'Vale");
         frame.add(userInterface);
@@ -183,7 +176,7 @@ public class Game {
                     gameOver();
                 else {
                     mario.setY(mario.getY() - intersection.height);
-                    enemy.attacked();
+                    enemy.disappear();
                     mario.setFalling(false);
                     mario.setJumping(false);
                     mario.jump();
@@ -199,12 +192,25 @@ public class Game {
             Rectangle powerUpHitbox = getGameObjectHitbox(powerup, direction, true);
 
             if (marioHitbox.intersects(powerUpHitbox)) {
-                powerup.onTouch(mario);
+                System.out.println(direction);
+                if (powerup instanceof Jersey) {
+                    mario.setIsRugbyman(true);
+                    mario.updateImage();
+                    Timer timer = new Timer(12000, e -> {
+                        mario.setIsRugbyman(false);
+                        mario.updateImage();
+                        ((Timer) e.getSource()).stop();
+                    });
+                    timer.setRepeats(false);
+                    timer.start();
+
+                }
             }
         }
     }
 
     public void checkEnnemyBlockCollisions() {
+        //TODO: check for all enemies
         for (Enemy enemy : map.getEnemies()) {
             boolean enemyLookingRight = enemy.getVelX() > 0;
             Rectangle champiHitbox = enemyLookingRight ? getGameObjectHitbox(enemy, Direction.RIGHT, false)
@@ -241,7 +247,12 @@ public class Game {
         return gameState;
     }
 
+    public void reset(){
+        mapManager.reset(camera);
+    }
+
     public static void main(String[] args) {
         Game game = new Game();
     }
+
 }

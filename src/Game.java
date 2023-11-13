@@ -199,25 +199,12 @@ public class Game {
             Rectangle powerUpHitbox = getGameObjectHitbox(powerup, direction, true);
 
             if (marioHitbox.intersects(powerUpHitbox)) {
-                powerup.disappear();
-                if (powerup instanceof Jersey) {
-                    mario.setIsRugbyman(true);
-                    mario.updateImage();
-                    Timer timer = new Timer(12000, e -> {
-                        mario.setIsRugbyman(false);
-                        mario.updateImage();
-                        ((Timer) e.getSource()).stop();
-                    });
-                    timer.setRepeats(false);
-                    timer.start();
-
-                }
+                powerup.onTouch(mario);
             }
         }
     }
 
     public void checkEnnemyBlockCollisions() {
-        //TODO: check for all enemies
         for (Enemy enemy : map.getEnemies()) {
             boolean enemyLookingRight = enemy.getVelX() > 0;
             Rectangle champiHitbox = enemyLookingRight ? getGameObjectHitbox(enemy, Direction.RIGHT, false)

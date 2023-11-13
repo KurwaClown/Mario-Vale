@@ -1,7 +1,8 @@
 import java.awt.image.BufferedImage;
 
 public class Mario extends GameObject {
-    private boolean isRugbyman = false;
+
+    private Mode mode = Mode.NORMAL;
     private final BufferedImage[] sprites;
     private int currentSpriteIndex;
     private long lastSpriteChangeTime;
@@ -11,6 +12,12 @@ public class Mario extends GameObject {
     private int timingCharge = 30;
 
     public boolean canForceJump = true;
+
+    private int coins = 0;
+
+    private enum Mode{
+        NORMAL, JERSEY, THROWER, WINNER // Jersey, Ball and Trophy
+    }
 
     public Mario(int x, int y) {
         super(x, y, "mario");
@@ -62,39 +69,24 @@ public class Mario extends GameObject {
         }
     }
 
-    public void setIsRugbyman(boolean isRugbyman) {
-        this.isRugbyman = isRugbyman;
-    }
-
 
     //TODO: Handle power up in Game
-//    public void powerup(PowerUp powerUp) {
-//        if (this.collide(powerUp)) {
-//            isRugbyman = true;
-//            updateImage();
-//            Timer timer = new Timer(12000, new ActionListener() {
-//                @Override
-//                public void actionPerformed(ActionEvent e) {
-//                    isRugbyman = false;
-//                    updateImage();
-//                    ((Timer) e.getSource()).stop();
-//                }
-//            });
-//            timer.setRepeats(false);
-//            timer.start();
-//        }
-//    }
-//
+    public void powerup(PowerUp powerUp) {
+        if (powerUp instanceof Jersey) {
+            this.mode = Mode.JERSEY;
+            updateImage();
+        } else if (powerUp instanceof Ball) {
+            this.mode = Mode.THROWER;
+        } else if (powerUp instanceof Trophy) {
+            this.mode = Mode.WINNER;
+        }
+    }
+
     public void attack() {
-        if (isRugbyman) {
+        if (this.mode == Mode.JERSEY) {
             if (regenCharge == 300) {
                 velX = 10;
-                timingCharge--;
                 regenCharge = 0;
-                if (timingCharge == 0) {
-                    velX = 0;
-                    timingCharge = 30;
-                }
             }
         }
     }
@@ -137,7 +129,7 @@ public class Mario extends GameObject {
 //}
 
     public void updateImage() {
-        if (isRugbyman) {
+        if (this.mode == Mode.JERSEY) {
             sprite = Ressource.getImage("marioStade");
         } else {
             sprite = Ressource.getImage("mario");
@@ -146,7 +138,10 @@ public class Mario extends GameObject {
 
     public void update() {
         if (regenCharge < 300) regenCharge++;
-        if (isRugbyman) return;
+
+        if (this.mode == Mode.JERSEY) return;
+
+
         if (getVelX() != 0) {
             long currentTime = System.currentTimeMillis();
             long timeSinceLastChange = currentTime - lastSpriteChangeTime;
@@ -161,5 +156,9 @@ public class Mario extends GameObject {
         }
 
         sprite = getCurrentSprite();
+    }
+
+    public void addCoin(){
+        coins++;
     }
 }

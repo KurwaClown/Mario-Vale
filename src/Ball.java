@@ -1,6 +1,8 @@
+import java.awt.*;
 
-public class Ball extends GameObject{
-    public Ball(double xLocation, double yLocation) {
-        super(xLocation, yLocation, "ball");
+public class Ball extends PowerUp{
+    public Ball() {
+        super("ball");
     }
+
 }

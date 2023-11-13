@@ -142,7 +142,9 @@ public class Game {
 
     private void checkBlockCollisions(Direction direction) {
         Rectangle marioHitbox = getGameObjectHitbox(mario, direction, false);
-
+        if(!mario.isJumping()){
+            mario.setFalling(true);
+        }
         for (Block block : map.getBlocks()) {
             Rectangle blockHitbox = getGameObjectHitbox(block, direction, true);
 

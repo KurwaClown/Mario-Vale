@@ -24,8 +24,7 @@ public class Mario extends GameObject {
 
     public void jump() {
         if (!isJumping() && !isFalling()) {
-            setJumping(true);
-            setVelY(10);
+            forceJump();
         } else if (canForceJump) {
             forceJump();
         }

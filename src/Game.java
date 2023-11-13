@@ -15,6 +15,7 @@ public class Game {
     private final Camera camera;
     private final Mario mario;
 
+
     private enum Direction {LEFT, RIGHT, TOP, BOTTOM}
 
     // Management of the game and adding object on the map
@@ -27,12 +28,12 @@ public class Game {
 
         map.addMario(mario);
         for (int i = 0; i < 100; i++) {
-            map.addBlocks(new Brick(200 * i, 600));
+            map.addBlocks(new Brick(400 * i, 550));
         }
-        map.addEnemy(new Champi(800, 750));
-        map.addBlocks(new Bonus(1000, 600, new Jersey()));
-        map.addBlocks(new Brick(600, 750));
-        map.addBlocks(new Brick(1000, 750));
+        map.addEnemy(new Champi(800, 800));
+        map.addBlocks(new Bonus(200, 650, new Jersey()));
+        map.addBlocks(new Brick(600, 800));
+        map.addBlocks(new Brick(1000, 800));
 
         JFrame frame = new JFrame("Mario'Vale");
         frame.add(userInterface);
@@ -84,8 +85,8 @@ public class Game {
     // Logics of the Game
     private void updateGameLogic() {
         if (gameState == GameState.PLAYING) {
-            checkCollisions();
             userInterface.updateGame();
+            checkCollisions();
             updateCamera();
         }
     }
@@ -156,11 +157,12 @@ public class Game {
                     mario.setVelY(0);
                     if (block instanceof Bonus bonus) map.addPowerup(bonus.getContainedPowerUp());
                     block.hit();
-                } else {
+                } else if (direction == Direction.BOTTOM) {
                     mario.setY(mario.getY() - intersection.height);
                     mario.setVelY(0);
-                    mario.setFalling(false);
                     mario.setJumping(false);
+                    mario.setFalling(false);
+                    mario.canForceJump = true;
                 }
             }
 
@@ -171,7 +173,6 @@ public class Game {
     private void checkEnemyCollisions(Direction direction) {
         Rectangle marioHitbox = getGameObjectHitbox(mario, direction, false);
 
-        //TODO: check for all enemies
         for (Enemy enemy : map.getEnemies()) {
             Rectangle enemyHitbox = getGameObjectHitbox(enemy, direction, true);
             if (marioHitbox.intersects(enemyHitbox)) {
@@ -196,6 +197,7 @@ public class Game {
             Rectangle powerUpHitbox = getGameObjectHitbox(powerup, direction, true);
 
             if (marioHitbox.intersects(powerUpHitbox)) {
+                System.out.println(direction);
                 if (powerup instanceof Jersey) {
                     mario.setIsRugbyman(true);
                     mario.updateImage();

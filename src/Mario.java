@@ -10,6 +10,8 @@ public class Mario extends GameObject {
     private int regenCharge = 300;
     private int timingCharge = 30;
 
+    public boolean canForceJump = true;
+
     public Mario(int x, int y) {
         super(x, y, "mario");
         sprites = new BufferedImage[2];
@@ -24,7 +26,15 @@ public class Mario extends GameObject {
         if (!isJumping() && !isFalling()) {
             setJumping(true);
             setVelY(10);
+        } else if (canForceJump) {
+            forceJump();
         }
+    }
+    public void forceJump() {
+            setJumping(true);
+            setFalling(false);
+            setVelY(10);
+            canForceJump = false;
     }
 
     public void move(boolean toRight) {

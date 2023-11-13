@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 public class GameObject {
     protected double x, y;
     protected double velX, velY;
-    private final double gravity = 0.38f;
+    private final double gravity = 0.30f;
 
     private final int GROUND_LEVEL = 858;
     private Dimension spriteDimension; // Dimension encapsulate width and height
@@ -52,6 +52,7 @@ public class GameObject {
                 velY = 0;
                 y= GROUND_LEVEL - spriteDimension.height;
                 falling = false;
+                if(this instanceof Mario mario) mario.canForceJump = true;
             }
         }
 
@@ -59,19 +60,19 @@ public class GameObject {
     }
     // Creating Rectangle to check collisions (cf Game.java => Collisions management)
     public Rectangle getBottomCollision(){
-        return new Rectangle((int)x, (int)y + spriteDimension.height, spriteDimension.width, 5);
+        return new Rectangle((int)x, (int)y + spriteDimension.height, spriteDimension.width, 10);
     }
 
     public Rectangle getTopCollision(){
-        return new Rectangle((int)x, (int)(y + 5), spriteDimension.width, 5);
+        return new Rectangle((int)x, (int)(y), spriteDimension.width, 10);
     }
     
     public Rectangle getLeftCollision(){
-        return new Rectangle((int)(x + 5), (int)y, 5, spriteDimension.height);
+        return new Rectangle((int)(x), (int)y, 10, spriteDimension.height);
     }
 
     public Rectangle getRightCollision(){
-        return new Rectangle((int)x + spriteDimension.width, (int)y, 5, spriteDimension.height);
+        return new Rectangle((int)x + spriteDimension.width, (int)y, 10, spriteDimension.height);
     }
     public void setVelX(double velX) {
         this.velX = velX;

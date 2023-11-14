@@ -130,8 +130,42 @@ public class Game {
             checkEnemyCollisions(direction);
             checkFlagCollisions(direction);
         }
+        checkProjectileCollisions();
         checkPowerupCollisions();
         checkEnnemyBlockCollisions();
+
+        removeUnusedObjects();
+    }
+
+    private void removeUnusedObjects() {
+        getMap().getEnemies().removeIf(enemy -> enemy.getY() > 2999 || enemy.getX() < -2999);
+        getMap().getBlocks().removeIf(block -> block.getY() > 2999 || block.getX() < -2999);
+        getMap().getPowerUps().removeIf(powerup -> powerup.getY() > 2999 || powerup.getX() < -2999);
+        getMap().getCoins().removeIf(coin -> coin.getY() > 2999 || coin.getX() < -2999);
+    }
+
+    private void checkProjectileCollisions() {
+        for(Projectile projectile : getMap().projectiles){
+            for(Enemy enemy : getMap().getEnemies()){
+                if(projectile.getHitbox().intersects(enemy.getHitbox())){
+                    enemy.disappear();
+                    projectile.disappear();
+                    mario.addScore(300);
+                }
+            }
+
+            for(Block block: getMap().getBlocks()){
+                if(projectile.getHitbox().intersects(block.getHitbox())){
+                    projectile.disappear();
+                }
+            }
+
+            if(projectile.getY() + projectile.getSpriteDimension().height >= 858){
+                projectile.setY(857 - projectile.getSpriteDimension().height);
+                projectile.setVelY(7.5);
+                projectile.setJumping(true);
+            }
+        }
     }
 
     private void checkBlockCollisions(Direction direction) {
@@ -266,6 +300,10 @@ public class Game {
     public void reset(){
         mapManager.reset(camera);
         gameState = GameState.PLAYING;
+    }
+
+    public Map getMap(){
+        return mapManager.getMap();
     }
 
     public static void main(String[] args) {

@@ -20,9 +20,9 @@ public class Map {
     private final List<Flag> flags = new ArrayList<>();
     private final List<Coin> coins = new ArrayList<>();
     private final BufferedImage backgroundImage = Ressource.getImage("map");
-
     private final BufferedImage littlecoin = Ressource.getImage("littlecoin");
     private final Camera camera;
+
 
     private Mario mario;
 
@@ -74,10 +74,11 @@ public class Map {
         }
         g.setFont(customFont);
         g.setColor(Color.white);
-        g.drawString("01", (int)camera.getX() + 1270,  (int)camera.getY() + 30);
-        g.drawImage(littlecoin,(int)camera.getX()+ 1230, (int) camera.getY()+8, null);
+
         for (Mario mario : marios) {
             mario.draw(g);
+            g.drawString(String.valueOf(mario.getCoins()), (int)camera.getX() + 1270,  (int)camera.getY() + 30);
+            g.drawImage(littlecoin,(int)camera.getX()+ 1230, (int) camera.getY()+8, null);
         }
         for (Block block : blocks) {
             block.draw(g);

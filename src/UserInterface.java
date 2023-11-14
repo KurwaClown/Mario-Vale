@@ -10,17 +10,17 @@ public class UserInterface extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (game.getGameState() == GameState.PLAYING) {
-            game.getMap().draw(g);
-        }
-        else if (game.getGameState() == GameState.MENU) {
+        if (game.getGameState() == GameState.MENU) {
             game.getMenu().drawMainMenu(g);
             repaint();
         }
         else if (game.getGameState() == GameState.GAMEOVER){
             game.getMenu().drawGameOver(g);
             repaint();
+        }else {
+            game.getMap().draw(g);
         }
+
     }
 
     public void updateGame() {

@@ -135,7 +135,7 @@ public class Mario extends GameObject {
         readytoFly=true;
     }
 
-    public void Flag() { // Assurez-vous que l'objet Flag est défini quelque part
+    public void Flag() {
 
         JOptionPane optionPane = new JOptionPane("Spam B", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
         final JDialog dialog = new JDialog();
@@ -156,9 +156,8 @@ public class Mario extends GameObject {
         Timer timer = new Timer(5000, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dialog.dispose();
-                // Vous pourriez vouloir mettre à jour marioX ici pour être sûr qu'il est mis à jour après la fermeture du dialogue
                 x+= numClicks * 10;
-                numClicks = 0; // Réinitialiser numClicks après le traitement
+                numClicks = 0;
             }
         });
         timer.setRepeats(false);

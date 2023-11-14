@@ -10,6 +10,7 @@ public class Map {
     private final List<Block> blocks = new ArrayList<>();
     private final List<PowerUp> powerups = new ArrayList<>();
     private final List<Flag> flags = new ArrayList<>();
+    private final List<Coin> coins = new ArrayList<>();
     private final BufferedImage backgroundImage = Ressource.getImage("map");
     private final Camera camera;
 
@@ -38,6 +39,10 @@ public class Map {
         enemies.add(enemy);
     }
 
+    public void addCoin(Coin coin) {
+        coins.add(coin);
+    }
+
     // draw objects in the lists
     public void draw(Graphics g) {
         g.translate(-(int) camera.getX(), -(int) camera.getY());
@@ -58,6 +63,9 @@ public class Map {
         }
         for (Enemy enemy : enemies) {
             enemy.draw(g);
+        }
+        for (Coin coin : coins) {
+            coin.draw(g);
         }
 
     }
@@ -102,5 +110,9 @@ public class Map {
 
     public List<Enemy> getEnemies() {
         return enemies;
+    }
+
+    public List<Coin> getCoins() {
+        return coins;
     }
 }

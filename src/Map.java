@@ -70,7 +70,7 @@ public class Map {
         }
         Font customFont = null;
         try {
-            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\coraa\\IdeaProjects\\T-JAV-501-TLS_7\\src\\font\\SuperMario2561.ttf")).deriveFont(20f);
+            customFont = Font.createFont(Font.TRUETYPE_FONT, new File(".\\out\\production\\T-JAV-501-TLS_7\\font\\SuperMario2561.ttf")).deriveFont(20f);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(customFont);
             System.out.println("Police chargée avec succès.");

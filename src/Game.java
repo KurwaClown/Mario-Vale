@@ -30,7 +30,6 @@ public class Game {
         this.camera = new Camera();
         this.mario = new Mario(50, 700);
         this.mapManager = new MapManager(camera, mario, ".\\out\\production\\T-JAV-501-TLS_7\\mapcsv\\map1.csv");
-        this.map = mapManager.getMap();
         this.userInterface = new UserInterface(this);
         this.menu = new Menu();
 

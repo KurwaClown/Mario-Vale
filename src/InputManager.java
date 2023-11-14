@@ -61,7 +61,7 @@ public class InputManager implements KeyListener {
         }
 
         }
-    }
+
     @Override
     public void keyReleased(KeyEvent event) {
         int keyCode = event.getKeyCode();

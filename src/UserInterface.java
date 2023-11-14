@@ -15,6 +15,11 @@ public class UserInterface extends JPanel {
         }
         else if (game.getGameState() == GameState.MENU) {
             game.getMenu().drawMainMenu(g);
+            repaint();
+        }
+        else if (game.getGameState() == GameState.GAMEOVER){
+            game.getMenu().drawGameOver(g);
+            repaint();
         }
     }
 

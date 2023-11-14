@@ -60,6 +60,20 @@ public class InputManager implements KeyListener {
             }
         }
 
+        } else if (gameState == GameState.GAMEOVER) {
+            if (keyCode == KeyEvent.VK_Z) {
+                game.getMenu().setSelectedOption((game.getMenu().getSelectedOption() - 1 + game.getMenu().getOption().length) % game.getMenu().getOption().length);
+            } else if (keyCode == KeyEvent.VK_S) {
+                game.getMenu().setSelectedOption((game.getMenu().getSelectedOption() - 1 + game.getMenu().getOption().length) % game.getMenu().getOption().length);
+            } else if (keyCode == KeyEvent.VK_ENTER) {
+                System.out.println(game.getMenu().getSelectedOption());
+                if (game.getMenu().getSelectedOption() == 0) {
+                    game.reset();
+                } else if (game.getMenu().getSelectedOption() == 1) {
+                    System.exit(1);
+                }
+            }
+
         }
 
     @Override

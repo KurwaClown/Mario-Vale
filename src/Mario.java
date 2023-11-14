@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Mario extends GameObject {
 
-    private Mode mode = Mode.THROWER;
+    private Mode mode = Mode.NORMAL;
     private final BufferedImage[] sprites;
     private int currentSpriteIndex;
     private long lastSpriteChangeTime;

@@ -7,5 +7,6 @@ public class Flag extends GameObject{
     }
     public void flagBreak(){
         sprite=Ressource.getImage("flagBreak");
+        setY(858 - getSpriteDimension().height);
     }
 }

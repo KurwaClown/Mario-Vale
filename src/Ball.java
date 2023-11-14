@@ -5,4 +5,9 @@ public class Ball extends PowerUp{
         super("ball");
     }
 
+    @Override
+    public void onTouch(Mario mario) {
+        super.onTouch(mario);
+        mario.addScore(750);
+    }
 }

@@ -14,6 +14,7 @@ public class Game {
     private final Map map;
     private final Camera camera;
     private final Mario mario;
+    private MapManager mapManager;
 
 
     private enum Direction {LEFT, RIGHT, TOP, BOTTOM}
@@ -22,9 +23,10 @@ public class Game {
     public Game() {
         this.gameState = GameState.PLAYING;
         this.camera = new Camera();
-        this.map = new Map(camera);
-        this.userInterface = new UserInterface(map);
         this.mario = new Mario(50, 700);
+        this.mapManager = new MapManager(camera, mario, ".\\out\\production\\T-JAV-501-TLS_7\\mapcsv\\map1.csv");
+        this.map = mapManager.getMap();
+        this.userInterface = new UserInterface(map);
 
         mapManager.loadMapFromCSV();
 
@@ -101,8 +103,8 @@ public class Game {
     public void gameOver() {
         gameState = GameState.GAMEOVER;
         System.out.println("Game over!");
-        System.out.println("Score: " + score);
-        System.out.println("Coins: " + coins);
+        System.out.println("Score: " + mario.getScore());
+        System.out.println("Coins: " + mario.getCoins());
     }
 
     public void increaseCoinsCount() {
@@ -128,8 +130,8 @@ public class Game {
         for (Direction direction : Direction.values()) {
             checkBlockCollisions(direction);
             checkEnemyCollisions(direction);
-            checkPowerupCollisions(direction);
         }
+        checkPowerupCollisions();
         checkEnnemyBlockCollisions();
     }
 
@@ -175,8 +177,11 @@ public class Game {
                 if (direction == Direction.TOP || direction == Direction.LEFT || direction == Direction.RIGHT)
                     gameOver();
                 else {
+                    enemy.attacked();
+
+                    mario.addScore(300);
+
                     mario.setY(mario.getY() - intersection.height);
-                    enemy.disappear();
                     mario.setFalling(false);
                     mario.setJumping(false);
                     mario.jump();
@@ -185,28 +190,14 @@ public class Game {
         }
     }
 
-    private void checkPowerupCollisions(Direction direction) {
-        Rectangle marioHitbox = getGameObjectHitbox(mario, direction, false);
-
+    private void checkPowerupCollisions() {
         for (PowerUp powerup : map.getPowerUps()) {
-            Rectangle powerUpHitbox = getGameObjectHitbox(powerup, direction, true);
-
-            if (marioHitbox.intersects(powerUpHitbox)) {
-                System.out.println(direction);
-                if (powerup instanceof Jersey) {
-                    mario.setIsRugbyman(true);
-                    mario.updateImage();
-                    Timer timer = new Timer(12000, e -> {
-                        mario.setIsRugbyman(false);
-                        mario.updateImage();
-                        ((Timer) e.getSource()).stop();
-                    });
-                    timer.setRepeats(false);
-                    timer.start();
-
-                }
-            }
+            if (mario.getHitbox().intersects(powerup.getHitbox())) powerup.onTouch(mario);
         }
+        for(Coin coin : map.getCoins()){
+            if(mario.getHitbox().intersects(coin.getHitbox())) coin.onTouch(mario);
+        }
+
     }
 
     public void checkEnnemyBlockCollisions() {

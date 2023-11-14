@@ -92,6 +92,7 @@ public class Mario extends GameObject {
         } else if (powerUp instanceof Trophy) {
             this.mode = Mode.WINNER;
         }
+        System.out.printf("Mario is now in %s mode\n", mode);
     }
 
     public void attack() {

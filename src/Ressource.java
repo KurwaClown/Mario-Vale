@@ -34,6 +34,8 @@ public class Ressource {
             images.put("shell", ImageIO.read(Ressource.class.getResource("./img/shell.png")));
             images.put("ball", ImageIO.read(Ressource.class.getResource("./img/shell.png")));
             images.put("littlecoin", ImageIO.read(Ressource.class.getResource("./img/littlecoin.png")));
+            images.put("fondmenu", ImageIO.read(Ressource.class.getResource("./img/fond_menu.png")));
+
 
         } catch (IOException e) {
             e.printStackTrace();

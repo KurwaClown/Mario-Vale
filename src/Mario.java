@@ -52,6 +52,8 @@ public class Mario extends GameObject {
     public void reset(){
         setX(50);
         setY(700);
+        this.coins = 0;
+        this.score = 0;
     }
     public void jump() {
         if (!isJumping() && !isFalling()) {
@@ -113,8 +115,18 @@ public class Mario extends GameObject {
                 velX = 10;
                 regenCharge = 0;
             }
+        } else if (this.mode == Mode.THROWER) {
+            if(regenCharge >= 30){
+                throwBall();
+                regenCharge -= 30;
+            }
         }
     }
+
+    private void throwBall() {
+
+    }
+
     public void finish(){
         readytoFly=true;
     }

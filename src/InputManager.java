@@ -43,6 +43,10 @@ public class InputManager implements KeyListener {
             if (keyCode == KeyEvent.VK_ESCAPE) {
                 game.quitGame();
             }
+        } else if (gameState == GameState.GAMEOVER || gameState == GameState.WIN) {
+            if(keyCode == KeyEvent.VK_R){
+                game.reset();
+            }
         }
 
     }

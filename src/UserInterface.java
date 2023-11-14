@@ -2,22 +2,24 @@ import javax.swing.*;
 import java.awt.*;
 // Base window, painting all the elements of the map
 public class UserInterface extends JPanel {
-    private final Map gameMap;
-
-    public UserInterface(Map map) {
-        gameMap = map;
+    private final Game game;
+    public UserInterface(Game game) {
+        this.game = game;
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        gameMap.draw(g);
-
+        if (game.getGameState() == GameState.PLAYING) {
+            game.getMap().draw(g);
+        }
+        else if (game.getGameState() == GameState.MENU) {
+            game.getMenu().drawMainMenu(g);
+        }
     }
 
-
     public void updateGame() {
-        gameMap.update();
+        game.getMap().update();
         repaint(); 
     }
     

@@ -16,17 +16,24 @@ public class Game {
     private final Mario mario;
     private MapManager mapManager;
 
+    private Menu menu;
+
+    public void startGame() {
+        gameState=GameState.PLAYING;
+    }
+
 
     private enum Direction {LEFT, RIGHT, TOP, BOTTOM}
 
     // Management of the game and adding object on the map
     public Game() {
-        this.gameState = GameState.PLAYING;
+        this.gameState = GameState.MENU;
         this.camera = new Camera();
         this.mario = new Mario(50, 700);
         this.mapManager = new MapManager(camera, mario, ".\\out\\production\\T-JAV-501-TLS_7\\mapcsv\\map1.csv");
         this.map = mapManager.getMap();
-        this.userInterface = new UserInterface(map);
+        this.userInterface = new UserInterface(this);
+        this.menu = new Menu();
 
         mapManager.loadMapFromCSV();
 
@@ -271,6 +278,14 @@ public class Game {
 
     public static void main(String[] args) {
         Game game = new Game();
+    }
+
+    public Map getMap(){
+        return this.map;
+    }
+
+    public Menu getMenu(){
+        return menu;
     }
 
 }

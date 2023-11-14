@@ -4,4 +4,9 @@ public class Jersey extends PowerUp{
         super("jersey");
     }
 
+    @Override
+    public void onTouch(Mario mario) {
+        super.onTouch(mario);
+        mario.addScore(500);
+    }
 }

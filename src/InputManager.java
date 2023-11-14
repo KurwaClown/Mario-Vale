@@ -23,20 +23,19 @@ public class InputManager implements KeyListener {
                 game.getMario().move(false);
             } else if (keyCode == KeyEvent.VK_D) {
                 game.getMario().move(true);
-            } else if(keyCode == KeyEvent.VK_E){
+            } else if (keyCode == KeyEvent.VK_E) {
                 game.getMario().attack(game.getMap());
-            } else if(keyCode == KeyEvent.VK_ESCAPE){
+            } else if (keyCode == KeyEvent.VK_ESCAPE) {
                 game.pauseGame();
             } else if (keyCode == KeyEvent.VK_F) {
                 game.getMario().finish();
-            } else if(keyCode == KeyEvent.VK_R){
+            } else if (keyCode == KeyEvent.VK_R) {
                 game.reset();
             }
         } else if (gameState == GameState.PAUSED) {
             if (keyCode == KeyEvent.VK_ESCAPE) {
                 game.resumeGame();
-            }
-            else if(keyCode == KeyEvent.VK_R){
+            } else if (keyCode == KeyEvent.VK_R) {
                 game.reset();
             }
         } else if (gameState == GameState.MENU) {
@@ -55,12 +54,7 @@ public class InputManager implements KeyListener {
                 game.quitGame();
             }
         } else if (gameState == GameState.GAMEOVER || gameState == GameState.WIN) {
-            if(keyCode == KeyEvent.VK_R){
-                game.reset();
-            }
-        }
 
-        } else if (gameState == GameState.GAMEOVER) {
             if (keyCode == KeyEvent.VK_Z) {
                 game.getMenu().setSelectedOption((game.getMenu().getSelectedOption() - 1 + game.getMenu().getOption().length) % game.getMenu().getOption().length);
             } else if (keyCode == KeyEvent.VK_S) {
@@ -75,24 +69,24 @@ public class InputManager implements KeyListener {
             }
 
         }
-
-    @Override
-    public void keyReleased(KeyEvent event) {
-        int keyCode = event.getKeyCode();
-        GameState gameState = game.getGameState();
-        if (gameState == GameState.PLAYING) {
-            if (keyCode == KeyEvent.VK_Q) {
-                game.getMario().stop(false);
-            } else if (keyCode == KeyEvent.VK_D) {
-                game.getMario().stop(true);
+    }
+        @Override
+        public void keyReleased (KeyEvent event){
+            int keyCode = event.getKeyCode();
+            GameState gameState = game.getGameState();
+            if (gameState == GameState.PLAYING) {
+                if (keyCode == KeyEvent.VK_Q) {
+                    game.getMario().stop(false);
+                } else if (keyCode == KeyEvent.VK_D) {
+                    game.getMario().stop(true);
+                }
             }
         }
+
+        @Override
+        public void keyTyped (KeyEvent e){
+
+        }
+
+
     }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-
-
-}

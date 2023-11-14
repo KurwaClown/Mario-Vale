@@ -17,6 +17,7 @@ public class Coin extends GameObject implements Collectible{
 
     public void onTouch(Mario mario){
         mario.addCoin();
+        mario.addScore(200);
         disappear();
     }
 }

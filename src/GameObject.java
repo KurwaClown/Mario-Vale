@@ -60,7 +60,7 @@ public class GameObject {
     }
     // Creating Rectangle to check collisions (cf Game.java => Collisions management)
     public Rectangle getBottomCollision(){
-        return new Rectangle((int)x, (int)y + spriteDimension.height, spriteDimension.width, 10);
+        return new Rectangle((int)x, (int)y + spriteDimension.height - 10, spriteDimension.width, 10);
     }
 
     public Rectangle getTopCollision(){
@@ -72,7 +72,7 @@ public class GameObject {
     }
 
     public Rectangle getRightCollision(){
-        return new Rectangle((int)x + spriteDimension.width, (int)y, 10, spriteDimension.height);
+        return new Rectangle((int)x + spriteDimension.width - 10, (int)y, 10, spriteDimension.height);
     }
     public void setVelX(double velX) {
         this.velX = velX;

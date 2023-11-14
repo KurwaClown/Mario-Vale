@@ -16,6 +16,7 @@ public class Menu {
         String[] options = {"Start", "Quit"};
         try {
             customFont = Font.createFont(Font.TRUETYPE_FONT, new File(".\\out\\production\\T-JAV-501-TLS_7\\font\\SuperMario2561.ttf")).deriveFont(20f);
+            titleFont = customFont.deriveFont(60f);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(customFont);
             System.out.println("Police chargée avec succès.");

@@ -14,7 +14,6 @@ public class Game {
     private final Map map;
     private final Camera camera;
     private final Mario mario;
-
     private MapManager mapManager;
 
 
@@ -104,8 +103,8 @@ public class Game {
     public void gameOver() {
         gameState = GameState.GAMEOVER;
         System.out.println("Game over!");
-        System.out.println("Score: " + score);
-        System.out.println("Coins: " + coins);
+        System.out.println("Score: " + mario.getScore());
+        System.out.println("Coins: " + mario.getCoins());
     }
 
     public void increaseCoinsCount() {
@@ -131,9 +130,9 @@ public class Game {
         for (Direction direction : Direction.values()) {
             checkBlockCollisions(direction);
             checkEnemyCollisions(direction);
-            checkPowerupCollisions(direction);
             checkFlagCollisions(direction);
         }
+        checkPowerupCollisions();
         checkEnnemyBlockCollisions();
     }
 
@@ -205,8 +204,11 @@ public class Game {
                 if (direction == Direction.TOP || direction == Direction.LEFT || direction == Direction.RIGHT)
                     gameOver();
                 else {
+                    enemy.attacked();
+
+                    mario.addScore(300);
+
                     mario.setY(mario.getY() - intersection.height);
-                    enemy.disappear();
                     mario.setFalling(false);
                     mario.setJumping(false);
                     mario.jump();
@@ -215,28 +217,14 @@ public class Game {
         }
     }
 
-    private void checkPowerupCollisions(Direction direction) {
-        Rectangle marioHitbox = getGameObjectHitbox(mario, direction, false);
-
+    private void checkPowerupCollisions() {
         for (PowerUp powerup : map.getPowerUps()) {
-            Rectangle powerUpHitbox = getGameObjectHitbox(powerup, direction, true);
-
-            if (marioHitbox.intersects(powerUpHitbox)) {
-                System.out.println(direction);
-                if (powerup instanceof Jersey) {
-                    mario.setIsRugbyman(true);
-                    mario.updateImage();
-                    Timer timer = new Timer(12000, e -> {
-                        mario.setIsRugbyman(false);
-                        mario.updateImage();
-                        ((Timer) e.getSource()).stop();
-                    });
-                    timer.setRepeats(false);
-                    timer.start();
-
-                }
-            }
+            if (mario.getHitbox().intersects(powerup.getHitbox())) powerup.onTouch(mario);
         }
+        for(Coin coin : map.getCoins()){
+            if(mario.getHitbox().intersects(coin.getHitbox())) coin.onTouch(mario);
+        }
+
     }
 
     public void checkEnnemyBlockCollisions() {

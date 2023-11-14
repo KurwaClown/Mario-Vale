@@ -4,7 +4,6 @@ import java.io.IOException;
 public class MapManager {
     private Mario mario;
     private Map map;
-
     String csvFilePath;
     private Champi champi;
 
@@ -39,9 +38,18 @@ public class MapManager {
                     case "Flag":
                         map.addFlag(new Flag(x, y));
                         break;
+                    case "Turtle":
+                    map.addEnemy(new Turtle(x, y));
+                    break;
                     case "Bonus":
                         String bonusType = values[3];
-                        map.addBlocks(new Bonus(x, y, new Jersey()));
+                        PowerUp powerUp = new Jersey();
+                        if(bonusType.equals("Ball")) powerUp = new Ball();
+                        else if(bonusType.equals("Trophy")) powerUp = new Trophy();
+                        map.addBlocks(new Bonus(x, y, powerUp));
+                        break;
+                    case "Coin":
+                        map.addCoin(new Coin(x, y));
                         break;
                 }
             }

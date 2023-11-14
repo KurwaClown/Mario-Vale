@@ -124,6 +124,10 @@ public class GameObject {
         return spriteDimension;
     }
 
+    public Rectangle getHitbox() {
+        return new Rectangle((int)x, (int)y, sprite.getWidth(), sprite.getHeight());
+    }
+
     public void UpdateSpriteDimension() {
         this.spriteDimension = new Dimension(sprite.getWidth(), sprite.getHeight());
     }

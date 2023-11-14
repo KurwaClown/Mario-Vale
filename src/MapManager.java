@@ -7,6 +7,9 @@ public class MapManager {
 
     String csvFilePath;
     private Champi champi;
+
+    private Flag flag;
+
     public MapManager(Camera camera, Mario mario, String csvFilePath){
         this.map = new Map(camera);
         this.mario = mario;
@@ -32,6 +35,9 @@ public class MapManager {
                         break;
                     case "Champi":
                         map.addEnemy(new Champi(x, y));
+                        break;
+                    case "Flag":
+                        map.addFlag(new Flag(x, y));
                         break;
                     case "Bonus":
                         String bonusType = values[3];

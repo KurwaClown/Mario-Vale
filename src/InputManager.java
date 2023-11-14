@@ -27,6 +27,8 @@ public class InputManager implements KeyListener {
                 game.getMario().attack();
             } else if(keyCode == KeyEvent.VK_ESCAPE){
                 game.pauseGame();
+            } else if (keyCode == KeyEvent.VK_F){
+                game.getMario().finish();
             }
         } else if (gameState == GameState.PAUSED) {
             if (keyCode == KeyEvent.VK_ESCAPE) {

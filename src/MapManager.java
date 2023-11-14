@@ -5,6 +5,8 @@ public class MapManager {
     private Mario mario;
     private Map map;
     private Champi champi;
+
+    private Flag flag;
     public MapManager(Camera camera, Mario mario){
         this.map = new Map(camera);
         this.mario = mario;
@@ -30,6 +32,9 @@ public class MapManager {
                         break;
                     case "Champi":
                         map.addEnemy(new Champi(x, y));
+                        break;
+                    case "Flag":
+                        map.addFlag(new Flag(x, y));
                         break;
                     case "Bonus":
                         // Supposons que le quatrième valeur est le type de bonus

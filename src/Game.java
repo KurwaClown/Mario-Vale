@@ -25,6 +25,7 @@ public class Game {
         this.gameState = GameState.PLAYING;
         this.camera = new Camera();
         this.mario = new Mario(50, 700);
+//        this.flag = new Flag(300 , 400);
         this.mapManager = new MapManager(camera, mario);
         this.map = mapManager.getMap();
         this.userInterface = new UserInterface(map);
@@ -132,6 +133,7 @@ public class Game {
             checkBlockCollisions(direction);
             checkEnemyCollisions(direction);
             checkPowerupCollisions(direction);
+            checkFlagCollisions(direction);
         }
         checkEnnemyBlockCollisions();
     }
@@ -164,6 +166,32 @@ public class Game {
                 }
             }
 
+
+        }
+    }
+    private void checkFlagCollisions(Direction direction) {
+        Rectangle marioHitbox = getGameObjectHitbox(mario, direction, false);
+        for (Flag flag : map.getFlags()) {
+            Rectangle flagHitbox = getGameObjectHitbox(flag, direction, true);
+
+            if (marioHitbox.intersects(flagHitbox)) {
+                Rectangle intersection = marioHitbox.intersection(flagHitbox);
+                if (direction == Direction.LEFT) {
+                    mario.setX(mario.getX() + intersection.width);
+                } else if (direction == Direction.RIGHT) {
+                    mario.setX(mario.getX() - intersection.width);
+                    if (mario.getReadyToFly()) {
+                        flag.flagBreak();
+                        mario.Flag();
+                        gameState = GameState.WIN;
+                        userInterface.updateGame();
+
+                    }
+                } else if (direction == Direction.TOP) {
+                    mario.setY(mario.getY() + intersection.height);
+                    mario.setVelY(0);
+                }
+            }
 
         }
     }

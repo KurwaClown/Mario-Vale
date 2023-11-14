@@ -1,4 +1,12 @@
 import java.awt.image.BufferedImage;
+import javax.swing.JOptionPane;
+import javax.swing.JDialog;
+import javax.swing.Timer;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 
 public class Mario extends GameObject {
     private boolean isRugbyman = false;
@@ -11,6 +19,10 @@ public class Mario extends GameObject {
     private int timingCharge = 30;
 
     public boolean canForceJump = true;
+
+    private int numClicks = 0;
+
+    private boolean readytoFly=false;
 
     public Mario(int x, int y) {
         super(x, y, "mario");
@@ -66,25 +78,6 @@ public class Mario extends GameObject {
         this.isRugbyman = isRugbyman;
     }
 
-
-    //TODO: Handle power up in Game
-//    public void powerup(PowerUp powerUp) {
-//        if (this.collide(powerUp)) {
-//            isRugbyman = true;
-//            updateImage();
-//            Timer timer = new Timer(12000, new ActionListener() {
-//                @Override
-//                public void actionPerformed(ActionEvent e) {
-//                    isRugbyman = false;
-//                    updateImage();
-//                    ((Timer) e.getSource()).stop();
-//                }
-//            });
-//            timer.setRepeats(false);
-//            timer.start();
-//        }
-//    }
-//
     public void attack() {
         if (isRugbyman) {
             if (regenCharge == 300) {
@@ -98,43 +91,44 @@ public class Mario extends GameObject {
             }
         }
     }
+    public void finish(){
+        readytoFly=true;
+    }
 
-//public void Flag(Flag flag) {
-//    int numClicks=0;
-//    if (interact && this.collide(flag)) {
-//        flag.breakFlag();
-//
-//        JOptionPane optionPane = new JOptionPane("Spam B", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
-//        final JDialog dialog = new JDialog();
-//        dialog.setTitle("Message");
-//        dialog.setModal(true);
-//
-//        dialog.setContentPane(optionPane);
-//        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-//        dialog.addKeyListener(new KeyAdapter() {
-//            @Override
-//            public void keyPressed(KeyEvent e) {
-//                if (e.getKeyCode() == KeyEvent.VK_B) {
-//                    numClicks++;
-//                }
-//            }
-//        });
-//
-//        Timer timer = new Timer(5000, new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                dialog.dispose();
-//            }
-//        });
-//        timer.setRepeats(false);
-//        timer.start();
-//
-//        dialog.pack();
-//        dialog.setVisible(true);
-//
-//        marioX += numClicks * 10;
-//        numClicks = 0;
-//    }
-//}
+    public void Flag() { // Assurez-vous que l'objet Flag est défini quelque part
+
+        JOptionPane optionPane = new JOptionPane("Spam B", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
+        final JDialog dialog = new JDialog();
+        dialog.setTitle("Message");
+        dialog.setModal(true);
+
+        dialog.setContentPane(optionPane);
+        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        dialog.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_B) {
+                    numClicks++;
+                }
+            }
+        });
+
+        Timer timer = new Timer(5000, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                dialog.dispose();
+                // Vous pourriez vouloir mettre à jour marioX ici pour être sûr qu'il est mis à jour après la fermeture du dialogue
+                x+= numClicks * 10;
+                numClicks = 0; // Réinitialiser numClicks après le traitement
+            }
+        });
+        timer.setRepeats(false);
+        timer.start();
+
+        dialog.pack();
+        dialog.setVisible(true);
+    }
+
+
 
     public void updateImage() {
         if (isRugbyman) {
@@ -161,5 +155,8 @@ public class Mario extends GameObject {
         }
 
         sprite = getCurrentSprite();
+    }
+    public boolean getReadyToFly(){
+        return readytoFly;
     }
 }

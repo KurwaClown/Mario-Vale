@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -6,6 +7,8 @@ public class Menu {
     private int selectedOption = 0;
 
     private String[] options = {"Start", "Quit"};
+
+    private final BufferedImage backgroundImage = Ressource.getImage("fondmenu");
 
     public Menu(){
 
@@ -16,7 +19,7 @@ public class Menu {
         String[] options = {"Start", "Quit"};
         try {
             customFont = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\coraa\\IdeaProjects\\T-JAV-501-TLS_7\\src\\font\\SuperMario2561.ttf")).deriveFont(20f);
-            titleFont = customFont.deriveFont(60f);
+            titleFont = customFont.deriveFont(100f);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(customFont);
             System.out.println("Police chargée avec succès.");
@@ -25,9 +28,10 @@ public class Menu {
             e.printStackTrace();
             customFont = new Font("SansSerif", Font.BOLD, 20);
         }
+        g.drawImage(backgroundImage, 0, 0, null);
         g.setFont(titleFont);
         String title = "Mario'Vale";
-        int xStart = 400;
+        int xStart = 340;
         for (int i = 0; i < title.length(); i++) {
             if (i==0){
                 g.setColor(Color.RED);
@@ -59,21 +63,20 @@ public class Menu {
             if (i==9){
                 g.setColor(Color.BLUE);
             }
-            g.drawString(title.substring(i, i+1), xStart, 300);
+            g.drawString(title.substring(i, i+1), xStart, 180);
             xStart += g.getFontMetrics().charWidth(title.charAt(i));
         }
         g.setFont(customFont);
-        g.setColor(Color.white);
         for (int i = 0; i < options.length; i++) {
             if (i == selectedOption) {
                 g.setColor(Color.RED);
                 int stringWidth = g.getFontMetrics().stringWidth(options[i]);
                 int stringHeight = g.getFontMetrics().getHeight();
-                g.drawRect(390, 400 + i * 100 - stringHeight, stringWidth + 20, stringHeight + 10);
+                g.drawRect(640, 450 + i * 100 - stringHeight, stringWidth + 20, stringHeight + 10);
             } else {
                 g.setColor(Color.WHITE);
             }
-            g.drawString(options[i], 400, 400 + i * 100);
+            g.drawString(options[i], 650, 450 + i * 100);
         }
     }
     public void drawGameOver (Graphics g){

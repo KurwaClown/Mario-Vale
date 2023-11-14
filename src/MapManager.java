@@ -64,6 +64,7 @@ public class MapManager {
     public void reset(Camera camera){
         this.map = new Map(camera);
         mario.reset();
+        camera.reset();
         loadMapFromCSV();
     }
 }

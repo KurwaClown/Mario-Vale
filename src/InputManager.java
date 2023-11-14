@@ -29,10 +29,15 @@ public class InputManager implements KeyListener {
                 game.pauseGame();
             } else if (keyCode == KeyEvent.VK_F){
                 game.getMario().finish();
+            } else if(keyCode == KeyEvent.VK_R){
+                game.reset();
             }
         } else if (gameState == GameState.PAUSED) {
             if (keyCode == KeyEvent.VK_ESCAPE) {
                 game.resumeGame();
+            }
+            else if(keyCode == KeyEvent.VK_R){
+                game.reset();
             }
         } else if (gameState == GameState.MENU) {
             if (keyCode == KeyEvent.VK_ESCAPE) {

@@ -1,3 +1,4 @@
+import javax.sound.sampled.Port;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -19,6 +20,8 @@ public class Map {
     private final List<PowerUp> powerups = new ArrayList<>();
     private final List<Flag> flags = new ArrayList<>();
     private final List<Coin> coins = new ArrayList<>();
+
+    List<Projectile> projectiles = new ArrayList<>();
     private final BufferedImage backgroundImage = Ressource.getImage("map");
     private final BufferedImage littlecoin = Ressource.getImage("littlecoin");
     private final Camera camera;
@@ -53,6 +56,10 @@ public class Map {
 
     public void addCoin(Coin coin) {
         coins.add(coin);
+    }
+
+    public void addProjectile(Projectile projectile) {
+        projectiles.add(projectile);
     }
 
     // draw objects in the lists
@@ -95,6 +102,9 @@ public class Map {
         for (Coin coin : coins) {
             coin.draw(g);
         }
+        for (Projectile projectile : projectiles) {
+            projectile.draw(g);
+        }
 
     }
 
@@ -116,6 +126,9 @@ public class Map {
         for (Enemy enemy : enemies) {
             enemy.update();
             enemy.moveObject();
+        }
+        for(Projectile projectile : projectiles){
+            projectile.moveObject();
         }
 
     }

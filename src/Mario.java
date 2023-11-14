@@ -6,6 +6,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Mario extends GameObject {
@@ -23,6 +25,8 @@ public class Mario extends GameObject {
 
     private int coins = 0;
     private int score;
+
+    private List<Projectile> projectiles = new ArrayList<>();
 
     public void addScore(int points) {
         score += points;
@@ -52,6 +56,8 @@ public class Mario extends GameObject {
     public void reset(){
         setX(50);
         setY(700);
+        this.coins = 0;
+        this.score = 0;
     }
     public void jump() {
         if (!isJumping() && !isFalling()) {
@@ -107,14 +113,24 @@ public class Mario extends GameObject {
         System.out.printf("Mario is now in %s mode\n", mode);
     }
 
-    public void attack() {
+    public void attack(Map map) {
         if (this.mode == Mode.JERSEY) {
             if (regenCharge == 300) {
                 velX = 10;
                 regenCharge = 0;
             }
+        } else if (this.mode == Mode.THROWER) {
+            if(regenCharge >= 30){
+                throwBall(map);
+                regenCharge -= 30;
+            }
         }
     }
+
+    private void throwBall(Map map) {
+        map.addProjectile(new Projectile((int) x, (int) y));
+    }
+
     public void finish(){
         readytoFly=true;
     }

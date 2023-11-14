@@ -11,7 +11,6 @@ public class Game {
     private int score = 0;
     private GameState gameState;
     private final UserInterface userInterface;
-    private final Map map;
     private final Camera camera;
     private final Mario mario;
     private MapManager mapManager;
@@ -139,8 +138,42 @@ public class Game {
             checkEnemyCollisions(direction);
             checkFlagCollisions(direction);
         }
+        checkProjectileCollisions();
         checkPowerupCollisions();
         checkEnnemyBlockCollisions();
+
+        removeUnusedObjects();
+    }
+
+    private void removeUnusedObjects() {
+        getMap().getEnemies().removeIf(enemy -> enemy.getY() > 2999 || enemy.getX() < -2999);
+        getMap().getBlocks().removeIf(block -> block.getY() > 2999 || block.getX() < -2999);
+        getMap().getPowerUps().removeIf(powerup -> powerup.getY() > 2999 || powerup.getX() < -2999);
+        getMap().getCoins().removeIf(coin -> coin.getY() > 2999 || coin.getX() < -2999);
+    }
+
+    private void checkProjectileCollisions() {
+        for(Projectile projectile : getMap().projectiles){
+            for(Enemy enemy : getMap().getEnemies()){
+                if(projectile.getHitbox().intersects(enemy.getHitbox())){
+                    enemy.disappear();
+                    projectile.disappear();
+                    mario.addScore(300);
+                }
+            }
+
+            for(Block block: getMap().getBlocks()){
+                if(projectile.getHitbox().intersects(block.getHitbox())){
+                    projectile.disappear();
+                }
+            }
+
+            if(projectile.getY() + projectile.getSpriteDimension().height >= 858){
+                projectile.setY(857 - projectile.getSpriteDimension().height);
+                projectile.setVelY(7.5);
+                projectile.setJumping(true);
+            }
+        }
     }
 
     private void checkBlockCollisions(Direction direction) {
@@ -148,7 +181,7 @@ public class Game {
         if(!mario.isJumping()){
             mario.setFalling(true);
         }
-        for (Block block : map.getBlocks()) {
+        for (Block block : mapManager.getMap().getBlocks()) {
             Rectangle blockHitbox = getGameObjectHitbox(block, direction, true);
 
             if (marioHitbox.intersects(blockHitbox)) {
@@ -160,7 +193,7 @@ public class Game {
                 } else if (direction == Direction.TOP) {
                     mario.setY(mario.getY() + intersection.height);
                     mario.setVelY(0);
-                    if (block instanceof Bonus bonus) map.addPowerup(bonus.getContainedPowerUp());
+                    if (block instanceof Bonus bonus) mapManager.getMap().addPowerup(bonus.getContainedPowerUp());
                     block.hit();
                 } else if (direction == Direction.BOTTOM) {
                     mario.setY(mario.getY() - intersection.height);
@@ -176,7 +209,7 @@ public class Game {
     }
     private void checkFlagCollisions(Direction direction) {
         Rectangle marioHitbox = getGameObjectHitbox(mario, direction, false);
-        for (Flag flag : map.getFlags()) {
+        for (Flag flag : mapManager.getMap().getFlags()) {
             Rectangle flagHitbox = getGameObjectHitbox(flag, direction, true);
 
             if (marioHitbox.intersects(flagHitbox)) {
@@ -204,7 +237,7 @@ public class Game {
     private void checkEnemyCollisions(Direction direction) {
         Rectangle marioHitbox = getGameObjectHitbox(mario, direction, false);
 
-        for (Enemy enemy : map.getEnemies()) {
+        for (Enemy enemy : mapManager.getMap().getEnemies()) {
             Rectangle enemyHitbox = getGameObjectHitbox(enemy, direction, true);
             if (marioHitbox.intersects(enemyHitbox)) {
                 Rectangle intersection = marioHitbox.intersection(enemyHitbox);
@@ -225,10 +258,10 @@ public class Game {
     }
 
     private void checkPowerupCollisions() {
-        for (PowerUp powerup : map.getPowerUps()) {
+        for (PowerUp powerup : mapManager.getMap().getPowerUps()) {
             if (mario.getHitbox().intersects(powerup.getHitbox())) powerup.onTouch(mario);
         }
-        for(Coin coin : map.getCoins()){
+        for(Coin coin : mapManager.getMap().getCoins()){
             if(mario.getHitbox().intersects(coin.getHitbox())) coin.onTouch(mario);
         }
 
@@ -236,12 +269,12 @@ public class Game {
 
     public void checkEnnemyBlockCollisions() {
         //TODO: check for all enemies
-        for (Enemy enemy : map.getEnemies()) {
+        for (Enemy enemy : mapManager.getMap().getEnemies()) {
             boolean enemyLookingRight = enemy.getVelX() > 0;
             Rectangle champiHitbox = enemyLookingRight ? getGameObjectHitbox(enemy, Direction.RIGHT, false)
                     : getGameObjectHitbox(enemy, Direction.LEFT, false);
 
-            for (Block block : map.getBlocks()) {
+            for (Block block : mapManager.getMap().getBlocks()) {
                 Rectangle blockHitbox = enemyLookingRight ? getGameObjectHitbox(block, Direction.RIGHT, true)
                         : getGameObjectHitbox(block, Direction.LEFT, true);
 
@@ -274,15 +307,17 @@ public class Game {
 
     public void reset(){
         mapManager.reset(camera);
+        gameState = GameState.PLAYING;
+    }
+
+    public Map getMap(){
+        return mapManager.getMap();
     }
 
     public static void main(String[] args) {
         Game game = new Game();
     }
 
-    public Map getMap(){
-        return this.map;
-    }
 
     public Menu getMenu(){
         return menu;

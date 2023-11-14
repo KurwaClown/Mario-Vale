@@ -23,16 +23,21 @@ public class InputManager implements KeyListener {
                 game.getMario().move(false);
             } else if (keyCode == KeyEvent.VK_D) {
                 game.getMario().move(true);
-            } else if (keyCode == KeyEvent.VK_E) {
-                game.getMario().attack();
-            } else if (keyCode == KeyEvent.VK_ESCAPE) {
+            } else if(keyCode == KeyEvent.VK_E){
+                game.getMario().attack(game.getMap());
+            } else if(keyCode == KeyEvent.VK_ESCAPE){
                 game.pauseGame();
             } else if (keyCode == KeyEvent.VK_F) {
                 game.getMario().finish();
+            } else if(keyCode == KeyEvent.VK_R){
+                game.reset();
             }
         } else if (gameState == GameState.PAUSED) {
             if (keyCode == KeyEvent.VK_ESCAPE) {
                 game.resumeGame();
+            }
+            else if(keyCode == KeyEvent.VK_R){
+                game.reset();
             }
         } else if (gameState == GameState.MENU) {
             if (keyCode == KeyEvent.VK_Z) {
@@ -46,6 +51,14 @@ public class InputManager implements KeyListener {
                     System.exit(1);
                 }
             }
+            if (keyCode == KeyEvent.VK_ESCAPE) {
+                game.quitGame();
+            }
+        } else if (gameState == GameState.GAMEOVER || gameState == GameState.WIN) {
+            if(keyCode == KeyEvent.VK_R){
+                game.reset();
+            }
+        }
 
         }
     }

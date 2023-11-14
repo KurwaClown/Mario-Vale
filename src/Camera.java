@@ -20,4 +20,9 @@ public class Camera {
     public double getY() {
         return y;
     }
+
+    public void reset(){
+        x = 0;
+        y = 0;
+    }
 }

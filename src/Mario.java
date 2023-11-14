@@ -14,6 +14,15 @@ public class Mario extends GameObject {
     public boolean canForceJump = true;
 
     private int coins = 0;
+    private int score;
+
+    public void addScore(int points) {
+        score += points;
+    }
+
+    public int getScore() {
+        return score;
+    }
 
     private enum Mode{
         NORMAL, JERSEY, THROWER, WINNER // Jersey, Ball and Trophy
@@ -163,5 +172,10 @@ public class Mario extends GameObject {
 
     public void addCoin(){
         coins++;
+        System.out.println(coins);
+    }
+
+    public int getCoins() {
+        return coins;
     }
 }

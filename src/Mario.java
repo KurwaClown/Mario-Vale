@@ -186,7 +186,7 @@ public class Mario extends GameObject {
         if (this.mode == Mode.JERSEY) {
             setSprite(Ressource.getImage("marioStade"));
         } else {
-            getCurrentSprite();
+            setSprite(getCurrentSprite());
         }
     }
 
@@ -208,6 +208,7 @@ public class Mario extends GameObject {
         } else {
             currentSpriteIndex = 0;
         }
+        updateImage();
     }
     public boolean getReadyToFly(){
         return readytoFly;

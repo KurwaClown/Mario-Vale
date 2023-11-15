@@ -1,12 +1,13 @@
 
 public class Flag extends GameObject{
 
-    public Flag(double xLocation, double yLocation) {
-        super(xLocation, yLocation, "flag");
-        sprite = Ressource.getImage("flag");
+    public Flag(double xLocation) {
+        super(xLocation, 650, "flag");
+        setSprite(Ressource.getImage("flag"));
+        setY(getY()-getSpriteDimension().height);
     }
     public void flagBreak(){
-        sprite=Ressource.getImage("flagBreak");
-        setY(858 - getSpriteDimension().height);
+        setSprite(Ressource.getImage("flagBroken"));
+        setY(650 - getSpriteDimension().height);
     }
 }

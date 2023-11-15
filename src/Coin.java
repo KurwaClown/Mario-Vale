@@ -4,7 +4,7 @@ public class Coin extends GameObject implements Collectible{
 
     public Coin(double xLocation, double yLocation) {
         super(xLocation, yLocation, "coin");
-        sprite = Ressource.getImage("coin");
+        setSprite(Ressource.getImage("coin"));
     }
     public void disappear(){
         y = 3000;

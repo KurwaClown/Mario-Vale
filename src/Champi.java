@@ -9,7 +9,7 @@ public class Champi extends Enemy {
         super(x, y, "champi");
         if (getRandom()<3){
             isRugbyman = true;
-            sprite=Ressource.getImage("champiRugby");
+            setSprite(Ressource.getImage("champiRugby"));
         }
     }
     // Implementing the automatic moves and the ability to charge

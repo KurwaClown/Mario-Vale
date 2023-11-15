@@ -15,8 +15,8 @@ public class GameObject {
     public GameObject(double xLocation, double yLocation, String name){
         this.x = xLocation;
         this.y = yLocation;
-        this.sprite = Ressource.getImage(name); //picking the Sprite in Ressource.java
-        this.spriteDimension = new Dimension(sprite.getWidth(), sprite.getHeight());
+        this.spriteDimension = new Dimension(0, 0);
+        setSprite(Ressource.getImage(name)); //picking the Sprite in Ressource.java
         this.velX = 0;
         this.velY = 0;
     }
@@ -120,7 +120,17 @@ public class GameObject {
         return y;
     }
 
+    public void setSprite(BufferedImage sprite) {
+        this.sprite = sprite;
+        updateSpriteDimension();
+    }
+
+    public void updateSpriteDimension() {
+        this.spriteDimension.setSize(sprite.getWidth(), sprite.getHeight());
+    }
+
     public Dimension getSpriteDimension() {
+        spriteDimension.setSize(sprite.getWidth(), sprite.getHeight());
         return spriteDimension;
     }
 

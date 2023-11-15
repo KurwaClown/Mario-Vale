@@ -171,9 +171,9 @@ public class Mario extends GameObject {
 
     public void updateImage() {
         if (this.mode == Mode.JERSEY) {
-            sprite = Ressource.getImage("marioStade");
+            setSprite(Ressource.getImage("marioStade"));
         } else {
-            sprite = Ressource.getImage("mario");
+            setSprite(Ressource.getImage("mario"));
         }
     }
 
@@ -195,8 +195,6 @@ public class Mario extends GameObject {
         } else {
             currentSpriteIndex = 0;
         }
-
-        sprite = getCurrentSprite();
     }
     public boolean getReadyToFly(){
         return readytoFly;

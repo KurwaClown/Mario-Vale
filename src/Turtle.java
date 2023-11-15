@@ -19,7 +19,7 @@ public class Turtle extends Enemy{
     }
 
     public void transformInShell(){
-        sprite = Ressource.getImage("shell");
+        setSprite( Ressource.getImage("shell"));
         isShell = true;
         setVelX(0);
     }

@@ -36,7 +36,7 @@ public class MapManager {
                         map.addEnemy(new Champi(x, y));
                         break;
                     case "Flag":
-                        map.addFlag(new Flag(x, y));
+                        map.addFlag(new Flag(x));
                         break;
                     case "Turtle":
                     map.addEnemy(new Turtle(x, y));

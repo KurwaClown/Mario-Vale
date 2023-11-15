@@ -16,7 +16,6 @@ public class Ressource {
         try {
             images.put("mario", ImageIO.read(Ressource.class.getResource("./img/mario_running1.png")));
             images.put("mario1", ImageIO.read(Ressource.class.getResource("./img/mario_running2.png")));
-            images.put("mario2", ImageIO.read(Ressource.class.getResource("./img/mario1.png")));
             images.put("champi", ImageIO.read(Ressource.class.getResource("./img/champi.png")));
             images.put("turtle", ImageIO.read(Ressource.class.getResource("./img/turtle.png")));
             images.put("plant", ImageIO.read(Ressource.class.getResource("./img/plant.png")));
@@ -29,7 +28,7 @@ public class Ressource {
             images.put("marioStade", ImageIO.read(Ressource.class.getResource("./img/marioStade.png")));
             images.put("flag", ImageIO.read(Ressource.class.getResource("./img/flag.png")));
             images.put("coin", ImageIO.read(Ressource.class.getResource("./img/coin.png")));
-            images.put("flagBreak", ImageIO.read(Ressource.class.getResource("./img/flagBreak.png")));
+            images.put("flagBroken", ImageIO.read(Ressource.class.getResource("./img/flagOnGround.png")));
             images.put("map", ImageIO.read(Ressource.class.getResource("./img/map.jpg")));
             images.put("shell", ImageIO.read(Ressource.class.getResource("./img/shell.png")));
             images.put("ball", ImageIO.read(Ressource.class.getResource("./img/shell.png")));

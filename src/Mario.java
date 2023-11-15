@@ -170,6 +170,7 @@ public class Mario extends GameObject {
             public void actionPerformed(ActionEvent e) {
                 dialog.dispose();
                 x+= numClicks * 10;
+                System.out.println(numClicks);
                 numClicks = 0;
             }
         });

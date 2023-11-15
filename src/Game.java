@@ -133,6 +133,7 @@ public class Game {
 
     // Collision management
     private void checkCollisions() {
+        checkForMapBoundaries();
         for (Direction direction : Direction.values()) {
             checkBlockCollisions(direction);
             checkEnemyCollisions(direction);
@@ -143,6 +144,12 @@ public class Game {
         checkEnnemyBlockCollisions();
 
         removeUnusedObjects();
+    }
+
+    private void checkForMapBoundaries() {
+        if(mario.getVelX() < 0 && mario.getX() < camera.getX()){
+            mario.setX(camera.getX());
+        }
     }
 
     private void removeUnusedObjects() {

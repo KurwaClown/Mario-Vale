@@ -20,7 +20,7 @@ public class GameObject {
     public GameObject(double xLocation, double yLocation, String name){
         this.x = xLocation;
         this.y = yLocation;
-        this.spriteDimension = new Dimension(0, 0);
+        this.spriteDimension = new Dimension(64, 64);
         setSprite(Ressource.getImage(name)); //picking the Sprite in Ressource.java
         this.velX = 0;
         this.velY = 0;
@@ -53,12 +53,7 @@ public class GameObject {
         if(falling){ // When falling after apex
             y = y + velY;
             velY = velY + gravity;
-            if(y + spriteDimension.height >= GROUND_LEVEL) {
-                velY = 0;
-                y= GROUND_LEVEL - spriteDimension.height;
-                falling = false;
-                if(this instanceof Mario mario) mario.canForceJump = true;
-            }
+
         }
 
         x = x + velX;
@@ -73,11 +68,11 @@ public class GameObject {
     }
     
     public Rectangle getLeftCollision(){
-        return new Rectangle((int)(x), (int)y, 10, spriteDimension.height);
+        return new Rectangle((int)(x), (int)y+3, 10, spriteDimension.height-3);
     }
 
     public Rectangle getRightCollision(){
-        return new Rectangle((int)x + spriteDimension.width - 10, (int)y, 10, spriteDimension.height);
+        return new Rectangle((int)x + spriteDimension.width - 10, (int)y+3, 10, spriteDimension.height-3);
     }
     public void setVelX(double velX) {
         this.velX = velX;

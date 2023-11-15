@@ -65,6 +65,10 @@ public class Mario extends GameObject {
     public void reset(){
         setX(50);
         setY(700);
+        setVelX(0);
+        setVelY(0);
+        setFalling(true);
+        setJumping(false);
         this.coins = 0;
         this.score = 0;
     }
@@ -191,7 +195,7 @@ public class Mario extends GameObject {
         if (this.mode == Mode.JERSEY) {
             setSprite(view.Ressource.getImage("marioStade"));
         } else {
-            setSprite(view.Ressource.getImage("mario"));
+            setSprite(getCurrentSprite());
         }
     }
 
@@ -213,6 +217,7 @@ public class Mario extends GameObject {
         } else {
             currentSpriteIndex = 0;
         }
+        updateImage();
     }
     public boolean getReadyToFly(){
         return readytoFly;

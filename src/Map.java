@@ -74,7 +74,6 @@ public class Map {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(customFont);
         } catch (IOException | FontFormatException e) {
-            System.out.println("Échec du chargement de la police.");
             e.printStackTrace();
             customFont = new Font("SansSerif", Font.BOLD, 20);
         }

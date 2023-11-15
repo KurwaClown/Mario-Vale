@@ -25,7 +25,6 @@ public class UserInterface extends JPanel {
 
     public void updateGame() {
         game.getMap().update();
-        repaint(); 
     }
     
 }

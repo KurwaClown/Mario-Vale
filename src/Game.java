@@ -28,7 +28,7 @@ public class Game {
     public Game() {
         this.gameState = GameState.MENU;
         this.camera = new Camera();
-        this.mario = new Mario(50, 640);
+        this.mario = new Mario(50, 540);
         this.mapManager = new MapManager(camera, mario, ".\\out\\production\\T-JAV-501-TLS_7\\mapcsv\\map1.csv");
         this.userInterface = new UserInterface(this);
         this.menu = new Menu();
@@ -89,6 +89,7 @@ public class Game {
             checkCollisions();
             updateCamera();
         }
+        userInterface.repaint();
     }
 
     public void pauseGame() {
@@ -171,7 +172,6 @@ public class Game {
                     if (direction == Direction.RIGHT || direction == Direction.LEFT) {
                         projectile.disappear();
                     } else if (direction == Direction.BOTTOM) {
-                        System.out.println("top");
                         projectile.setY(projectile.getY() - intersection.height);
                         projectile.setVelY(7.5);
                         projectile.setJumping(true);
@@ -190,21 +190,24 @@ public class Game {
             mario.setFalling(true);
         }
         for (Block block : mapManager.getMap().getBlocks()) {
+
             Rectangle blockHitbox = getGameObjectHitbox(block, direction, true);
 
             if (marioHitbox.intersects(blockHitbox)) {
                 Rectangle intersection = marioHitbox.intersection(blockHitbox);
-                if (direction == Direction.LEFT) {
+                if (direction == Direction.LEFT && mario.getVelX() < 0) {
                     mario.setX(mario.getX() + intersection.width);
-                } else if (direction == Direction.RIGHT) {
+                } else if (direction == Direction.RIGHT && mario.getVelX() > 0) {
                     mario.setX(mario.getX() - intersection.width);
-                } else if (direction == Direction.TOP) {
+                } else if (direction == Direction.TOP && mario.getVelY() > 0) {
+                    if(mario.isFalling()) break;
                     mario.setY(mario.getY() + intersection.height);
                     mario.setVelY(0);
                     if (block instanceof Bonus bonus) mapManager.getMap().addPowerup(bonus.getContainedPowerUp());
                     block.hit();
                 } else if (direction == Direction.BOTTOM) {
-                    mario.setY(mario.getY() - intersection.height);
+                    if(mario.isJumping()) break;
+                    mario.setY(block.getY() - mario.getSpriteDimension().height);
                     mario.setVelY(0);
                     mario.setJumping(false);
                     mario.setFalling(false);
@@ -276,7 +279,6 @@ public class Game {
     }
 
     public void checkEnnemyBlockCollisions() {
-        //TODO: check for all enemies
         for (Enemy enemy : mapManager.getMap().getEnemies()) {
             boolean enemyLookingRight = enemy.getVelX() > 0;
             Rectangle champiHitbox = enemyLookingRight ? getGameObjectHitbox(enemy, Direction.RIGHT, false)

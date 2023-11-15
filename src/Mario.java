@@ -105,6 +105,19 @@ public class Mario extends GameObject {
         if (powerUp instanceof Jersey) {
             this.mode = Mode.JERSEY;
             updateImage();
+            new java.util.Timer().schedule(
+                    new java.util.TimerTask() {
+                        @Override
+                        public void run() {
+                            if (mode == Mode.JERSEY) {
+                                mode = Mode.NORMAL;
+                                updateImage();
+                            }
+                        }
+                    },
+                    12000
+            );
+
         } else if (powerUp instanceof Ball) {
             this.mode = Mode.THROWER;
         } else if (powerUp instanceof Trophy) {

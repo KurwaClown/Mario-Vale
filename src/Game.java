@@ -5,8 +5,8 @@ import java.awt.*;
 public class Game {
     private boolean isRunning = true;
     private final int TARGET_FPS = 60;
-    private final static int WIDTH = 1335;
-    private final static int HEIGHT = 930;
+    private final static int WIDTH = 1300;
+    private final static int HEIGHT = 730;
     private int coins = 0;
     private int score = 0;
     private GameState gameState;
@@ -28,7 +28,7 @@ public class Game {
     public Game() {
         this.gameState = GameState.MENU;
         this.camera = new Camera();
-        this.mario = new Mario(50, 700);
+        this.mario = new Mario(50, 640);
         this.mapManager = new MapManager(camera, mario, ".\\out\\production\\T-JAV-501-TLS_7\\mapcsv\\map1.csv");
         this.userInterface = new UserInterface(this);
         this.menu = new Menu();

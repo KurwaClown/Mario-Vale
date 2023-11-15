@@ -6,7 +6,7 @@ public class GameObject {
     protected double velX, velY;
     private final double gravity = 0.30f;
 
-    private final int GROUND_LEVEL = 858;
+    private final int GROUND_LEVEL = 650;
     private Dimension spriteDimension; // Dimension encapsulate width and height
     protected BufferedImage sprite;
 

@@ -66,7 +66,7 @@ public class Map {
     public void draw(Graphics g) {
         g.translate(-(int) camera.getX(), -(int) camera.getY());
         for (int i = 0; i < 10; i++) {
-            g.drawImage(backgroundImage, i * backgroundImage.getWidth(), 0, null);
+            g.drawImage(backgroundImage, i * backgroundImage.getWidth(), -150, null);
         }
         Font customFont = null;
         try {

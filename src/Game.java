@@ -22,7 +22,7 @@ public class Game {
     }
 
 
-    private enum Direction {LEFT, RIGHT, TOP, BOTTOM}
+    private enum Direction {TOP, LEFT, RIGHT, BOTTOM}
 
     // Management of the game and adding object on the map
     public Game() {
@@ -167,8 +167,8 @@ public class Game {
                 }
             }
 
-            if(projectile.getY() + projectile.getSpriteDimension().height >= 858){
-                projectile.setY(857 - projectile.getSpriteDimension().height);
+            if(projectile.getY() + projectile.getSpriteDimension().height >= 586){
+                projectile.setY(587 - projectile.getSpriteDimension().height);
                 projectile.setVelY(7.5);
                 projectile.setJumping(true);
             }

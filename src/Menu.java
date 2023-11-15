@@ -82,12 +82,11 @@ public class Menu {
         Font titleFont= null;
         String[] options = {"Restart", "Quit"};
         try {
-            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("C:\\Users\\coraa\\IdeaProjects\\T-JAV-501-TLS_7\\src\\font\\SuperMario2561.ttf")).deriveFont(20f);
-            titleFont = customFont.deriveFont(60f);
+            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("out/production/T-JAV-501-TLS_7/font/SuperMario2561.ttf")).deriveFont(20f);
+            titleFont = customFont.deriveFont(100f);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(customFont);
         } catch (IOException | FontFormatException e) {
-            System.out.println("Échec du chargement de la police.");
             e.printStackTrace();
             customFont = new Font("SansSerif", Font.BOLD, 20);
         }

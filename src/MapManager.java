@@ -16,6 +16,9 @@ public class MapManager {
         this.csvFilePath = csvFilePath;
     }
     public void loadMapFromCSV() {
+        for (int i = 0; i < 50; i++) {
+            map.addBlocks(new GroundBrick(i * 64, 650));
+        }
         try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -50,6 +53,9 @@ public class MapManager {
                         break;
                     case "Coin":
                         map.addCoin(new Coin(x, y));
+                        break;
+                    case "DeadBrick":
+                        map.addBlocks(new DeadBrick(x, y));
                         break;
                 }
             }

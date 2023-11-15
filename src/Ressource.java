@@ -31,9 +31,10 @@ public class Ressource {
             images.put("flagBroken", ImageIO.read(Ressource.class.getResource("./img/flagOnGround.png")));
             images.put("map", ImageIO.read(Ressource.class.getResource("./img/map.jpg")));
             images.put("shell", ImageIO.read(Ressource.class.getResource("./img/shell.png")));
-            images.put("ball", ImageIO.read(Ressource.class.getResource("./img/shell.png")));
+            images.put("ball", ImageIO.read(Ressource.class.getResource("./img/ball.png")));
             images.put("littlecoin", ImageIO.read(Ressource.class.getResource("./img/littlecoin.png")));
             images.put("fondmenu", ImageIO.read(Ressource.class.getResource("./img/fond_menu.png")));
+            images.put("groundBrick", ImageIO.read(Ressource.class.getResource("./img/ground.png")));
 
 
         } catch (IOException e) {

@@ -136,8 +136,8 @@ public class Game {
             checkBlockCollisions(direction);
             checkEnemyCollisions(direction);
             checkFlagCollisions(direction);
+            checkProjectileCollisions(direction);
         }
-        checkProjectileCollisions();
         checkPowerupCollisions();
         checkEnnemyBlockCollisions();
 
@@ -151,26 +151,35 @@ public class Game {
         getMap().getCoins().removeIf(coin -> coin.getY() > 2999 || coin.getX() < -2999);
     }
 
-    private void checkProjectileCollisions() {
-        for(Projectile projectile : getMap().projectiles){
-            for(Enemy enemy : getMap().getEnemies()){
-                if(projectile.getHitbox().intersects(enemy.getHitbox())){
+    private void checkProjectileCollisions(Direction direction) {
+        for (Projectile projectile : getMap().projectiles) {
+            for (Enemy enemy : getMap().getEnemies()) {
+                if (projectile.getHitbox().intersects(enemy.getHitbox())) {
                     enemy.disappear();
                     projectile.disappear();
                     mario.addScore(300);
                 }
             }
 
-            for(Block block: getMap().getBlocks()){
-                if(projectile.getHitbox().intersects(block.getHitbox())){
-                    projectile.disappear();
-                }
-            }
+            Rectangle projectileHitbox = getGameObjectHitbox(projectile, direction, false);
 
-            if(projectile.getY() + projectile.getSpriteDimension().height >= 586){
-                projectile.setY(587 - projectile.getSpriteDimension().height);
-                projectile.setVelY(7.5);
-                projectile.setJumping(true);
+            for (Block block : mapManager.getMap().getBlocks()) {
+                Rectangle blockHitbox = getGameObjectHitbox(block, direction, true);
+
+                if (projectileHitbox.intersects(blockHitbox)) {
+                    Rectangle intersection = projectileHitbox.intersection(blockHitbox);
+                    if (direction == Direction.RIGHT || direction == Direction.LEFT) {
+                        projectile.disappear();
+                    } else if (direction == Direction.BOTTOM) {
+                        System.out.println("top");
+                        projectile.setY(projectile.getY() - intersection.height);
+                        projectile.setVelY(7.5);
+                        projectile.setJumping(true);
+                        projectile.setFalling(false);
+                    }
+                }
+
+
             }
         }
     }

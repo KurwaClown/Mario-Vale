@@ -49,6 +49,7 @@ public class MapManager {
                         PowerUp powerUp = new Jersey();
                         if(bonusType.equals("Ball")) powerUp = new Ball();
                         else if(bonusType.equals("Trophy")) powerUp = new Trophy();
+                        else if(bonusType.equals("Brennus")) powerUp = new Brennus();
                         map.addBlocks(new Bonus(x, y, powerUp));
                         break;
                     case "Coin":

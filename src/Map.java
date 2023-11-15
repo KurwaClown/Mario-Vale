@@ -112,6 +112,7 @@ public class Map {
         for (Mario mario : marios) {
             mario.moveObject();
             mario.update();
+
         }
         for (Block block : blocks) {
             block.moveObject();

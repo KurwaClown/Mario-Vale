@@ -35,6 +35,9 @@ public class Ressource {
             images.put("littlecoin", ImageIO.read(Ressource.class.getResource("./img/littlecoin.png")));
             images.put("fondmenu", ImageIO.read(Ressource.class.getResource("./img/fond_menu.png")));
             images.put("groundBrick", ImageIO.read(Ressource.class.getResource("./img/ground.png")));
+            images.put("brennus", ImageIO.read(Ressource.class.getResource("./img/brennus.png")));
+            images.put("marioBrennus", ImageIO.read(Ressource.class.getResource("./img/marioval_brenus.png")));
+            images.put("marioDore", ImageIO.read(Ressource.class.getResource("./img/marioval_dore.png")));
 
 
         } catch (IOException e) {

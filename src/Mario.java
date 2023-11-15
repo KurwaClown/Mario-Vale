@@ -75,10 +75,8 @@ public class Mario extends GameObject {
 
     public void move(boolean toRight) {
         if (toRight) {
-            System.out.println("Moving to the right");
             setVelX(5);
         } else {
-            System.out.println("Moving to the left");
             setVelX(-5);
         }
 
@@ -91,16 +89,13 @@ public class Mario extends GameObject {
 
     public void stop(boolean toRight) {
         if (toRight && getVelX() > 0) {
-            System.out.println("Stopping to the right");
             setVelX(0);
         } else if (!toRight && getVelX() < 0) {
-            System.out.println("Stopping to the left");
             setVelX(0);
         }
     }
 
 
-    //TODO: Handle power up in Game
     public void powerup(PowerUp powerUp) {
         if (powerUp instanceof Jersey) {
             this.mode = Mode.JERSEY;

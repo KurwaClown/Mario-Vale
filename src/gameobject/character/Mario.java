@@ -2,11 +2,7 @@ package gameobject.character;
 
 import core.Game;
 import gameobject.GameObject;
-import gameobject.collectible.Ball;
-import gameobject.collectible.Jersey;
-
-import gameobject.collectible.PowerUp;
-import gameobject.collectible.Trophy;
+import gameobject.collectible.*;
 
 import java.awt.image.BufferedImage;
 import javax.swing.JOptionPane;

@@ -1,5 +1,6 @@
-package gameobject.character;
+package gameobject.collectible;
 
+import gameobject.character.Mario;
 import gameobject.collectible.PowerUp;
 
 public class Brennus extends PowerUp {

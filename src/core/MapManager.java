@@ -5,7 +5,7 @@ import gameobject.block.Bonus;
 import gameobject.block.Brick;
 import gameobject.block.DeadBrick;
 import gameobject.block.GroundBrick;
-import gameobject.character.Brennus;
+import gameobject.collectible.Brennus;
 import gameobject.character.Mario;
 import gameobject.collectible.*;
 import gameobject.enemy.Champi;

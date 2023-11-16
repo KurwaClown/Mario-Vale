@@ -98,6 +98,7 @@ public class Map {
             projectile.draw(g);
         }
 
+
     }
 
     // Update each map element

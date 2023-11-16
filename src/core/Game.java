@@ -12,6 +12,8 @@ import view.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 // initializing the window and base variables
 public class Game {
@@ -28,9 +30,14 @@ public class Game {
     private MapManager mapManager;
 
     private view.Menu menu;
+    private int numClicks;
 
     public void startGame() {
         gameState = GameState.PLAYING;
+    }
+
+    public int getFlagCount() {
+        return numClicks;
     }
 
 
@@ -136,6 +143,10 @@ public class Game {
 
     }
 
+    public void victory(){
+        gameState = GameState.WIN;
+    }
+
     // Collision management
     private void checkCollisions() {
         checkForMapBoundaries();
@@ -231,23 +242,19 @@ public class Game {
     }
 
     private void checkFlagCollisions(Direction direction) {
+        if(gameState == GameState.FLAG) return;
         Rectangle marioHitbox = getGameObjectHitbox(mario, direction, false);
         for (Flag flag : mapManager.getMap().getFlags()) {
             Rectangle flagHitbox = getGameObjectHitbox(flag, direction, true);
 
             if (marioHitbox.intersects(flagHitbox)) {
                 Rectangle intersection = marioHitbox.intersection(flagHitbox);
-                if (direction == Direction.LEFT) {
-                    mario.setX(mario.getX() + intersection.width);
-                } else if (direction == Direction.RIGHT) {
+                if (direction == Direction.LEFT || direction == Direction.RIGHT) {
                     mario.setX(mario.getX() - intersection.width);
-                    if (mario.getReadyToFly()) {
-                        flag.flagBreak();
-                        mario.Flag();
-                        gameState = GameState.WIN;
-                        userInterface.updateGame();
-
-                    }
+                    flag.flagBreak();
+                    gameState = GameState.FLAG;
+                    flagGame();
+                    userInterface.updateGame();
                 } else if (direction == Direction.TOP) {
                     mario.setY(mario.getY() + intersection.height);
                     mario.setVelY(0);
@@ -331,6 +338,22 @@ public class Game {
 
             }
         }
+    }
+
+    public void flagGame() {
+        Timer timer = new Timer(5000, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                mario.setX(mario.getX() + numClicks * 10);
+                System.out.println("Number of presses : " + numClicks);
+                victory();
+            }
+        });
+        timer.setRepeats(false);
+        timer.start();
+    }
+
+    public void increaseNumClicks() {
+        numClicks++;
     }
 
     private Rectangle getGameObjectHitbox(GameObject object, Direction direction, boolean isOpposite) {

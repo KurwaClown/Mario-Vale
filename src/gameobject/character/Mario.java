@@ -3,7 +3,9 @@ package gameobject.character;
 import core.Game;
 import gameobject.GameObject;
 import gameobject.collectible.*;
+import view.Ressource;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import javax.swing.JOptionPane;
 import javax.swing.JDialog;
@@ -36,7 +38,6 @@ public class Mario extends GameObject {
 
     private int hp = 1;
 
-    private Game game;
 
     private List<Projectile> projectiles = new ArrayList<>();
 
@@ -189,38 +190,6 @@ public class Mario extends GameObject {
         readytoFly = true;
     }
 
-    public void Flag() {
-
-        JOptionPane optionPane = new JOptionPane("Spam B", JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
-        final JDialog dialog = new JDialog();
-        dialog.setTitle("Message");
-        dialog.setModal(true);
-
-        dialog.setContentPane(optionPane);
-        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-        dialog.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_B) {
-                    numClicks++;
-                }
-            }
-        });
-
-        Timer timer = new Timer(5000, new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                dialog.dispose();
-                x+= numClicks * 10;
-                System.out.println("Number of presses : " + numClicks);
-                numClicks = 0;
-            }
-        });
-        timer.setRepeats(false);
-        timer.start();
-
-        dialog.pack();
-        dialog.setVisible(true);
-    }
 
 
     public void update() {

@@ -52,7 +52,7 @@ public class InputManager implements KeyListener {
                     System.exit(1);
                 }
             }
-            if (keyCode == KeyEvent.VK_ESCAPE) {
+            else if (keyCode == KeyEvent.VK_ESCAPE) {
                 game.quitGame();
             }
         } else if (gameState == GameState.GAMEOVER || gameState == GameState.WIN) {
@@ -81,6 +81,11 @@ public class InputManager implements KeyListener {
                     game.getMario().stop(false);
                 } else if (keyCode == KeyEvent.VK_D) {
                     game.getMario().stop(true);
+                }
+            }
+            else if(gameState == GameState.FLAG){
+                if (keyCode == KeyEvent.VK_B) {
+                    game.increaseNumClicks();
                 }
             }
         }

@@ -24,12 +24,12 @@ public class Ressource {
     }
 
     private static void loadMaps() {
-        maps.put("map1", Ressource.class.getResource("../mapcsv/map1.csv").getFile());
+        maps.put("map1", Ressource.class.getResource("../ressource/mapcsv/map1.csv").getFile());
     }
 
     private static void loadFont() {
         try {
-            File fontFile = new File(Objects.requireNonNull(Ressource.class.getResource("../font/SuperMario256.ttf")).getFile());
+            File fontFile = new File(Objects.requireNonNull(Ressource.class.getResource("../ressource/font/SuperMario256.ttf")).getFile());
             marioFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(20f);
             System.out.println("Mario Font loaded");
         } catch (Exception e) {
@@ -42,28 +42,30 @@ public class Ressource {
 
     private static void loadImages() {
         try {
-            images.put("mario", ImageIO.read(Ressource.class.getResource("../img/mario_running1.png")));
-            images.put("mario1", ImageIO.read(Ressource.class.getResource("../img/mario_running2.png")));
-            images.put("champi", ImageIO.read(Ressource.class.getResource("../img/champi.png")));
-            images.put("turtle", ImageIO.read(Ressource.class.getResource("../img/turtle.png")));
-            images.put("plant", ImageIO.read(Ressource.class.getResource("../img/plant.png")));
-            images.put("brick", ImageIO.read(Ressource.class.getResource("../img/brick.png")));
-            images.put("deadBrick", ImageIO.read(Ressource.class.getResource("../img/deadBrick.png")));
-            images.put("bonus", ImageIO.read(Ressource.class.getResource("../img/bonus.png")));
-            images.put("jersey", ImageIO.read(Ressource.class.getResource("../img/jersey.png")));
-            images.put("trophy", ImageIO.read(Ressource.class.getResource("../img/trophy.png")));
-            images.put("champiRugby", ImageIO.read(Ressource.class.getResource("../img/champiRugby.png")));
-            images.put("marioStade", ImageIO.read(Ressource.class.getResource("../img/marioStade.png")));
-            images.put("flag", ImageIO.read(Ressource.class.getResource("../img/flag.png")));
-            images.put("coin", ImageIO.read(Ressource.class.getResource("../img/coin.png")));
-            images.put("flagBroken", ImageIO.read(Ressource.class.getResource("../img/flagOnGround.png")));
-            images.put("map", ImageIO.read(Ressource.class.getResource("../img/map.jpg")));
-            images.put("shell", ImageIO.read(Ressource.class.getResource("../img/shell.png")));
-            images.put("ball", ImageIO.read(Ressource.class.getResource("../img/ball.png")));
-            images.put("littlecoin", ImageIO.read(Ressource.class.getResource("../img/littlecoin.png")));
-            images.put("fondmenu", ImageIO.read(Ressource.class.getResource("../img/fond_menu.png")));
-            images.put("groundBrick", ImageIO.read(Ressource.class.getResource("../img/ground.png")));
-
+            images.put("mario", ImageIO.read(Ressource.class.getResource("../ressource/img/mario_running1.png")));
+            images.put("mario1", ImageIO.read(Ressource.class.getResource("../ressource/img/mario_running2.png")));
+            images.put("champi", ImageIO.read(Ressource.class.getResource("../ressource/img/champi.png")));
+            images.put("turtle", ImageIO.read(Ressource.class.getResource("../ressource/img/turtle.png")));
+            images.put("plant", ImageIO.read(Ressource.class.getResource("../ressource/img/plant.png")));
+            images.put("brick", ImageIO.read(Ressource.class.getResource("../ressource/img/brick.png")));
+            images.put("deadBrick", ImageIO.read(Ressource.class.getResource("../ressource/img/deadBrick.png")));
+            images.put("bonus", ImageIO.read(Ressource.class.getResource("../ressource/img/bonus.png")));
+            images.put("jersey", ImageIO.read(Ressource.class.getResource("../ressource/img/jersey.png")));
+            images.put("trophy", ImageIO.read(Ressource.class.getResource("../ressource/img/trophy.png")));
+            images.put("champiRugby", ImageIO.read(Ressource.class.getResource("../ressource/img/champiRugby.png")));
+            images.put("marioStade", ImageIO.read(Ressource.class.getResource("../ressource/img/marioStade.png")));
+            images.put("flag", ImageIO.read(Ressource.class.getResource("../ressource/img/flag.png")));
+            images.put("coin", ImageIO.read(Ressource.class.getResource("../ressource/img/coin.png")));
+            images.put("flagBroken", ImageIO.read(Ressource.class.getResource("../ressource/img/flagOnGround.png")));
+            images.put("map", ImageIO.read(Ressource.class.getResource("../ressource/img/map.jpg")));
+            images.put("shell", ImageIO.read(Ressource.class.getResource("../ressource/img/shell.png")));
+            images.put("ball", ImageIO.read(Ressource.class.getResource("../ressource/img/ball.png")));
+            images.put("littlecoin", ImageIO.read(Ressource.class.getResource("../ressource/img/littlecoin.png")));
+            images.put("fondmenu", ImageIO.read(Ressource.class.getResource("../ressource/img/fond_menu.png")));
+            images.put("groundBrick", ImageIO.read(Ressource.class.getResource("../ressource/img/ground.png")));
+            images.put("brennus", ImageIO.read(Ressource.class.getResource("../ressource/img/brennus.png")));
+            images.put("marioBrennus", ImageIO.read(Ressource.class.getResource("../ressource/img/marioval_brenus.png")));
+            images.put("marioDore", ImageIO.read(Ressource.class.getResource("../ressource/img/marioval_dore.png")));
             System.out.println("Images loaded");
 
         } catch (IOException e) {

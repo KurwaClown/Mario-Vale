@@ -204,7 +204,7 @@ public class Mario extends GameObject {
         dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
         dialog.addKeyListener(new KeyAdapter() {
             @Override
-            public void keyPressed(KeyEvent e) {
+            public void keyReleased(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_B) {
                     numClicks++;
                 }
@@ -228,7 +228,6 @@ public class Mario extends GameObject {
 
 
     public void update() {
-        System.out.println(counterCharge);
         if (regenCharge < 300) regenCharge++;
         if (this.isCharging && this.counterCharge>0){
             velX = 10;

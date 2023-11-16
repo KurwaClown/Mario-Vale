@@ -1,10 +1,13 @@
 package gameobject.block;
 
 import gameobject.collectible.PowerUp;
+import view.Ressource;
 
 public class Bonus extends Block {
 
     private final PowerUp containedPowerUp;
+
+    private boolean isDeadBlock = false;
 
     public Bonus(double xLocation, double yLocation, PowerUp containedPowerUp) {
         super(xLocation, yLocation, "bonus");
@@ -17,8 +20,10 @@ public class Bonus extends Block {
 
     @Override
     public void hit() {
+        if(isDeadBlock) return;
         displayBonus(containedPowerUp);
-        //TODO: transform into a deadblock
+        isDeadBlock = true;
+        setSprite(Ressource.getImage("deadBrick"));
     }
 
     public PowerUp getContainedPowerUp() {

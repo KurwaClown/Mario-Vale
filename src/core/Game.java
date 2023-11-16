@@ -272,7 +272,7 @@ public class Game {
             if (marioHitbox.intersects(enemyHitbox)) {
                 Rectangle intersection = marioHitbox.intersection(enemyHitbox);
                 if (direction == Direction.TOP || direction == Direction.LEFT || direction == Direction.RIGHT)
-                    if (mario.getVelX() > enemy.getVelX()) {
+                    if (mario.getVelX() > enemy.getVelX() && mario.getVelX()>5) {
                         enemy.attacked();
                     } else {
                         mario.attacked();

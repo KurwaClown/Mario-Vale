@@ -64,7 +64,7 @@ public class Mario extends GameObject {
     }
     public void reset(){
         setX(50);
-        setY(700);
+        setY(550);
         setVelX(0);
         setVelY(0);
         setFalling(true);

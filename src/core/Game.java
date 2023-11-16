@@ -144,9 +144,9 @@ public class Game {
             checkEnemyCollisions(direction);
             checkFlagCollisions(direction);
             checkProjectileCollisions(direction);
+        checkEnnemyBlockCollisions(direction);
         }
         checkPowerupCollisions();
-        checkEnnemyBlockCollisions();
 
         removeUnusedObjects();
     }
@@ -289,7 +289,7 @@ public class Game {
 
     }
 
-    public void checkEnnemyBlockCollisions() {
+    public void checkEnnemyBlockCollisions(Direction direction) {
         for (Enemy enemy : mapManager.getMap().getEnemies()) {
             if(!enemy.isJumping()){
                 enemy.setFalling(true);
@@ -299,15 +299,31 @@ public class Game {
                     : getGameObjectHitbox(enemy, Direction.LEFT, false);
 
             for (Block block : mapManager.getMap().getBlocks()) {
-                Rectangle blockHitbox = enemyLookingRight ? getGameObjectHitbox(block, Direction.RIGHT, true)
-                        : getGameObjectHitbox(block, Direction.LEFT, true);
+                Rectangle blockHitbox = getGameObjectHitbox(block, direction, true);
 
                 if (champiHitbox.intersects(blockHitbox)) {
                     Rectangle intersection = champiHitbox.intersection(blockHitbox);
-                    double newX = enemyLookingRight ? enemy.getX() - intersection.width : enemy.getX() + intersection.width;
-                    enemy.setX(newX);
-                    enemy.inverseVelX();
+                    if (direction == Direction.LEFT && enemy.getVelX() < 0) {
+                        enemy.setX(enemy.getX() + intersection.width);
+                        enemy.inverseVelX();
+                    } else if (direction == Direction.RIGHT && enemy.getVelX() > 0) {
+                        enemy.setX(enemy.getX() - intersection.width);
+                        enemy.inverseVelX();
+                    } else if (direction == Direction.TOP && enemy.getVelY() > 0) {
+                        if(enemy.isFalling()) break;
+                        enemy.setY(enemy.getY() + intersection.height);
+                        enemy.setVelY(0);
+                        if (block instanceof Bonus bonus) mapManager.getMap().addPowerup(bonus.getContainedPowerUp());
+                        block.hit();
+                    } else if (direction == Direction.BOTTOM) {
+                        enemy.setY(block.getY() - enemy.getSpriteDimension().height);
+                        enemy.setVelY(0);
+                        enemy.setJumping(false);
+                        enemy.setFalling(false);
+                    }
                 }
+
+
             }
         }
     }

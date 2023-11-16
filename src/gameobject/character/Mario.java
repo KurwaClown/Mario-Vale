@@ -34,6 +34,10 @@ public class Mario extends GameObject {
     private int coins = 0;
     private int score;
 
+    private int hp = 1;
+
+    private Game game;
+
     private List<Projectile> projectiles = new ArrayList<>();
 
     public void addScore(int points) {
@@ -45,13 +49,14 @@ public class Mario extends GameObject {
         return score;
     }
 
-    private enum Mode{
-        NORMAL, JERSEY, THROWER, WINNER // Jersey, Ball and Trophy
+
+    private enum Mode {
+        NORMAL, JERSEY, THROWER, WINNER, BRENNUS
     }
 
     private int numClicks = 0;
 
-    private boolean readytoFly=false;
+    private boolean readytoFly = false;
 
     public Mario(int x, int y) {
         super(x, y, "mario");
@@ -62,7 +67,8 @@ public class Mario extends GameObject {
         lastSpriteChangeTime = System.currentTimeMillis();
         setFalling(true);
     }
-    public void reset(){
+
+    public void reset() {
         setX(50);
         setY(550);
         setVelX(0);
@@ -72,6 +78,7 @@ public class Mario extends GameObject {
         this.coins = 0;
         this.score = 0;
     }
+
     public void jump() {
         if (!isJumping() && !isFalling()) {
             forceJump();
@@ -79,11 +86,12 @@ public class Mario extends GameObject {
             forceJump();
         }
     }
+
     public void forceJump() {
-            setJumping(true);
-            setFalling(false);
-            setVelY(10);
-            canForceJump = false;
+        setJumping(true);
+        setFalling(false);
+        setVelY(10);
+        canForceJump = false;
     }
 
     public void move(boolean toRight) {
@@ -112,14 +120,12 @@ public class Mario extends GameObject {
     public void powerup(PowerUp powerUp) {
         if (powerUp instanceof Jersey) {
             this.mode = Mode.JERSEY;
-            updateImage();
             new java.util.Timer().schedule(
                     new java.util.TimerTask() {
                         @Override
                         public void run() {
                             if (mode == Mode.JERSEY) {
                                 mode = Mode.NORMAL;
-                                updateImage();
                             }
                         }
                     },
@@ -128,8 +134,25 @@ public class Mario extends GameObject {
 
         } else if (powerUp instanceof Ball) {
             this.mode = Mode.THROWER;
+        } else if (powerUp instanceof Brennus) {
+            this.mode = Mode.BRENNUS;
+            this.hp = 2;
         } else if (powerUp instanceof Trophy) {
             this.mode = Mode.WINNER;
+            hp = 1000;
+            new java.util.Timer().schedule(
+                    new java.util.TimerTask() {
+                        @Override
+                        public void run() {
+                            if (mode == Mode.WINNER) {
+                                mode = Mode.NORMAL;
+                                hp =1;
+                            }
+                        }
+                    },
+                    12000
+            );
+
         }
         System.out.printf("Mario is now in %s mode\n", mode);
     }
@@ -141,19 +164,28 @@ public class Mario extends GameObject {
                 regenCharge = 0;
             }
         } else if (this.mode == Mode.THROWER) {
-            if(regenCharge >= 30){
+            if (regenCharge >= 30) {
                 throwBall(map);
                 regenCharge -= 30;
             }
         }
     }
 
+    public void attacked() {
+        this.hp--;
+        if (this.hp == 1 && this.mode == Mode.BRENNUS) {
+            this.mode = Mode.NORMAL;
+            System.out.println(this.mode);
+        }
+
+    }
+
     private void throwBall(view.Map map) {
         map.addProjectile(new Projectile((int) x, (int) y));
     }
 
-    public void finish(){
-        readytoFly=true;
+    public void finish() {
+        readytoFly = true;
     }
 
     public void Flag() {
@@ -190,14 +222,30 @@ public class Mario extends GameObject {
     }
 
 
-
-    public void updateImage() {
+    public void update() {
+        if (regenCharge < 300) regenCharge++;
         if (this.mode == Mode.JERSEY) {
             setSprite(view.Ressource.getImage("marioStade"));
+        } else if (this.mode == Mode.BRENNUS) {
+            setSprite(view.Ressource.getImage("marioBrennus"));
+        } else if (this.mode == Mode.WINNER) {
+            setSprite(view.Ressource.getImage("marioDore"));
         } else {
             setSprite(getCurrentSprite());
         }
-    }
+//            if (getVelX() != 0) {
+//                long currentTime = System.currentTimeMillis();
+//                long timeSinceLastChange = currentTime - lastSpriteChangeTime;
+//
+//                if (timeSinceLastChange > ANIMATION_TIME) {
+//                    currentSpriteIndex = (currentSpriteIndex + 1) % sprites.length;
+//                    lastSpriteChangeTime = currentTime - (timeSinceLastChange - ANIMATION_TIME);
+//
+//                }
+//            } else {
+//                currentSpriteIndex = 0;
+//            }
+        }
 
     public void update() {
         if (regenCharge < 300) regenCharge++;
@@ -229,7 +277,13 @@ public class Mario extends GameObject {
         System.out.println("Coins: " + this.getCoins());
     }
 
-    public int getCoins() {
-        return coins;
-    }
-}
+            public int getCoins () {
+                return coins;
+            }
+
+            public int getHp () {
+                return hp;
+            }
+
+        }
+

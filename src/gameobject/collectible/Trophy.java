@@ -1,5 +1,6 @@
 package gameobject.collectible;
 
+import gameobject.character.Mario;
 import gameobject.collectible.PowerUp;
 
 public class Trophy extends PowerUp{

@@ -1,4 +1,8 @@
-public class Brennus extends PowerUp{
+package gameobject.character;
+
+import gameobject.collectible.PowerUp;
+
+public class Brennus extends PowerUp {
     public Brennus() {
         super("brennus");
     }

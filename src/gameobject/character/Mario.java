@@ -1,8 +1,10 @@
 package gameobject.character;
 
+import core.Game;
 import gameobject.GameObject;
 import gameobject.collectible.Ball;
 import gameobject.collectible.Jersey;
+
 import gameobject.collectible.PowerUp;
 import gameobject.collectible.Trophy;
 
@@ -233,40 +235,20 @@ public class Mario extends GameObject {
         } else {
             setSprite(getCurrentSprite());
         }
-//            if (getVelX() != 0) {
-//                long currentTime = System.currentTimeMillis();
-//                long timeSinceLastChange = currentTime - lastSpriteChangeTime;
-//
-//                if (timeSinceLastChange > ANIMATION_TIME) {
-//                    currentSpriteIndex = (currentSpriteIndex + 1) % sprites.length;
-//                    lastSpriteChangeTime = currentTime - (timeSinceLastChange - ANIMATION_TIME);
-//
-//                }
-//            } else {
-//                currentSpriteIndex = 0;
-//            }
-        }
+            if (getVelX() != 0) {
+                long currentTime = System.currentTimeMillis();
+                long timeSinceLastChange = currentTime - lastSpriteChangeTime;
 
-    public void update() {
-        if (regenCharge < 300) regenCharge++;
+                if (timeSinceLastChange > ANIMATION_TIME) {
+                    currentSpriteIndex = (currentSpriteIndex + 1) % sprites.length;
+                    lastSpriteChangeTime = currentTime - (timeSinceLastChange - ANIMATION_TIME);
 
-        if (this.mode == Mode.JERSEY) return;
-
-
-        if (getVelX() != 0) {
-            long currentTime = System.currentTimeMillis();
-            long timeSinceLastChange = currentTime - lastSpriteChangeTime;
-
-            if (timeSinceLastChange > ANIMATION_TIME) {
-                currentSpriteIndex = (currentSpriteIndex + 1) % sprites.length;
-                lastSpriteChangeTime = currentTime - (timeSinceLastChange - ANIMATION_TIME);
-
+                }
+            } else {
+                currentSpriteIndex = 0;
             }
-        } else {
-            currentSpriteIndex = 0;
         }
-        updateImage();
-    }
+
     public boolean getReadyToFly(){
         return readytoFly;
     }

@@ -63,6 +63,7 @@ public class Ressource {
             images.put("littlecoin", ImageIO.read(Ressource.class.getResource("../img/littlecoin.png")));
             images.put("fondmenu", ImageIO.read(Ressource.class.getResource("../img/fond_menu.png")));
             images.put("groundBrick", ImageIO.read(Ressource.class.getResource("../img/ground.png")));
+
             System.out.println("Images loaded");
 
         } catch (IOException e) {

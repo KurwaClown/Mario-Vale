@@ -29,7 +29,9 @@ public class Mario extends GameObject {
     private static final long ANIMATION_TIME = 500;
 
     private int regenCharge = 300;
-    private int timingCharge = 30;
+    private int counterCharge = 15;
+
+    private boolean isCharging = false;
 
     public boolean canForceJump = true;
 
@@ -162,8 +164,9 @@ public class Mario extends GameObject {
     public void attack(view.Map map) {
         if (this.mode == Mode.JERSEY) {
             if (regenCharge == 300) {
-                velX = 10;
-                regenCharge = 0;
+                this.isCharging=true;
+            } else {
+                isCharging = false;
             }
         } else if (this.mode == Mode.THROWER) {
             if (regenCharge >= 30) {
@@ -225,8 +228,21 @@ public class Mario extends GameObject {
 
 
     public void update() {
+        System.out.println(counterCharge);
         if (regenCharge < 300) regenCharge++;
-        if (this.mode == Mode.JERSEY) {
+        if (this.isCharging && this.counterCharge>0){
+            velX = 10;
+            regenCharge = 0;
+            counterCharge--;
+        }
+        else if (!this.isCharging && this.counterCharge<15){
+             counterCharge++;
+             velX=5;
+        }
+        else {
+            this.isCharging=false;
+        }
+    if (this.mode == Mode.JERSEY) {
             setSprite(view.Ressource.getImage("marioStade"));
         } else if (this.mode == Mode.BRENNUS) {
             setSprite(view.Ressource.getImage("marioBrennus"));

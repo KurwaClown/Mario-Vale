@@ -264,7 +264,11 @@ public class Game {
             if (marioHitbox.intersects(enemyHitbox)) {
                 Rectangle intersection = marioHitbox.intersection(enemyHitbox);
                 if (direction == Direction.TOP || direction == Direction.LEFT || direction == Direction.RIGHT)
-                    mario.attacked();
+                    if (mario.getVelX()>enemy.getVelX()){
+                        enemy.attacked();
+                    } else {
+                        mario.attacked();
+                    }
                 if(mario.getHp()==0){
                     gameOver();
                 }

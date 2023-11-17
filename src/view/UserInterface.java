@@ -27,8 +27,6 @@ public class UserInterface extends JPanel {
             repaint();
         } else if (game.getGameState() == GameState.FLAG) {
             game.getMap().draw(g);
-            drawFlagCount(game.getFlagCount());
-            repaint();
         }else if (game.getGameState() == GameState.PAUSED){
             game.getMenu().drawPauseMenu(g);
             repaint();

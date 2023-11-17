@@ -163,7 +163,7 @@ public class Game {
     }
 
     private void checkForMapBoundaries() {
-        if (mario.getVelX() < 0 && mario.getX() < camera.getX()) {
+        if (mario.getX() < camera.getX()) {
             mario.setX(camera.getX());
         }
     }

@@ -34,6 +34,26 @@ public class Menu {
             g.drawString(options[i], 650, 450 + i * 100);
         }
     }
+
+    public void drawPauseMenu(Graphics g) {
+        String[] options = {"Resume", "Quit"};
+        g.drawImage(backgroundImage, 0, 0, null);
+
+        drawMenuTitle("Pause", 500, g);
+
+        g.setFont(Ressource.getMarioFont());
+        for (int i = 0; i < options.length; i++) {
+            if (i == selectedOption) {
+                g.setColor(Color.RED);
+                int stringWidth = g.getFontMetrics().stringWidth(options[i]);
+                int stringHeight = g.getFontMetrics().getHeight();
+                g.drawRect(640, 450 + i * 100 - stringHeight, stringWidth + 20, stringHeight + 10);
+            } else {
+                g.setColor(Color.WHITE);
+            }
+            g.drawString(options[i], 650, 450 + i * 100);
+        }
+    }
     public void drawGameOver (Graphics g){
 
         drawMenuTitle("Game Over", 400, g);

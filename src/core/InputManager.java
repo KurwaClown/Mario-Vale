@@ -35,10 +35,16 @@ public class InputManager implements KeyListener {
                 game.reset();
             }
         } else if (gameState == GameState.PAUSED) {
-            if (keyCode == KeyEvent.VK_ESCAPE) {
-                game.resumeGame();
-            } else if (keyCode == KeyEvent.VK_R) {
-                game.reset();
+            if (keyCode == KeyEvent.VK_Z) {
+                game.getMenu().setSelectedOption((game.getMenu().getSelectedOption() - 1 + game.getMenu().getOption().length) % game.getMenu().getOption().length);
+            } else if (keyCode == KeyEvent.VK_S) {
+                game.getMenu().setSelectedOption((game.getMenu().getSelectedOption() - 1 + game.getMenu().getOption().length) % game.getMenu().getOption().length);
+            } else if (keyCode == KeyEvent.VK_ENTER) {
+                if (game.getMenu().getSelectedOption() == 0) {
+                    game.resumeGame();
+                } else if (game.getMenu().getSelectedOption() == 1) {
+                    System.exit(1);
+                }
             }
         } else if (gameState == GameState.MENU) {
             if (keyCode == KeyEvent.VK_Z) {

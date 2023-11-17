@@ -33,6 +33,8 @@ public class InputManager implements KeyListener {
                 game.getMario().finish();
             } else if (keyCode == KeyEvent.VK_R) {
                 game.reset();
+            } else if (keyCode == KeyEvent.VK_P) {
+                game.getMario().rotatePowerUp();
             }
         } else if (gameState == GameState.PAUSED) {
             if (keyCode == KeyEvent.VK_Z) {

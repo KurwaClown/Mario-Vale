@@ -69,6 +69,21 @@ public class Mario extends GameObject {
         setFalling(true);
     }
 
+    //For testing purposes only
+    public void rotatePowerUp() {
+        if (mode == Mode.NORMAL) {
+            mode = Mode.JERSEY;
+        } else if (mode == Mode.JERSEY) {
+            mode = Mode.THROWER;
+        } else if (mode == Mode.THROWER) {
+            mode = Mode.BRENNUS;
+        } else if (mode == Mode.BRENNUS) {
+            mode = Mode.WINNER;
+        } else if (mode == Mode.WINNER) {
+            mode = Mode.NORMAL;
+        }
+    }
+
     public void reset() {
         setX(50);
         setY(550);

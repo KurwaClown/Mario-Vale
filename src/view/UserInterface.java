@@ -24,14 +24,18 @@ public class UserInterface extends JPanel {
         }
         else if (game.getGameState() == GameState.GAMEOVER){
             game.getMenu().drawGameOver(g);
-            repaint();
         } else if (game.getGameState() == GameState.FLAG) {
             game.getMap().draw(g);
+            addGreyMask(g);
+            drawFlagCount(g);
         }else if (game.getGameState() == GameState.PAUSED){
+            game.getMap().draw(g);
             game.getMenu().drawPauseMenu(g);
+            addGreyMask(g);
             repaint();
         }else {
             game.getMap().draw(g);
+
         }
 
     }
@@ -40,11 +44,15 @@ public class UserInterface extends JPanel {
             game.getMap().update();
         }
 
-    public void drawFlagCount(int count) {
-        Graphics g = this.getGraphics();
+    public void drawFlagCount(Graphics g) {
+        g.setFont(Ressource.getMarioFont().deriveFont(60f));
         g.setColor(Color.WHITE);
-        g.setFont(Ressource.getMarioFont());
-        g.drawString(String.valueOf(count), 600, 350);
+        g.drawString(String.valueOf(game.getFlagCount()), (int)game.getCamera().getX()+(getWidth()/2),  400);
+    }
+
+    private void addGreyMask(Graphics g) {
+        g.setColor(new Color(128, 128, 128, 128));
+        g.fillRect((int)game.getCamera().getX(), (int)game.getCamera().getY(), 1300, 800);
     }
 }
     

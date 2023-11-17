@@ -21,8 +21,6 @@ public class Game {
     private final int TARGET_FPS = 60;
     private final static int WIDTH = 1300;
     private final static int HEIGHT = 730;
-    private int coins = 0;
-    private int score = 0;
     private GameState gameState;
     private final UserInterface userInterface;
     private final view.Camera camera;
@@ -389,6 +387,10 @@ public class Game {
 
     public view.Menu getMenu() {
         return menu;
+    }
+
+    public view.Camera getCamera() {
+        return camera;
     }
 
 }

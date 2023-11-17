@@ -37,7 +37,7 @@ public class Menu {
 
     public void drawPauseMenu(Graphics g) {
         String[] options = {"Resume", "Quit"};
-        g.drawImage(backgroundImage, 0, 0, null);
+        //g.drawImage(backgroundImage, 0, 0, null);
 
         drawMenuTitle("Pause", 500, g);
 

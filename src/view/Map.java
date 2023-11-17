@@ -87,8 +87,6 @@ public class Map {
         }
         for (Flag flag : flags) {
             flag.draw(g);
-
-
         }
         for (Enemy enemy : enemies) {
             enemy.draw(g);

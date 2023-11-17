@@ -27,10 +27,5 @@ public class Flag extends GameObject {
     @Override
     public void draw(Graphics g) {
         super.draw(g);
-        System.out.println (flagBroken);
-        if(flagBroken)
-            g.setFont(Ressource.getMarioFont().deriveFont(60f));
-            g.drawString(String.valueOf(count), (int)x,  400);
-
     }
 }

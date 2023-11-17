@@ -74,6 +74,7 @@ public class Mario extends GameObject {
         setY(550);
         setVelX(0);
         setVelY(0);
+        setLookingRight(true);
         setFalling(true);
         setJumping(false);
         this.coins = 0;
@@ -96,13 +97,8 @@ public class Mario extends GameObject {
     }
 
     public void move(boolean toRight) {
-        if (toRight) {
-            setVelX(5);
-        } else {
-            setVelX(-5);
-        }
-
-
+        setLookingRight(toRight);
+        setVelX(5);
     }
 
     public BufferedImage getCurrentSprite() {
@@ -110,11 +106,7 @@ public class Mario extends GameObject {
     }
 
     public void stop(boolean toRight) {
-        if (toRight && getVelX() > 0) {
-            setVelX(0);
-        } else if (!toRight && getVelX() < 0) {
-            setVelX(0);
-        }
+        if(toRight == isLookingRight()) setVelX(0);
     }
 
 
@@ -183,7 +175,7 @@ public class Mario extends GameObject {
     }
 
     private void throwBall(view.Map map) {
-        map.addProjectile(new Projectile((int) x, (int) y));
+        map.addProjectile(new Projectile((int) x, (int) y, isLookingRight()));
     }
 
     public void finish() {

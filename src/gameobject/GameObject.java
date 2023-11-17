@@ -10,7 +10,7 @@ public class GameObject {
     protected double x, y;
     protected double velX, velY;
     private final double gravity = 0.30f;
-
+    private boolean lookingRight = true;
     private final int GROUND_LEVEL = 650;
     private Dimension spriteDimension; // Dimension encapsulate width and height
     protected BufferedImage sprite;
@@ -33,7 +33,7 @@ public class GameObject {
      */
     public void draw(Graphics g) {
         BufferedImage style = this.sprite;
-
+        if(!this.isLookingRight()) style = Ressource.getFlippedImage(this.sprite);
         if(style != null){
             g.drawImage(style, (int)this.x, (int)this.y, null);
         }
@@ -55,8 +55,8 @@ public class GameObject {
             velY = velY + gravity;
 
         }
-
-        x = x + velX;
+        if(lookingRight) x = x + velX;
+        else x = x - velX;
     }
     // Creating Rectangle to check collisions (cf Game.java => Collisions management)
     public Rectangle getBottomCollision(){
@@ -138,6 +138,13 @@ public class GameObject {
         return new Rectangle((int)x, (int)y, sprite.getWidth(), sprite.getHeight());
     }
 
+    public void setLookingRight(boolean lookingRight) {
+        this.lookingRight = lookingRight;
+    }
+
+    public boolean isLookingRight() {
+        return lookingRight;
+    }
     public void UpdateSpriteDimension() {
         this.spriteDimension = new Dimension(sprite.getWidth(), sprite.getHeight());
     }

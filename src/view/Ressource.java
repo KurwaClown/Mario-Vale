@@ -2,6 +2,7 @@ package view;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -75,6 +76,29 @@ public class Ressource {
 
     public static BufferedImage getImage(String name) {
         return images.get(name);
+    }
+
+    public static BufferedImage getFlippedImage(BufferedImage image) {
+        return flipHorizontally(image);
+    }
+
+    private static BufferedImage flipHorizontally(BufferedImage originalImage) {
+        int width = originalImage.getWidth();
+        int height = originalImage.getHeight();
+
+        BufferedImage flippedImage = new BufferedImage(width, height, originalImage.getType());
+        Graphics2D g2d = flippedImage.createGraphics();
+
+        AffineTransform at = new AffineTransform();
+        at.concatenate(AffineTransform.getScaleInstance(-1, 1)); // Flip horizontally
+        at.concatenate(AffineTransform.getTranslateInstance(-width, 0)); // Translate back
+
+        g2d.setTransform(at);
+        g2d.drawImage(originalImage, 0, 0, null);
+
+        g2d.dispose();
+
+        return flippedImage;
     }
 
     public static Font getMarioFont() {

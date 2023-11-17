@@ -217,9 +217,9 @@ public class Game {
 
             if (marioHitbox.intersects(blockHitbox)) {
                 Rectangle intersection = marioHitbox.intersection(blockHitbox);
-                if (direction == Direction.LEFT && mario.getVelX() < 0) {
+                if (direction == Direction.LEFT && !mario.isLookingRight()) {
                     mario.setX(mario.getX() + intersection.width);
-                } else if (direction == Direction.RIGHT && mario.getVelX() > 0) {
+                } else if (direction == Direction.RIGHT && mario.isLookingRight()) {
                     mario.setX(mario.getX() - intersection.width);
                 } else if (direction == Direction.TOP && mario.getVelY() > 0) {
                     if (mario.isFalling()) break;
@@ -306,7 +306,7 @@ public class Game {
             if (!enemy.isJumping()) {
                 enemy.setFalling(true);
             }
-            boolean enemyLookingRight = enemy.getVelX() > 0;
+            boolean enemyLookingRight = enemy.isLookingRight();
             Rectangle champiHitbox = enemyLookingRight ? getGameObjectHitbox(enemy, Direction.RIGHT, false)
                     : getGameObjectHitbox(enemy, Direction.LEFT, false);
 
@@ -315,10 +315,10 @@ public class Game {
 
                 if (champiHitbox.intersects(blockHitbox)) {
                     Rectangle intersection = champiHitbox.intersection(blockHitbox);
-                    if (direction == Direction.LEFT && enemy.getVelX() < 0) {
+                    if (direction == Direction.LEFT && !enemy.isLookingRight()) {
                         enemy.setX(enemy.getX() + intersection.width);
                         enemy.inverseVelX();
-                    } else if (direction == Direction.RIGHT && enemy.getVelX() > 0) {
+                    } else if (direction == Direction.RIGHT && enemy.isLookingRight()) {
                         enemy.setX(enemy.getX() - intersection.width);
                         enemy.inverseVelX();
                     } else if (direction == Direction.TOP && enemy.getVelY() > 0) {
@@ -334,8 +334,6 @@ public class Game {
                         enemy.setFalling(false);
                     }
                 }
-
-
             }
         }
     }

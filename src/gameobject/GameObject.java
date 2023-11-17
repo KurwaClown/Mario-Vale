@@ -60,11 +60,11 @@ public class GameObject {
     }
     // Creating Rectangle to check collisions (cf Game.java => Collisions management)
     public Rectangle getBottomCollision(){
-        return new Rectangle((int)x, (int)y + spriteDimension.height - 10, spriteDimension.width, 10);
+        return new Rectangle((int)x, (int)y + spriteDimension.height - 20, spriteDimension.width, 20);
     }
 
     public Rectangle getTopCollision(){
-        return new Rectangle((int)x, (int)(y), spriteDimension.width, 10);
+        return new Rectangle((int)x, (int)(y), spriteDimension.width, 20);
     }
     
     public Rectangle getLeftCollision(){

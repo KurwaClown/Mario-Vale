@@ -277,15 +277,16 @@ public class Game {
                     } else {
                         mario.attacked();
                     }
-                if (mario.getHp() == 0) {
-                    gameOver();
-                } else {
+                else {
                     enemy.attacked();
                     mario.addScore(300);
                     mario.setY(mario.getY() - intersection.height);
                     mario.setFalling(false);
                     mario.setJumping(false);
                     mario.jump();
+                }
+                if (mario.getHp() == 0) {
+                    gameOver();
                 }
             }
         }

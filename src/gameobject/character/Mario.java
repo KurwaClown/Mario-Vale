@@ -39,8 +39,6 @@ public class Mario extends GameObject {
     private int hp = 1;
 
 
-    private List<Projectile> projectiles = new ArrayList<>();
-
     public void addScore(int points) {
         score += points;
         System.out.println("Score: " + this.getScore());
@@ -89,6 +87,7 @@ public class Mario extends GameObject {
         setY(550);
         setVelX(0);
         setVelY(0);
+        mode = Mode.NORMAL;
         setLookingRight(true);
         setFalling(true);
         setJumping(false);
@@ -202,13 +201,13 @@ public class Mario extends GameObject {
     public void update() {
         if (regenCharge < 300) regenCharge++;
         if (this.isCharging && this.counterCharge>0){
-            velX = 10;
+            setVelX(10);
             regenCharge = 0;
             counterCharge--;
         }
         else if (!this.isCharging && this.counterCharge<15){
              counterCharge++;
-             velX=5;
+             velX=3.5;
         }
         else {
             this.isCharging=false;

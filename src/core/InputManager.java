@@ -17,7 +17,6 @@ public class InputManager implements KeyListener {
         GameState gameState = game.getGameState();
 
 
-//  TODO: Implement Mario Actions
         if (gameState == GameState.PLAYING) {
             if (keyCode == KeyEvent.VK_SPACE) {
                 game.getMario().jump();

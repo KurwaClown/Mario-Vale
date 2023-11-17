@@ -29,8 +29,6 @@ public class Map {
     private final Camera camera;
 
 
-    private Mario mario;
-
     public Map(Camera camera) {
         this.camera = camera;
     }
@@ -118,7 +116,8 @@ public class Map {
             flag.moveObject();
         }
         for (Enemy enemy : enemies) {
-            enemy.update();
+            if(enemy instanceof gameobject.enemy.Champi champi) champi.update(marios.getFirst().getHitbox());
+            else enemy.update();
             enemy.moveObject();
         }
         for(Projectile projectile : projectiles){

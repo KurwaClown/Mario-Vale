@@ -2,6 +2,7 @@ package gameobject.enemy;
 
 import view.Ressource;
 
+import java.awt.*;
 import java.util.Random;
 
 public class Champi extends Enemy {
@@ -17,28 +18,27 @@ public class Champi extends Enemy {
         }
     }
     // Implementing the automatic moves and the ability to charge
-    @Override
-    public void update() {
-        //TODO: Fix rugbyman
-//        if (isRugbyman && regenCharge == 300) {
-//            setVelX(10);
-//            timingCharge--;
-//            regenCharge = 0;
-//            if (timingCharge == 0) {
-//                velX = 0;
-//                timingCharge = 30;
-//            }
-//
-//        }
-//        if(regenCharge<300){
-//            regenCharge++;
-//        }
+
+    public void update(Rectangle marioHitbox) {
+        if (isRugbyman && regenCharge == 300 && marioHitbox.intersects(getForwardHitbox())) {
+            setVelX(9.9f);
+            timingCharge--;
+            regenCharge = 0;
+        }
+        if(regenCharge<300){
+            regenCharge++;
+        }
+        if(regenCharge == 30) setVelX(3.5);
     }
 
     // Random use to create a champi or a RugbyChampi
     public int getRandom(){
         Random rand = new Random();
         return rand.nextInt(10);
+    }
+
+    private Rectangle getForwardHitbox() {
+        return new Rectangle((int) x + (isLookingRight() ? getSpriteDimension().width : -getSpriteDimension().width*3), (int) y, getSpriteDimension().width * 3 , getSpriteDimension().height);
     }
 }
 

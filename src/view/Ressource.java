@@ -68,6 +68,8 @@ public class Ressource {
             images.put("brennus", ImageIO.read(Ressource.class.getResource("../ressource/img/brennus.png")));
             images.put("marioBrennus", ImageIO.read(Ressource.class.getResource("../ressource/img/marioval_brenus.png")));
             images.put("marioDore", ImageIO.read(Ressource.class.getResource("../ressource/img/marioval_dore.png")));
+            images.put("pipeBase", ImageIO.read(Ressource.class.getResource("../ressource/img/pipebody.png")));
+            images.put("pipeTop", ImageIO.read(Ressource.class.getResource("../ressource/img/pipetop.png")));
             System.out.println("Images loaded");
 
         } catch (IOException e) {

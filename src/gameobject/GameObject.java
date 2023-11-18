@@ -4,11 +4,12 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import gameobject.character.Mario;
+import gameobject.enemy.Turtle;
 import view.Ressource;
 
 public class GameObject {
-    protected double x, y;
-    protected double velX, velY;
+    private double x, y;
+    private double velX, velY;
     private final double gravity = 0.30f;
     private boolean lookingRight = true;
     private Dimension spriteDimension; // Dimension encapsulate width and height
@@ -119,6 +120,7 @@ public class GameObject {
         this.falling = falling;
     }
     public void setX(double x) {
+
         this.x = x;
     }
 

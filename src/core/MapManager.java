@@ -54,12 +54,12 @@ public class MapManager {
         y = y * 64;
         return switch (id) {
             case 4 -> new Brick(x, y);
-            case 5 -> new Champi(x, y);
+            case 5 -> new Champi(x, y- 64);
             case 7 -> new Coin(x, y);
             case 8 -> new DeadBrick(x, y);
             case 9 -> new Flag(x);
             case 12 -> new GroundBrick(x, y);
-            case 24 -> new Turtle(x, y);
+            case 24 -> new Turtle(x, y- 64);
             case 26 -> new Pipe(x, y, false);
             case 27 -> new Pipe(x, y, true);
             case 28 -> new Bonus(x, y, new Ball());

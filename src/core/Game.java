@@ -3,11 +3,13 @@ package core;
 import gameobject.*;
 import gameobject.block.Block;
 import gameobject.block.Bonus;
+import gameobject.block.Pipe;
 import gameobject.character.Mario;
 import gameobject.character.Projectile;
 import gameobject.collectible.Coin;
 import gameobject.collectible.PowerUp;
 import gameobject.enemy.Enemy;
+import gameobject.enemy.Turtle;
 import view.*;
 
 import javax.swing.*;
@@ -314,15 +316,13 @@ public class Game {
             if (!enemy.isJumping()) {
                 enemy.setFalling(true);
             }
-            boolean enemyLookingRight = enemy.isLookingRight();
-            Rectangle champiHitbox = enemyLookingRight ? getGameObjectHitbox(enemy, Direction.RIGHT, false)
-                    : getGameObjectHitbox(enemy, Direction.LEFT, false);
+            Rectangle enemyHitbox = getGameObjectHitbox(enemy, direction, false);
 
             for (Block block : mapManager.getMap().getBlocks()) {
                 Rectangle blockHitbox = getGameObjectHitbox(block, direction, true);
 
-                if (champiHitbox.intersects(blockHitbox)) {
-                    Rectangle intersection = champiHitbox.intersection(blockHitbox);
+                if (enemyHitbox.intersects(blockHitbox)) {
+                    Rectangle intersection = enemyHitbox.intersection(blockHitbox);
                     if (direction == Direction.LEFT && !enemy.isLookingRight()) {
                         enemy.setX(enemy.getX() + enemy.getVelX());
                         enemy.inverseVelX();
@@ -336,6 +336,7 @@ public class Game {
                         if (block instanceof Bonus bonus) mapManager.getMap().addPowerup(bonus.getContainedPowerUp());
                         block.hit();
                     } else if (direction == Direction.BOTTOM && enemy.isFalling()) {
+                        if(block instanceof Pipe) System.out.println(enemy + " from bottom");
                         enemy.setY(block.getY() - enemy.getSpriteDimension().height);
                         enemy.setVelY(0);
                         enemy.setJumping(false);

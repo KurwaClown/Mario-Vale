@@ -14,10 +14,10 @@ public int direction =1;
             Random rand = new Random();
             int test = rand.nextInt(2);
             if (test ==1 && isOut ==false){
-                y += 50;
+                setY(getY() + 50);
             }
             else if (test ==1 && isOut ==true){
-                y -=50;
+                setY(getY() - 50);
             }
         }
 

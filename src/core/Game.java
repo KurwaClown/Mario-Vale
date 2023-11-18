@@ -147,7 +147,7 @@ public class Game {
 
     // Collision management
     private void checkCollisions() {
-        checkForMapBoundaries();
+
         for (Direction direction : Direction.values()) {
             checkBlockCollisions(direction);
             checkEnemyCollisions(direction);
@@ -156,13 +156,16 @@ public class Game {
             checkEnnemyBlockCollisions(direction);
         }
         checkPowerupCollisions();
-
+        checkForMapBoundaries();
         removeUnusedObjects();
     }
 
     private void checkForMapBoundaries() {
         if (mario.getX() < camera.getX()) {
             mario.setX(camera.getX());
+        }
+        if(mario.getY() > camera.getY() + userInterface.getHeight()){
+            gameOver();
         }
     }
 

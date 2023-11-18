@@ -1,5 +1,6 @@
 package gameobject.enemy;
 
+import view.AudioManager;
 import view.Ressource;
 
 import java.awt.*;
@@ -8,6 +9,8 @@ import java.util.Random;
 public class Champi extends Enemy {
     private boolean isRugbyman = false;
     private int regenCharge=300;
+
+    private AudioManager audioManager = new AudioManager();
     private int timingCharge=30;
 
     public Champi(int x, int y){
@@ -21,6 +24,7 @@ public class Champi extends Enemy {
 
     public void update(Rectangle marioHitbox) {
         if (isRugbyman && regenCharge == 300 && marioHitbox.intersects(getForwardHitbox())) {
+            audioManager.playSound("champicharge.wav");
             setVelX(9.9f);
             timingCharge--;
             regenCharge = 0;

@@ -157,7 +157,7 @@ public class Game {
         }
         checkPowerupCollisions();
         checkForMapBoundaries();
-        removeUnusedObjects();
+        mapManager.removeUnusedObjects();
     }
 
     private void checkForMapBoundaries() {
@@ -169,12 +169,6 @@ public class Game {
         }
     }
 
-    private void removeUnusedObjects() {
-        getMap().getEnemies().removeIf(enemy -> enemy.getY() > 2999 || enemy.getX() < -2999);
-        getMap().getBlocks().removeIf(block -> block.getY() > 2999 || block.getX() < -2999);
-        getMap().getPowerUps().removeIf(powerup -> powerup.getY() > 2999 || powerup.getX() < -2999);
-        getMap().getCoins().removeIf(coin -> coin.getY() > 2999 || coin.getX() < -2999);
-    }
 
     private void checkProjectileCollisions(Direction direction) {
         for (Projectile projectile : getMap().getProjectiles()) {

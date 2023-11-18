@@ -34,6 +34,8 @@ public class InputManager implements KeyListener {
                 game.reset();
             } else if (keyCode == KeyEvent.VK_P) {
                 game.getMario().rotatePowerUp();
+            }else if (keyCode == KeyEvent.VK_O) {
+                game.toggleHitboxes();
             }
         } else if (gameState == GameState.PAUSED) {
             if (keyCode == KeyEvent.VK_Z) {

@@ -11,7 +11,6 @@ public class GameObject {
     protected double velX, velY;
     private final double gravity = 0.30f;
     private boolean lookingRight = true;
-    private final int GROUND_LEVEL = 650;
     private Dimension spriteDimension; // Dimension encapsulate width and height
     protected BufferedImage sprite;
 
@@ -39,6 +38,17 @@ public class GameObject {
         }
     }
 
+    public void drawHitboxes(Graphics g){
+        g.setColor(Color.BLUE);
+        g.fillRect(getTopCollision().x, getTopCollision().y, getTopCollision().width, getTopCollision().height);
+        g.setColor(Color.GREEN);
+        g.fillRect(getBottomCollision().x, getBottomCollision().y, getBottomCollision().width, getBottomCollision().height);
+        g.setColor(Color.YELLOW);
+        g.fillRect(getLeftCollision().x, getLeftCollision().y, getLeftCollision().width, getLeftCollision().height);
+        g.setColor(Color.PINK);
+        g.fillRect(getRightCollision().x, getRightCollision().y, getRightCollision().width, getRightCollision().height);
+    }
+
 
     public void moveObject(){
         if(jumping && velY <= 0){ //After the apex of the jump
@@ -60,19 +70,23 @@ public class GameObject {
     }
     // Creating Rectangle to check collisions (cf Game.java => Collisions management)
     public Rectangle getBottomCollision(){
-        return new Rectangle((int)x, (int)y + spriteDimension.height - 20, spriteDimension.width, 20);
+        int hitboxHeight = isFalling() ? (int)this.velY : 1;
+        return new Rectangle((int)x, (int)y + spriteDimension.height - hitboxHeight, spriteDimension.width, 1 + hitboxHeight);
     }
 
     public Rectangle getTopCollision(){
-        return new Rectangle((int)x, (int)(y), spriteDimension.width, 20);
+        int hitboxHeight = isJumping() ? (int)this.velY : 1;
+        return new Rectangle((int)x, (int)(y), spriteDimension.width, 1 + hitboxHeight);
     }
     
-    public Rectangle getLeftCollision(){
-        return new Rectangle((int)(x), (int)y+3, 10, spriteDimension.height-3);
+    public Rectangle getLeftCollision(){ //Yellow collision
+        int hitboxWidth = isLookingRight() ? 1 : Math.max((int)this.velX, 1);
+        return new Rectangle((int)x-1, (int)y, hitboxWidth, spriteDimension.height);
     }
 
-    public Rectangle getRightCollision(){
-        return new Rectangle((int)x + spriteDimension.width - 10, (int)y+3, 10, spriteDimension.height-3);
+    public Rectangle getRightCollision(){ //Pink collision
+        int hitboxWidth = isLookingRight() ? Math.max((int)this.velX, 1) : 1;
+        return new Rectangle((int)x + spriteDimension.width - hitboxWidth - 1, (int)y, hitboxWidth + 1, spriteDimension.height);
     }
     public void setVelX(double velX) {
         this.velX = velX;

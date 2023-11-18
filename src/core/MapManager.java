@@ -54,17 +54,18 @@ public class MapManager {
         y = y * 64;
         return switch (id) {
             case 4 -> new Brick(x, y);
-            case 12 -> new GroundBrick(x, y);
-            case 8 -> new DeadBrick(x, y);
-            case 2 ->
-                //TODO: Select which power up to create
-                    new Bonus(x, y, new Jersey());
-            case 7 -> new Coin(x, y);
-            case 9 -> new Flag(x);
             case 5 -> new Champi(x, y);
+            case 7 -> new Coin(x, y);
+            case 8 -> new DeadBrick(x, y);
+            case 9 -> new Flag(x);
+            case 12 -> new GroundBrick(x, y);
             case 24 -> new Turtle(x, y);
             case 26 -> new Pipe(x, y, false);
             case 27 -> new Pipe(x, y, true);
+            case 28 -> new Bonus(x, y, new Ball());
+            case 29 -> new Bonus(x, y, new Brennus());
+            case 30 -> new Bonus(x, y, new Jersey());
+            case 31 -> new Bonus(x, y, new Trophy());
             default -> null;
         };
     }
@@ -106,6 +107,10 @@ public class MapManager {
         camera.reset();
         loadMapFromCSV();
 
+    }
+
+    public void toggleHitboxes(){
+        this.map.toggleHitboxes();
     }
 }
 

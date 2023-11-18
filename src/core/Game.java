@@ -160,6 +160,10 @@ public class Game {
         mapManager.removeUnusedObjects();
     }
 
+    public void toggleHitboxes(){
+        this.mapManager.toggleHitboxes();
+    }
+
     private void checkForMapBoundaries() {
         if (mario.getX() < camera.getX()) {
             mario.setX(camera.getX());
@@ -213,10 +217,11 @@ public class Game {
             if (marioHitbox.intersects(blockHitbox)) {
                 Rectangle intersection = marioHitbox.intersection(blockHitbox);
                 if (direction == Direction.LEFT && !mario.isLookingRight()) {
-                    mario.setX(mario.getX() + intersection.width);
+                    mario.setX(mario.getX() + mario.getVelX());
+
                 } else if (direction == Direction.RIGHT && mario.isLookingRight()) {
-                    mario.setX(mario.getX() - intersection.width);
-                } else if (direction == Direction.TOP && mario.getVelY() > 0) {
+                    mario.setX(mario.getX() - mario.getVelX());
+                } else if (direction == Direction.TOP ) {
                     if (mario.isFalling()) break;
                     mario.setY(mario.getY() + intersection.height);
                     mario.setVelY(0);
@@ -228,7 +233,7 @@ public class Game {
                     mario.setVelY(0);
                     mario.setJumping(false);
                     mario.setFalling(false);
-                    mario.canForceJump = true;
+                    mario.canJump = true;
                 }
             }
 
@@ -278,6 +283,7 @@ public class Game {
                     mario.setY(mario.getY() - intersection.height);
                     mario.setFalling(false);
                     mario.setJumping(false);
+                    mario.canJump = true;
                     mario.jump();
                 }
                 if (mario.getHp() == 0) {
@@ -312,10 +318,10 @@ public class Game {
                 if (champiHitbox.intersects(blockHitbox)) {
                     Rectangle intersection = champiHitbox.intersection(blockHitbox);
                     if (direction == Direction.LEFT && !enemy.isLookingRight()) {
-                        enemy.setX(enemy.getX() + intersection.width);
+                        enemy.setX(enemy.getX() + enemy.getVelX());
                         enemy.inverseVelX();
                     } else if (direction == Direction.RIGHT && enemy.isLookingRight()) {
-                        enemy.setX(enemy.getX() - intersection.width);
+                        enemy.setX(enemy.getX() - enemy.getVelX());
                         enemy.inverseVelX();
                     } else if (direction == Direction.TOP && enemy.isJumping()) {
                         if (enemy.isFalling()) break;

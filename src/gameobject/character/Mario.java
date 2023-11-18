@@ -1,21 +1,9 @@
 package gameobject.character;
 
-import core.Game;
 import gameobject.GameObject;
 import gameobject.collectible.*;
-import view.Ressource;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
-import javax.swing.JOptionPane;
-import javax.swing.JDialog;
-import javax.swing.Timer;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class Mario extends GameObject {
@@ -31,7 +19,7 @@ public class Mario extends GameObject {
 
     private boolean isCharging = false;
 
-    public boolean canForceJump = true;
+    public boolean canJump = true;
 
     private int coins = 0;
     private int score;
@@ -53,7 +41,6 @@ public class Mario extends GameObject {
         NORMAL, JERSEY, THROWER, WINNER, BRENNUS
     }
 
-    private int numClicks = 0;
 
     private boolean readytoFly = false;
 
@@ -91,24 +78,20 @@ public class Mario extends GameObject {
         setLookingRight(true);
         setFalling(true);
         setJumping(false);
+        this.canJump = true;
         this.coins = 0;
         this.score = 0;
     }
 
     public void jump() {
-        if (!isJumping() && !isFalling()) {
-            forceJump();
-        } else if (canForceJump) {
-            forceJump();
+        if (canJump) {
+            setJumping(true);
+            setFalling(false);
+            setVelY(10);
+            canJump = false;
         }
     }
 
-    public void forceJump() {
-        setJumping(true);
-        setFalling(false);
-        setVelY(10);
-        canForceJump = false;
-    }
 
     public void move(boolean toRight) {
         setLookingRight(toRight);

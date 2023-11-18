@@ -28,6 +28,8 @@ public class Map {
     private final BufferedImage littlecoin = Ressource.getImage("littlecoin");
     private final Camera camera;
 
+    private boolean drawHitboxes = false;
+
 
     public Map(Camera camera) {
         this.camera = camera;
@@ -74,11 +76,13 @@ public class Map {
 
 
         mario.draw(g);
+        if(drawHitboxes)mario.drawHitboxes(g);
         g.drawString(String.valueOf(mario.getCoins()), (int) camera.getX() + 1270, (int) camera.getY() + 30);
         g.drawImage(littlecoin, (int) camera.getX() + 1230, (int) camera.getY() + 8, null);
 
         for (Block block : blocks) {
             block.draw(g);
+            if(drawHitboxes)block.drawHitboxes(g);
         }
         for (PowerUp powerup : powerups) {
             powerup.draw(g);
@@ -88,6 +92,7 @@ public class Map {
 
         for (Enemy enemy : enemies) {
             enemy.draw(g);
+            if(drawHitboxes)enemy.drawHitboxes(g);
         }
         for (Coin coin : coins) {
             coin.draw(g);
@@ -146,5 +151,9 @@ public class Map {
 
     public List<Projectile> getProjectiles() {
         return projectiles;
+    }
+
+    public void toggleHitboxes() {
+        this.drawHitboxes = !this.drawHitboxes;
     }
 }

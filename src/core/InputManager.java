@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 public class InputManager implements KeyListener {
     private final Game game;
 
+
     InputManager(Game game) {
         this.game = game;
     }
@@ -66,7 +67,20 @@ public class InputManager implements KeyListener {
             else if (keyCode == KeyEvent.VK_ESCAPE) {
                 game.quitGame();
             }
-        } else if (gameState == GameState.GAMEOVER || gameState == GameState.WIN) {
+        } else if(gameState == GameState.WIN){
+            if (keyCode == KeyEvent.VK_Z) {
+                game.getMenu().setSelectedOption((game.getMenu().getSelectedOption() - 1 + game.getMenu().getOption().length) % game.getMenu().getOption().length);
+            } else if (keyCode == KeyEvent.VK_S) {
+                game.getMenu().setSelectedOption((game.getMenu().getSelectedOption() - 1 + game.getMenu().getOption().length) % game.getMenu().getOption().length);
+            } else if (keyCode == KeyEvent.VK_ENTER) {
+                if (game.getMenu().getSelectedOption() == 0) {
+                    game.nextLevel();
+                } else if (game.getMenu().getSelectedOption() == 1) {
+                    System.exit(1);
+                }
+            }
+
+        }else if (gameState == GameState.GAMEOVER || gameState == GameState.WIN) {
 
             if (keyCode == KeyEvent.VK_Z) {
                 game.getMenu().setSelectedOption((game.getMenu().getSelectedOption() - 1 + game.getMenu().getOption().length) % game.getMenu().getOption().length);

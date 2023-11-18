@@ -1,5 +1,7 @@
 package view;
 
+import core.Game;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -10,11 +12,15 @@ public class Menu {
 
     private String[] options = {"Start", "Quit"};
 
+    private Game game;
+
+    private Camera camera;
     private final AudioManager audioManager = new AudioManager();
     private final BufferedImage backgroundImage = Ressource.getImage("fondmenu");
 
-    public Menu(){
-
+    public Menu(Game game){
+    this.game = game;
+    camera = this.game.getCamera();
     }
     public void drawMainMenu(Graphics g) {
         audioManager.playLoopSound("./src/ressource/sound/haka.wav");
@@ -74,6 +80,24 @@ public class Menu {
                 g.setColor(Color.WHITE);
             }
             g.drawString(options[i], 400, 400 + i * 100);
+        }
+    }
+    public void drawWinMenu(Graphics g) {
+        String[] options = {"Next", "Quit"};
+
+        drawMenuTitle("Bravo !", (int)camera.getX()+400, g);
+        System.out.println(camera.getX());
+        g.setFont(Ressource.getMarioFont());
+        for (int i = 0; i < options.length; i++) {
+            if (i == selectedOption) {
+                g.setColor(Color.RED);
+                int stringWidth = g.getFontMetrics().stringWidth(options[i]);
+                int stringHeight = g.getFontMetrics().getHeight();
+                g.drawRect((int)camera.getX()+640, 450 + i * 100 - stringHeight, stringWidth + 20, stringHeight + 10);
+            } else {
+                g.setColor(Color.WHITE);
+            }
+            g.drawString(options[i], (int)camera.getX()+650, 450 + i * 100);
         }
     }
 

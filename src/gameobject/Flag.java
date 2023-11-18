@@ -11,7 +11,7 @@ public class Flag extends GameObject {
     private int count = 0;
 
     public Flag(double xLocation) {
-        super(xLocation, 650, "flag");
+        super(xLocation, 576, "flag");
         setSprite(Ressource.getImage("flag"));
         setY(getY()-getSpriteDimension().height);
     }

@@ -26,13 +26,14 @@ public class Champi extends Enemy {
         if (isRugbyman && regenCharge == 300 && marioHitbox.intersects(getForwardHitbox())) {
             audioManager.playSound("champicharge.wav");
             setVelX(9.9f);
-            timingCharge--;
+
             regenCharge = 0;
         }
         if(regenCharge<300){
             regenCharge++;
         }
-        if(timingCharge==0) setVelX(3.5);
+
+        if(regenCharge==timingCharge) setVelX(3.5);
     }
 
     // Random use to create a champi or a RugbyChampi

@@ -47,8 +47,8 @@ public class Mario extends GameObject {
 
     private boolean readytoFly = false;
 
-    public Mario(int x, int y) {
-        super(x, y, "mario");
+    public Mario() {
+        super(50, 476, "mario");
         sprites = new BufferedImage[2];
         sprites[0] = view.Ressource.getImage("mario");
         sprites[1] = view.Ressource.getImage("mario1");

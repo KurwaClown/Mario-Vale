@@ -36,7 +36,7 @@ public class MapManager {
                 String[] values = line.split(",");
                 for (int col = 0; col < values.length; col++) {
                     int id = Integer.parseInt(values[col].trim());
-                    if(id == 17) this.mario.setPosition(col*64, lineCount*64);
+                    if(id == 17) this.mario.setPosition(col*64, (lineCount-1)*64);
                     else if (id != -1) {
                         addObjectToMap(idToGameObject(id, col, lineCount));
                     }

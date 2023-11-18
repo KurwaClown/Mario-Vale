@@ -47,7 +47,7 @@ public class Game {
     public Game() {
         this.gameState = GameState.MENU;
         this.camera = new Camera();
-        this.mario = new Mario(50, 540);
+        this.mario = new Mario();
         this.mapManager = new MapManager(camera, mario);
         this.userInterface = new UserInterface(this);
         this.menu = new view.Menu();

@@ -26,6 +26,7 @@ public class Ressource {
 
     private static void loadMaps() {
         maps.put("map1", Ressource.class.getResource("../ressource/map/map1.csv").getFile());
+        maps.put("map2", Ressource.class.getResource("../ressource/map/map2.csv").getFile());
     }
 
     private static void loadFont() {

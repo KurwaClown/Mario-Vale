@@ -242,7 +242,7 @@ public class Game {
     private void checkFlagCollisions(Direction direction) {
         if(gameState == GameState.FLAG) return;
         Rectangle marioHitbox = getGameObjectHitbox(mario, direction, false);
-        for (Flag flag : mapManager.getMap().getFlags()) {
+        Flag flag = mapManager.getMap().getFlag();
             Rectangle flagHitbox = getGameObjectHitbox(flag, direction, true);
 
             if (marioHitbox.intersects(flagHitbox)) {
@@ -257,7 +257,7 @@ public class Game {
                     mario.setY(mario.getY() + intersection.height);
                     mario.setVelY(0);
                 }
-            }
+
 
         }
     }
@@ -351,7 +351,7 @@ public class Game {
 
     public void increaseNumClicks() {
         numClicks++;
-        getMap().getFlags().getFirst().increaseCount();
+        getMap().getFlag().increaseCount();
     }
 
     private Rectangle getGameObjectHitbox(GameObject object, Direction direction, boolean isOpposite) {

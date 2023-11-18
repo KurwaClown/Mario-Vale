@@ -16,11 +16,11 @@ import java.awt.Color;
 
 // creating List to stocks the objects that will be paint on the map
 public class Map {
-    private final List<Mario> marios = new ArrayList<>();
+    private Mario mario;
     private final List<Enemy> enemies = new ArrayList<>();
     private final List<Block> blocks = new ArrayList<>();
     private final List<PowerUp> powerups = new ArrayList<>();
-    private final List<Flag> flags = new ArrayList<>();
+    private Flag flag;
     private final List<Coin> coins = new ArrayList<>();
 
     private List<Projectile> projectiles = new ArrayList<>();
@@ -35,7 +35,7 @@ public class Map {
 
     // add to the lists
     public void addMario(Mario mario) {
-        marios.add(mario);
+        this.mario = mario;
     }
 
     public void addBlocks(Block block) {
@@ -47,7 +47,7 @@ public class Map {
     }
 
     public void addFlag(Flag flag) {
-        flags.add(flag);
+        this.flag = flag;
     }
 
     public void addEnemy(Enemy enemy) {
@@ -72,20 +72,20 @@ public class Map {
         g.setFont(Ressource.getMarioFont());
         g.setColor(Color.white);
 
-        for (Mario mario : marios) {
-            mario.draw(g);
-            g.drawString(String.valueOf(mario.getCoins()), (int)camera.getX() + 1270,  (int)camera.getY() + 30);
-            g.drawImage(littlecoin,(int)camera.getX()+ 1230, (int) camera.getY()+8, null);
-        }
+
+        mario.draw(g);
+        g.drawString(String.valueOf(mario.getCoins()), (int) camera.getX() + 1270, (int) camera.getY() + 30);
+        g.drawImage(littlecoin, (int) camera.getX() + 1230, (int) camera.getY() + 8, null);
+
         for (Block block : blocks) {
             block.draw(g);
         }
         for (PowerUp powerup : powerups) {
             powerup.draw(g);
         }
-        for (Flag flag : flags) {
-            flag.draw(g);
-        }
+
+        flag.draw(g);
+
         for (Enemy enemy : enemies) {
             enemy.draw(g);
         }
@@ -101,26 +101,23 @@ public class Map {
 
     // Update each map element
     public void update() {
-        for (Mario mario : marios) {
             mario.moveObject();
             mario.update();
 
-        }
         for (Block block : blocks) {
             block.moveObject();
         }
         for (PowerUp powerup : powerups) {
             powerup.moveObject();
         }
-        for (Flag flag : flags) {
             flag.moveObject();
-        }
+
         for (Enemy enemy : enemies) {
-            if(enemy instanceof gameobject.enemy.Champi champi) champi.update(marios.getFirst().getHitbox());
+            if (enemy instanceof gameobject.enemy.Champi champi) champi.update(mario.getHitbox());
             else enemy.update();
             enemy.moveObject();
         }
-        for(Projectile projectile : projectiles){
+        for (Projectile projectile : projectiles) {
             projectile.moveObject();
         }
 
@@ -135,8 +132,8 @@ public class Map {
         return powerups;
     }
 
-    public List<Flag> getFlags() {
-        return flags;
+    public Flag getFlag() {
+        return flag;
     }
 
     public List<Enemy> getEnemies() {

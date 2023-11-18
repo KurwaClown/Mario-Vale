@@ -1,14 +1,12 @@
 package core;
 
 import gameobject.*;
-import gameobject.block.Bonus;
-import gameobject.block.Brick;
-import gameobject.block.DeadBrick;
-import gameobject.block.GroundBrick;
+import gameobject.block.*;
 import gameobject.collectible.Brennus;
 import gameobject.character.Mario;
 import gameobject.collectible.*;
 import gameobject.enemy.Champi;
+import gameobject.enemy.Enemy;
 import gameobject.enemy.Turtle;
 import view.Camera;
 import view.Map;
@@ -17,74 +15,82 @@ import view.Ressource;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+
 public class MapManager {
     private Mario mario;
     private Map map;
     String csvFilePath;
-    private Champi champi;
 
-    private Flag flag;
-
-    public MapManager(Camera camera, Mario mario){
+    public MapManager(Camera camera, Mario mario) {
         this.map = new Map(camera);
         this.mario = mario;
         map.addMario(mario);
-        this.csvFilePath = Ressource.getMap("map1");
+        this.csvFilePath = Ressource.getMap("map2");
     }
+
     public void loadMapFromCSV() {
-        for (int i = 0; i < 50; i++) {
-            map.addBlocks(new GroundBrick(i * 64, 650));
-        }
         try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))) {
             String line;
+            int lineCount = 0;
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
-                String type = values[0];
-                int x = Integer.parseInt(values[1]);
-                int y = Integer.parseInt(values[2]);
+                for (int col = 0; col < values.length; col++) {
+                    int id = Integer.parseInt(values[col].trim());
+                    if(id == 17) this.mario.setPosition(col*64, lineCount*64);
+                    else if (id != -1) {
+                        addObjectToMap(idToGameObject(id, col, lineCount));
+                    }
 
-                switch (type) {
-                    case "Mario":
-                        this.mario = new Mario(x, y);
-                        map.addMario(mario);
-                        break;
-                    case "Brick":
-                        map.addBlocks(new Brick(x, y));
-                        break;
-                    case "Champi":
-                        map.addEnemy(new Champi(x, y));
-                        break;
-                    case "Flag":
-                        map.addFlag(new Flag(x));
-                        break;
-                    case "Turtle":
-                    map.addEnemy(new Turtle(x, y));
-                    break;
-                    case "Bonus":
-                        String bonusType = values[3];
-                        PowerUp powerUp = new Jersey();
-                        if(bonusType.equals("Ball")) powerUp = new Ball();
-                        else if(bonusType.equals("Trophy")) powerUp = new Trophy();
-                        else if(bonusType.equals("Brennus")) powerUp = new Brennus();
-                        map.addBlocks(new Bonus(x, y, powerUp));
-                        break;
-                    case "Coin":
-                        map.addCoin(new Coin(x, y));
-                        break;
-                    case "DeadBrick":
-                        map.addBlocks(new DeadBrick(x, y));
-                        break;
                 }
+                lineCount++;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    private GameObject idToGameObject(int id, int x, int y) {
+        x *= 64;
+        y *= 64;
+        return switch (id) {
+            case 4 -> new Brick(x, y);
+            case 12 -> new GroundBrick(x, y);
+            case 8 -> new DeadBrick(x, y);
+            case 2 ->
+                //TODO: Select which power up to create
+                    new Bonus(x, y, new Jersey());
+            case 7 -> new Coin(x, y);
+            case 9 -> new Flag(x);
+            case 5 -> new Champi(x, y);
+            case 24 -> new Turtle(x, y);
+            default -> null;
+        };
+    }
+
+    private void addObjectToMap(GameObject gameObject){
+        if(gameObject == null) return;
+
+
+        if(gameObject instanceof Mario){
+            map.addMario((Mario) gameObject);
+        } else if (gameObject instanceof Block) {
+            map.addBlocks((Block) gameObject);
+        } else if (gameObject instanceof PowerUp) {
+            map.addPowerup((PowerUp) gameObject);
+        } else if (gameObject instanceof Flag) {
+            map.addFlag((Flag) gameObject);
+        } else if (gameObject instanceof Enemy) {
+            map.addEnemy((Enemy) gameObject);
+        } else if (gameObject instanceof Coin) {
+            map.addCoin((Coin) gameObject);
+        }
+    }
+
     public Map getMap() {
         return this.map;
     }
-    public void reset(Camera camera){
+
+    public void reset(Camera camera) {
         this.map = new Map(camera);
         mario.reset();
         map.addMario(mario);

@@ -148,4 +148,9 @@ public class GameObject {
     public void UpdateSpriteDimension() {
         this.spriteDimension = new Dimension(sprite.getWidth(), sprite.getHeight());
     }
+
+    public void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
 }

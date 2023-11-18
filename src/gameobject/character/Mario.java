@@ -91,7 +91,7 @@ public class Mario extends GameObject {
         if (canJump) {
             setJumping(true);
             setFalling(false);
-            setVelY(10);
+            setVelY(11);
             audioManager.playSound("saut.wav");
             canJump = false;
         }

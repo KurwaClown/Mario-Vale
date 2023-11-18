@@ -63,6 +63,8 @@ public class MapManager {
             case 9 -> new Flag(x);
             case 5 -> new Champi(x, y);
             case 24 -> new Turtle(x, y);
+            case 26 -> new Pipe(x, y, false);
+            case 27 -> new Pipe(x, y, true);
             default -> null;
         };
     }

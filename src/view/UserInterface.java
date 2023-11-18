@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 // Base window, painting all the elements of the map
 public class UserInterface extends JPanel {
     private final Game game;
+
     public UserInterface(Game game) {
         this.game = game;
     }
@@ -21,6 +22,7 @@ public class UserInterface extends JPanel {
         if (game.getGameState() == GameState.MENU) {
             game.getMenu().drawMainMenu(g);
             repaint();
+
         }
         else if (game.getGameState() == GameState.GAMEOVER){
             game.getMenu().drawGameOver(g);

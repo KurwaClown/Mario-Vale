@@ -1,37 +1,50 @@
 package view;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 
 public class AudioManager {
 
+    private boolean isPlaying = false;
+
+    private Clip clip;
     public AudioManager() {
     }
-
     public void playLoopSound(String soundFileName) {
-        try {
-            Clip clip = AudioSystem.getClip();
-            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File("C:\\Users\\romai\\IdeaProjects\\T-JAV-501-TLS_7\\src\\ressource\\sound\\" + soundFileName));
-            clip.open(inputStream);
 
-            // Mettre le son en boucle
-            clip.loop(Clip.LOOP_CONTINUOUSLY);
+        if (!isPlaying) {
+            try {
+                if (clip != null) {
+                    clip.stop();
+                    clip.close();
+                }
 
-            // Démarrer le son
-            clip.start();
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-            e.printStackTrace();
+                clip = AudioSystem.getClip();
+                AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(soundFileName));
+                clip.open(inputStream);
+
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
+
+                clip.start();
+
+                isPlaying = true;
+
+                clip.addLineListener(event -> {
+                    if (event.getType() == LineEvent.Type.STOP) {
+                        isPlaying = false;
+                    }
+                });
+            } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+                e.printStackTrace();
+            }
         }
     }
+
     public void playSound(String soundFileName) {
         try {
             Clip clip = AudioSystem.getClip();
-            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File("C:\\Users\\romai\\IdeaProjects\\T-JAV-501-TLS_7\\src\\ressource\\sound\\" + soundFileName));
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File("./src/ressource/sound/" + soundFileName));
             clip.open(inputStream);
             clip.start();
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {

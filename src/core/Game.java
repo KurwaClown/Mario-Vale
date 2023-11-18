@@ -107,6 +107,7 @@ public class Game {
             userInterface.updateGame();
             checkCollisions();
             updateCamera();
+            audioManager.playLoopSound("./src/ressource/sound/playingmusic.wav");
         }
         userInterface.repaint();
     }

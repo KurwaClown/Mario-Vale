@@ -10,11 +10,9 @@ import java.io.IOException;
 
 public class AudioManager {
 
-    // Le constructeur n'a pas besoin de déclarer des exceptions puisque rien n'est fait dedans.
     public AudioManager() {
     }
 
-    // Supposons que vous voulez jouer le son 'haka', vous pouvez nommer la méthode plus généralement.
     public void playLoopSound(String soundFileName) {
         try {
             Clip clip = AudioSystem.getClip();

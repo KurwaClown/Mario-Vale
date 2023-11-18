@@ -20,7 +20,7 @@ public class Map {
     private final List<Enemy> enemies = new ArrayList<>();
     private final List<Block> blocks = new ArrayList<>();
     private final List<PowerUp> powerups = new ArrayList<>();
-    private Flag flag;
+    private Flag flag = new Flag(1600);
     private final List<Coin> coins = new ArrayList<>();
 
     private List<Projectile> projectiles = new ArrayList<>();

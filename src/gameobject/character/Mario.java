@@ -77,6 +77,7 @@ public class Mario extends GameObject {
         setY(550);
         setVelX(0);
         setVelY(0);
+        this.hp = 1;
         mode = Mode.NORMAL;
         setLookingRight(true);
         setFalling(true);

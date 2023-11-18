@@ -275,9 +275,11 @@ public class Game {
             if (marioHitbox.intersects(enemyHitbox)) {
                 Rectangle intersection = marioHitbox.intersection(enemyHitbox);
                 if (direction == Direction.TOP || direction == Direction.LEFT || direction == Direction.RIGHT)
+
                     if ((mario.getVelX() > enemy.getVelX() && mario.getVelX()>5) || mario.getHp() >1) {
                         enemy.disappear();
                     } else {
+                        System.out.println(direction);
                         mario.attacked();
                     }
                 else {
@@ -289,7 +291,7 @@ public class Game {
                     mario.canJump = true;
                     mario.jump();
                 }
-                if (mario.getHp() == 0) {
+                if (mario.getHp() <= 0) {
                     gameOver();
                     audioManager.playSound("game-over.wav");
                 }

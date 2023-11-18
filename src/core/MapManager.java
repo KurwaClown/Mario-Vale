@@ -50,8 +50,8 @@ public class MapManager {
     }
 
     private GameObject idToGameObject(int id, int x, int y) {
-        x *= 64;
-        y *= 64;
+        x = x * 64;
+        y = y * 64;
         return switch (id) {
             case 4 -> new Brick(x, y);
             case 12 -> new GroundBrick(x, y);

@@ -17,12 +17,12 @@ public abstract class Enemy extends GameObject {
     }
     public void disappear(){
         y = 3000;
+        setFalling(false);
     }
 
     public void update(){}
 
     public void inverseVelX(){
-        System.out.printf("Enemy is looking right: %s\n", isLookingRight());
         setLookingRight(!isLookingRight());
     }
 }

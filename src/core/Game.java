@@ -39,7 +39,7 @@ public class Game {
     }
 
 
-    private enum Direction {TOP, LEFT, RIGHT, BOTTOM}
+    private enum Direction {BOTTOM, TOP, LEFT, RIGHT }
 
     // Management of the game and adding object on the map
     public Game() {
@@ -300,7 +300,7 @@ public class Game {
 
     }
 
-    public void checkEnnemyBlockCollisions(Direction direction) {
+    private void checkEnnemyBlockCollisions(Direction direction) {
         for (Enemy enemy : mapManager.getMap().getEnemies()) {
             if (!enemy.isJumping()) {
                 enemy.setFalling(true);
@@ -320,13 +320,13 @@ public class Game {
                     } else if (direction == Direction.RIGHT && enemy.isLookingRight()) {
                         enemy.setX(enemy.getX() - intersection.width);
                         enemy.inverseVelX();
-                    } else if (direction == Direction.TOP && enemy.getVelY() > 0) {
+                    } else if (direction == Direction.TOP && enemy.isJumping()) {
                         if (enemy.isFalling()) break;
                         enemy.setY(enemy.getY() + intersection.height);
                         enemy.setVelY(0);
                         if (block instanceof Bonus bonus) mapManager.getMap().addPowerup(bonus.getContainedPowerUp());
                         block.hit();
-                    } else if (direction == Direction.BOTTOM) {
+                    } else if (direction == Direction.BOTTOM && enemy.isFalling()) {
                         enemy.setY(block.getY() - enemy.getSpriteDimension().height);
                         enemy.setVelY(0);
                         enemy.setJumping(false);

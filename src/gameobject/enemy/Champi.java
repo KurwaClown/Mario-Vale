@@ -28,7 +28,7 @@ public class Champi extends Enemy {
         if(regenCharge<300){
             regenCharge++;
         }
-        if(regenCharge == 30) setVelX(3.5);
+        if(timingCharge==0) setVelX(3.5);
     }
 
     // Random use to create a champi or a RugbyChampi

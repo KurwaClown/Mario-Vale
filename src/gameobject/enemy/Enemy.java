@@ -15,10 +15,7 @@ public abstract class Enemy extends GameObject {
     public void attacked(){
         this.disappear();
     }
-    public void disappear(){
-        y = 3000;
-        setFalling(false);
-    }
+
 
     public void update(){}
 

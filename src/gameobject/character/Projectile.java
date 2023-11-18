@@ -19,9 +19,4 @@ public class Projectile extends GameObject {
 
     }
 
-    public void disappear() {
-        this.setY(-3000);
-        this.setFalling(false);
-    }
-
 }

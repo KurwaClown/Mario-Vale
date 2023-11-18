@@ -17,12 +17,12 @@ public class GameObject {
     protected boolean jumping, falling;
 
     public GameObject(double xLocation, double yLocation, String name){
-        this.x = xLocation;
-        this.y = yLocation;
+        setX(xLocation);
+        setY(yLocation);
         this.spriteDimension = new Dimension(64, 64);
         setSprite(Ressource.getImage(name)); //picking the Sprite in Ressource.java
-        this.velX = 0;
-        this.velY = 0;
+        setVelX(0);
+        setVelY(0);
     }
 
 
@@ -34,7 +34,7 @@ public class GameObject {
         BufferedImage style = this.sprite;
         if(!this.isLookingRight()) style = Ressource.getFlippedImage(this.sprite);
         if(style != null){
-            g.drawImage(style, (int)this.x, (int)this.y, null);
+            g.drawImage(style, (int)getX(), (int)getY(), null);
         }
     }
 
@@ -51,42 +51,42 @@ public class GameObject {
 
 
     public void moveObject(){
-        if(jumping && velY <= 0){ //After the apex of the jump
+        if(jumping && getVelY() <= 0){ //After the apex of the jump
             jumping = false;
             falling = true;
         }
         else if(jumping){ // At jumping time
-            velY = velY - gravity;
-            y = y - velY;
+            setVelY(getVelY() - gravity);
+            setY(getY()- getVelY());
         }
 
         if(falling){ // When falling after apex
-            y = y + velY;
-            velY = velY + gravity;
+            setY(getY() + getVelY());
+            setVelY(getVelY() + gravity);
 
         }
-        if(lookingRight) x = x + velX;
-        else x = x - velX;
+        if(lookingRight) setX(getX() + getVelX());
+        else setX(getX() - getVelX());
     }
     // Creating Rectangle to check collisions (cf Game.java => Collisions management)
     public Rectangle getBottomCollision(){
-        int hitboxHeight = isFalling() ? (int)this.velY : 1;
-        return new Rectangle((int)x, (int)y + spriteDimension.height - hitboxHeight, spriteDimension.width, 1 + hitboxHeight);
+        int hitboxHeight = isFalling() ? Math.max((int)getVelY(),1) : 1;
+        return new Rectangle((int)getX(), (int)getY() + spriteDimension.height - hitboxHeight, spriteDimension.width, hitboxHeight);
     }
 
     public Rectangle getTopCollision(){
-        int hitboxHeight = isJumping() ? (int)this.velY : 1;
-        return new Rectangle((int)x, (int)(y), spriteDimension.width, 1 + hitboxHeight);
+        int hitboxHeight = isJumping() ? Math.max((int)getVelY(),1) : 1;
+        return new Rectangle((int)getX(), (int)getY(), spriteDimension.width, hitboxHeight);
     }
     
     public Rectangle getLeftCollision(){ //Yellow collision
-        int hitboxWidth = isLookingRight() ? 1 : Math.max((int)this.velX, 1);
-        return new Rectangle((int)x-1, (int)y, hitboxWidth, spriteDimension.height);
+        int hitboxWidth = isLookingRight() ? 1 : Math.max((int)getVelX(), 1);
+        return new Rectangle((int)getX(), (int)getY(), hitboxWidth, spriteDimension.height);
     }
 
     public Rectangle getRightCollision(){ //Pink collision
-        int hitboxWidth = isLookingRight() ? Math.max((int)this.velX, 1) : 1;
-        return new Rectangle((int)x + spriteDimension.width - hitboxWidth - 1, (int)y, hitboxWidth + 1, spriteDimension.height);
+        int hitboxWidth = isLookingRight() ? Math.max((int)getVelX(), 1) : 1;
+        return new Rectangle((int)getX() + spriteDimension.width - hitboxWidth, (int)getY(), hitboxWidth, spriteDimension.height);
     }
     public void setVelX(double velX) {
         this.velX = velX;
@@ -149,7 +149,7 @@ public class GameObject {
     }
 
     public Rectangle getHitbox() {
-        return new Rectangle((int)x, (int)y, sprite.getWidth(), sprite.getHeight());
+        return new Rectangle((int)getX(), (int)getY(), sprite.getWidth(), sprite.getHeight());
     }
 
     public void setLookingRight(boolean lookingRight) {
@@ -164,7 +164,12 @@ public class GameObject {
     }
 
     public void setPosition(int x, int y) {
-        this.x = x;
-        this.y = y;
+        setX(x);
+        setY(y);
+    }
+
+    public void disappear(){
+        y = 3000;
+        setFalling(false);
     }
 }

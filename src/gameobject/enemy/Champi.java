@@ -43,7 +43,7 @@ public class Champi extends Enemy {
     }
 
     private Rectangle getForwardHitbox() {
-        return new Rectangle((int) x + (isLookingRight() ? getSpriteDimension().width : -getSpriteDimension().width*3), (int) y, getSpriteDimension().width * 3 , getSpriteDimension().height);
+        return new Rectangle((int) getX() + (isLookingRight() ? getSpriteDimension().width : -getSpriteDimension().width*3), (int) getY(), getSpriteDimension().width * 3 , getSpriteDimension().height);
     }
 }
 

@@ -178,7 +178,7 @@ public class Mario extends GameObject {
     }
 
     private void throwBall(view.Map map) {
-        map.addProjectile(new Projectile((int) x, (int) y, isLookingRight()));
+        map.addProjectile(new Projectile((int) getX(), (int) getY(), isLookingRight()));
     }
 
     public void finish() {
@@ -196,7 +196,7 @@ public class Mario extends GameObject {
         }
         else if (!this.isCharging && this.counterCharge<15){
              counterCharge++;
-             velX=3.5;
+             setVelX(3.5);
         }
         else {
             this.isCharging=false;

@@ -10,12 +10,14 @@ public class Menu {
 
     private String[] options = {"Start", "Quit"};
 
+    private final AudioManager audioManager = new AudioManager();
     private final BufferedImage backgroundImage = Ressource.getImage("fondmenu");
 
     public Menu(){
 
     }
     public void drawMainMenu(Graphics g) {
+        audioManager.playLoopSound("./src/ressource/sound/haka.wav");
         String[] options = {"Start", "Quit"};
         g.drawImage(backgroundImage, 0, 0, null);
 

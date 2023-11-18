@@ -22,6 +22,8 @@ public class Game {
     private final static int WIDTH = 1300;
     private final static int HEIGHT = 730;
     private GameState gameState;
+
+    private AudioManager audioManager = new AudioManager();
     private final UserInterface userInterface;
     private final view.Camera camera;
     private final Mario mario;
@@ -105,6 +107,7 @@ public class Game {
             userInterface.updateGame();
             checkCollisions();
             updateCamera();
+            audioManager.playLoopSound("./src/ressource/sound/playingmusic.wav");
         }
         userInterface.repaint();
     }
@@ -288,6 +291,7 @@ public class Game {
                 }
                 if (mario.getHp() == 0) {
                     gameOver();
+                    audioManager.playSound("game-over.wav");
                 }
             }
         }
@@ -346,6 +350,7 @@ public class Game {
                 mario.setX(mario.getX() + numClicks * 10);
                 System.out.println("Number of presses : " + numClicks);
                 victory();
+                audioManager.playSound("niveau-termine.wav");
             }
         });
         timer.setRepeats(false);

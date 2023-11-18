@@ -2,6 +2,8 @@ package gameobject.character;
 
 import gameobject.GameObject;
 import gameobject.collectible.*;
+import view.AudioManager;
+import view.Ressource;
 
 import java.awt.image.BufferedImage;
 
@@ -17,6 +19,7 @@ public class Mario extends GameObject {
     private int regenCharge = 300;
     private int counterCharge = 15;
 
+    private AudioManager audioManager = new AudioManager();
     private boolean isCharging = false;
 
     public boolean canJump = true;
@@ -88,6 +91,7 @@ public class Mario extends GameObject {
             setJumping(true);
             setFalling(false);
             setVelY(10);
+            audioManager.playSound("saut.wav");
             canJump = false;
         }
     }
@@ -108,6 +112,7 @@ public class Mario extends GameObject {
 
 
     public void powerup(PowerUp powerUp) {
+        audioManager.playSound("power-up.wav");
         if (powerUp instanceof Jersey) {
             this.mode = Mode.JERSEY;
             new java.util.Timer().schedule(
@@ -223,6 +228,7 @@ public class Mario extends GameObject {
     }
 
     public void addCoin(){
+        audioManager.playSound("piece.wav");
         coins++;
         System.out.println("Score: " + this.getScore());
         System.out.println("Coins: " + this.getCoins());

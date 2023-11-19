@@ -14,6 +14,8 @@ public class Menu {
 
     private Game game;
 
+    private final BufferedImage coin = Ressource.getImage("coin");
+
     private Camera camera;
     private final AudioManager audioManager = new AudioManager();
     private final BufferedImage backgroundImage = Ressource.getImage("fondmenu");
@@ -69,7 +71,6 @@ public class Menu {
         String[] options = {"Restart", "Quit"};
         g.setFont(Ressource.getMarioFont());
         g.setColor(Color.white);
-
         for (int i = 0; i < options.length; i++) {
             if (i == selectedOption) {
                 g.setColor(Color.RED);
@@ -86,8 +87,11 @@ public class Menu {
         String[] options = {"Next", "Quit"};
 
         drawMenuTitle("Bravo !", (int)camera.getX()+400, g);
-        System.out.println(camera.getX());
-        g.setFont(Ressource.getMarioFont());
+        g.setFont(Ressource.getMarioFont().deriveFont(60f));
+        g.drawString(String.valueOf(game.getMario().getCoins()), (int) camera.getX() + 850, 450);
+        g.drawImage(coin, (int) camera.getX() + 780, 398, null);
+        g.drawString("Score : "+game.getMario().getScore(), (int) camera.getX() + 780, 550);
+        g.setFont(Ressource.getMarioFont());;
         for (int i = 0; i < options.length; i++) {
             if (i == selectedOption) {
                 g.setColor(Color.RED);
@@ -99,7 +103,9 @@ public class Menu {
             }
             g.drawString(options[i], (int)camera.getX()+650, 450 + i * 100);
         }
+
     }
+
 
     public void drawMenuTitle(String title, int xStart, Graphics g){
         g.setFont(Ressource.getMarioFont().deriveFont(100f));

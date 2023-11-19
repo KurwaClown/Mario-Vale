@@ -5,16 +5,19 @@ import gameobject.GameObject;
 import javax.swing.Timer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import gameobject.character.Projectile;
+import java.util.Random;
 
-public class Canon extends GameObject {
+import gameobject.character.Projectile;
+import view.Map;
+
+public class Canon extends Enemy {
     private final Timer shootingTimer;
 
-    private view.Map map;
 
-    public Canon(int x, int y){
+    public Canon(int x, int y, Map map){
         super(x,y,"canon");
-        shootingTimer = new Timer(3000, new ActionListener() {
+        setVelX(0);
+        shootingTimer = new Timer(randomNumber(), new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 missile(map);
@@ -23,6 +26,10 @@ public class Canon extends GameObject {
         shootingTimer.start();
     }
     private void missile(view.Map map) {
-        map.addMissile(new Missile((int) x, (int) y, isLookingRight()));
+        map.addEnemy(new Missile((int) x, (int) y, isLookingRight()));
+    }
+    private int randomNumber(){
+        Random random = new Random();
+        return random.nextInt(1000,3000);
     }
 }

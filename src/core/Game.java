@@ -8,6 +8,7 @@ import gameobject.character.Projectile;
 import gameobject.collectible.Coin;
 import gameobject.collectible.PowerUp;
 import gameobject.enemy.Enemy;
+import gameobject.enemy.Missile;
 import view.*;
 
 import javax.swing.*;
@@ -315,7 +316,7 @@ public class Game {
 
     private void checkEnnemyBlockCollisions(Direction direction) {
         for (Enemy enemy : mapManager.getMap().getEnemies()) {
-            if (!enemy.isJumping()) {
+            if (!enemy.isJumping() && !(enemy instanceof Missile)) {
                 enemy.setFalling(true);
             }
             boolean enemyLookingRight = enemy.isLookingRight();

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.awt.Graphics;
 import java.awt.Color;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 // creating List to stocks the objects that will be paint on the map
 public class Map {
@@ -29,7 +30,7 @@ public class Map {
     private Flag flag = new Flag(1600);
     private final List<Coin> coins = new ArrayList<>();
 
-    private List<Projectile> projectiles = new ArrayList<>();
+    private final List<Projectile> projectiles = new CopyOnWriteArrayList<>();
     private final BufferedImage backgroundImage = Ressource.getImage("map");
     private final BufferedImage littlecoin = Ressource.getImage("littlecoin");
     private final Camera camera;

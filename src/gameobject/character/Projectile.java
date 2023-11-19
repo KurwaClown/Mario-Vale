@@ -13,9 +13,6 @@ public class Projectile extends GameObject {
         setVelY(3);
         setLookingRight(toRight);
         setFalling(true);
-        Timer timer = new Timer(LIFETIME, e -> disappear());
-        timer.setRepeats(false);
-        timer.start();
 
     }
 

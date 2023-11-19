@@ -26,7 +26,7 @@ public class Canon extends Enemy {
         shootingTimer.start();
     }
     private void missile(view.Map map) {
-        map.addEnemy(new Missile((int) x, (int) y, isLookingRight()));
+        map.addEnemy(new Missile((int) getX(), (int) getY(), isLookingRight()));
     }
     private int randomNumber(){
         Random random = new Random();

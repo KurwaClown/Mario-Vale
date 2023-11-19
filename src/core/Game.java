@@ -201,7 +201,7 @@ public class Game {
 
                 if (projectileHitbox.intersects(blockHitbox)) {
                     Rectangle intersection = projectileHitbox.intersection(blockHitbox);
-                    if (direction == Direction.RIGHT || direction == Direction.LEFT) {
+                    if (direction == Direction.RIGHT || direction == Direction.LEFT || direction == Direction.TOP) {
                         projectile.disappear();
                     } else if (direction == Direction.BOTTOM) {
                         projectile.setY(projectile.getY() - intersection.height);

@@ -6,7 +6,9 @@ import gameobject.character.Mario;
 import gameobject.character.Projectile;
 import gameobject.collectible.Coin;
 import gameobject.collectible.PowerUp;
+import gameobject.enemy.Canon;
 import gameobject.enemy.Enemy;
+import gameobject.enemy.Missile;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -20,6 +22,10 @@ public class Map {
     private final List<Enemy> enemies = new ArrayList<>();
     private final List<Block> blocks = new ArrayList<>();
     private final List<PowerUp> powerups = new ArrayList<>();
+
+    private List<Missile> missiles = new ArrayList<>();
+
+    private List<Canon> canons = new ArrayList<>();
     private Flag flag = new Flag(1600);
     private final List<Coin> coins = new ArrayList<>();
 
@@ -64,6 +70,10 @@ public class Map {
         projectiles.add(projectile);
     }
 
+    public void addCanon(Canon canon){canons.add(canon);}
+
+    public void addMissile(Missile missile){missiles.add(missile);}
+
     // draw objects in the lists
     public void draw(Graphics g) {
         g.translate(-(int) camera.getX(), -(int) camera.getY());
@@ -100,6 +110,12 @@ public class Map {
         for (Projectile projectile : projectiles) {
             projectile.draw(g);
         }
+        for  (Canon canon : canons){
+            canon.draw(g);
+        }
+        for  (Missile missile : missiles){
+            missile.draw(g);
+        }
 
 
     }
@@ -124,6 +140,12 @@ public class Map {
         }
         for (Projectile projectile : projectiles) {
             projectile.moveObject();
+        }
+        for  (Canon canon : canons){
+            canon.moveObject();
+        }
+        for  (Missile missile : missiles){
+            missile.moveObject();
         }
 
     }
@@ -155,6 +177,13 @@ public class Map {
 
     public void toggleHitboxes() {
         this.drawHitboxes = !this.drawHitboxes;
+    }
+    public List<Canon> getCanons() {
+        return canons;
+    }
+
+    public List<Missile> getMissiles() {
+        return missiles;
     }
 
     public void reset(){

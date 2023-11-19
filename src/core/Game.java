@@ -52,7 +52,7 @@ public class Game {
         this.mario = new Mario();
         this.mapManager = new MapManager(camera, mario);
         this.userInterface = new UserInterface(this);
-        this.menu = new view.Menu();
+        this.menu = new view.Menu(this);
 
         mapManager.loadMapFromCSV();
 
@@ -146,6 +146,10 @@ public class Game {
 
     }
 
+    public void nextLevel(){
+        mapManager.goToNextLevel();
+        gameState= GameState.PLAYING;
+    }
     public void victory(){
         gameState = GameState.WIN;
     }

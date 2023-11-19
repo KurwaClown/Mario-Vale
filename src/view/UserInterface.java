@@ -35,6 +35,9 @@ public class UserInterface extends JPanel {
             game.getMenu().drawPauseMenu(g);
             addGreyMask(g);
             repaint();
+        }else if (game.getGameState()==GameState.WIN){
+            game.getMap().draw(g);
+            game.getMenu().drawWinMenu(g);
         }else {
             game.getMap().draw(g);
 

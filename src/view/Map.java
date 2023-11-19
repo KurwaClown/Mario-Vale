@@ -156,4 +156,13 @@ public class Map {
     public void toggleHitboxes() {
         this.drawHitboxes = !this.drawHitboxes;
     }
+
+    public void reset(){
+        enemies.clear();
+        blocks.clear();
+        powerups.clear();
+        coins.clear();
+        projectiles.clear();
+        camera.reset();
+    }
 }

@@ -19,13 +19,15 @@ import java.io.IOException;
 public class MapManager {
     private Mario mario;
     private Map map;
+
+    private int currentLevel = 1;
     String csvFilePath;
 
     public MapManager(Camera camera, Mario mario) {
         this.map = new Map(camera);
         this.mario = mario;
         map.addMario(mario);
-        this.csvFilePath = Ressource.getMap("map2");
+        this.csvFilePath = Ressource.getMap("map1");
     }
 
     public void loadMapFromCSV() {
@@ -48,6 +50,15 @@ public class MapManager {
             e.printStackTrace();
         }
     }
+    public void goToNextLevel() {
+
+        currentLevel++;
+        map.reset();
+        csvFilePath = Ressource.getMap("map" + currentLevel);
+        loadMapFromCSV();
+
+    }
+
 
     private GameObject idToGameObject(int id, int x, int y) {
         x = x * 64;

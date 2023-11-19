@@ -5,6 +5,7 @@ import gameobject.block.*;
 import gameobject.collectible.Brennus;
 import gameobject.character.Mario;
 import gameobject.collectible.*;
+import gameobject.enemy.Canon;
 import gameobject.enemy.Champi;
 import gameobject.enemy.Enemy;
 import gameobject.enemy.Turtle;
@@ -77,6 +78,7 @@ public class MapManager {
             case 29 -> new Bonus(x, y, new Brennus());
             case 30 -> new Bonus(x, y, new Jersey());
             case 31 -> new Bonus(x, y, new Trophy());
+            case 32 -> new Canon(x,y);
             default -> null;
         };
     }

@@ -54,7 +54,6 @@ public class MapManager {
         }
     }
     public void goToNextLevel() {
-
         currentLevel++;
         map.reset();
         csvFilePath = Resource.getMap("map" + currentLevel);

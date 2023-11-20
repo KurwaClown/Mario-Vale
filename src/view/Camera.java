@@ -5,14 +5,9 @@ public class Camera {
     private double x = 0;
     private double y = 0;
 
-    public Camera() {
-
-    }
     public void moveCam(double xOffset, double yOffset){
-        x = x + xOffset;
-        y = y + yOffset;
-
-        //System.out.println("Camera location = (" + x + ", " + y + ")");
+        setX(getX() + xOffset);
+        setY(getY() + yOffset);
     }
 
     public double getX() {
@@ -23,8 +18,16 @@ public class Camera {
         return y;
     }
 
+
+    private void setX(double x) {
+        this.x = x;
+    }
+
+    private void setY(double y) {
+        this.y = y;
+    }
     public void reset(){
-        x = 0;
-        y = 0;
+        setX(0);
+        setY(0);
     }
 }

@@ -145,11 +145,9 @@ public class Game {
     private void updateCamera() {
         double xOffset = 0;
 
-        if (mario.getVelX() > 0 && mario.getX() - 600 > camera.getX())
-            xOffset = mario.getVelX();
+        if (mario.getVelX() > 0 && mario.getX() - 600 > camera.getX()) xOffset = mario.getVelX();
 
         camera.moveCam(xOffset, 0);
-
     }
 
     public void nextLevel(){

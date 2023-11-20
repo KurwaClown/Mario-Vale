@@ -118,6 +118,7 @@ public class Game {
             if (menu.getIsEndurance()) {
                 moveCanonsWithCamera(cameraOffset);
                 audioManager.playLoopSound("./src/ressource/sound/playingmusic.wav");
+                mapManager.generateGroundIfNecessary(getCamera());
             }
         }
 
@@ -422,12 +423,14 @@ public class Game {
     public MapManager getMapManager(){return mapManager;}
 
     public void moveCanonsWithCamera(double offset) {
-        System.out.println("Canons to move: " + getMap().getEnemies().size());
         for (Enemy enemy : mapManager.getMap().getEnemies()) {
             if(enemy instanceof Canon) {
                 enemy.setX(enemy.getX() + offset);
             }
         }
+    }
+    public void resetPreviousCameraX(){
+        previousCameraX =0;
     }
 
 }

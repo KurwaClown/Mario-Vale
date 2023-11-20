@@ -22,6 +22,10 @@ public class MapManager {
     private Mario mario;
     private Map map;
 
+    private int lastGeneratedX = 0;
+    private final int BLOCK_WIDTH = 64;
+    private final int GENERATION_THRESHOLD = 1;
+
     private Menu menu;
 
     private int currentLevel = 1;
@@ -61,6 +65,16 @@ public class MapManager {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    public void generateGroundIfNecessary(Camera camera) {
+        int generationPointX = (int)camera.getX()  + 1300+ GENERATION_THRESHOLD * BLOCK_WIDTH;
+        if (lastGeneratedX + BLOCK_WIDTH <= generationPointX) {
+            for (int x = lastGeneratedX; x < generationPointX; x += BLOCK_WIDTH) {
+                Block groundBlock = new GroundBrick(x, 700 - BLOCK_WIDTH);
+                map.addBlocks(groundBlock);
+            }
+            lastGeneratedX = generationPointX;
         }
     }
     public void goToNextLevel() {
@@ -126,11 +140,13 @@ public class MapManager {
     }
 
     public void reset(Camera camera) {
+        camera.reset();
         this.map = new Map(camera);
+        lastGeneratedX =0;
+        loadMapFromCSV();
+        generateGroundIfNecessary(camera);
         mario.reset();
         map.addMario(mario);
-        camera.reset();
-        loadMapFromCSV();
 
     }
 

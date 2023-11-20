@@ -1,6 +1,7 @@
 package core;
 
-import gameobject.*;
+import gameobject.Flag;
+import gameobject.GameObject;
 import gameobject.block.Block;
 import gameobject.block.Bonus;
 import gameobject.block.Pipe;
@@ -10,28 +11,28 @@ import gameobject.collectible.Coin;
 import gameobject.collectible.PowerUp;
 import gameobject.enemy.Enemy;
 import gameobject.enemy.Missile;
-import view.*;
+import view.AudioManager;
+import view.Camera;
+import view.Map;
+import view.UserInterface;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 // initializing the window and base variables
 public class Game {
     private boolean isRunning = true;
-    private final int TARGET_FPS = 60;
     private final static int WIDTH = 1300;
     private final static int HEIGHT = 730;
     private GameState gameState;
 
-    private AudioManager audioManager = new AudioManager();
+    private final AudioManager audioManager = new AudioManager();
     private final UserInterface userInterface;
     private final view.Camera camera;
     private final Mario mario;
-    private MapManager mapManager;
+    private final MapManager mapManager;
 
-    private view.Menu menu;
+    private final view.Menu menu;
     private int numClicks;
 
     public void startGame() {
@@ -74,7 +75,10 @@ public class Game {
 
     // Game loop 60Hz
     public void gameLoop() {
+        int TARGET_FPS = 60;
+
         System.out.println("Running game at " + TARGET_FPS + " FPS");
+
         long previousTime = System.currentTimeMillis();
         long lag = 0;
         long targetFrameTime = 1000 / TARGET_FPS;
@@ -109,7 +113,7 @@ public class Game {
             userInterface.updateGame();
             checkCollisions();
             updateCamera();
-            audioManager.playLoopSound("./src/ressource/sound/playingmusic.wav");
+            audioManager.playLoopSound("./src/resource/sound/playingmusic.wav");
         }
         userInterface.repaint();
     }
@@ -162,7 +166,7 @@ public class Game {
             checkEnemyCollisions(direction);
             checkFlagCollisions(direction);
             checkProjectileCollisions(direction);
-            checkEnnemyBlockCollisions(direction);
+            checkEnemyBlockCollisions(direction);
         }
         checkPowerupCollisions();
         checkForMapBoundaries();
@@ -234,7 +238,7 @@ public class Game {
                     if (mario.isFalling()) break;
                     mario.setY(mario.getY() + intersection.height);
                     mario.setVelY(0);
-                    if (block instanceof Bonus bonus) mapManager.getMap().addPowerup(bonus.getContainedCollectible());
+                    if (block instanceof Bonus bonus) mapManager.getMap().addCollectible(bonus.getContainedCollectible());
                     block.hit();
                 } else if (direction == Direction.BOTTOM) {
                     if (mario.isJumping()) break;
@@ -315,7 +319,7 @@ public class Game {
 
     }
 
-    private void checkEnnemyBlockCollisions(Direction direction) {
+    private void checkEnemyBlockCollisions(Direction direction) {
         for (Enemy enemy : mapManager.getMap().getEnemies()) {
             if (!enemy.isJumping() && !(enemy instanceof Missile)) {
                 enemy.setFalling(true);
@@ -337,7 +341,7 @@ public class Game {
                         if (enemy.isFalling()) break;
                         enemy.setY(enemy.getY() + intersection.height);
                         enemy.setVelY(0);
-                        if (block instanceof Bonus bonus) mapManager.getMap().addPowerup(bonus.getContainedCollectible());
+                        if (block instanceof Bonus bonus) mapManager.getMap().addCollectible(bonus.getContainedCollectible());
                         block.hit();
                     } else if (direction == Direction.BOTTOM && enemy.isFalling()) {
                         if(block instanceof Pipe) System.out.println(enemy + " from bottom");
@@ -352,13 +356,11 @@ public class Game {
     }
 
     public void flagGame() {
-        Timer timer = new Timer(5000, new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                mario.setX(mario.getX() + numClicks * 10);
-                System.out.println("Number of presses : " + numClicks);
-                victory();
-                audioManager.playSound("niveau-termine.wav");
-            }
+        Timer timer = new Timer(5000, e -> {
+            mario.setX(mario.getX() + numClicks * 10);
+            System.out.println("Number of presses : " + numClicks);
+            victory();
+            audioManager.playSound("niveau-termine.wav");
         });
         timer.setRepeats(false);
         timer.start();
@@ -395,7 +397,7 @@ public class Game {
     }
 
     public static void main(String[] args) {
-        Game game = new Game();
+        new Game();
     }
 
 

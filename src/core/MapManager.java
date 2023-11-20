@@ -1,8 +1,8 @@
 package core;
 
-import gameobject.*;
+import gameobject.Flag;
+import gameobject.GameObject;
 import gameobject.block.*;
-import gameobject.collectible.Brennus;
 import gameobject.character.Mario;
 import gameobject.collectible.*;
 import gameobject.enemy.Canon;
@@ -18,7 +18,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class MapManager {
-    private Mario mario;
+    private final Mario mario;
     private Map map;
 
     private int currentLevel = 1;
@@ -48,7 +48,9 @@ public class MapManager {
                 lineCount++;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error while loading map, check the csv file");
+            System.out.println("Closing game");
+            System.exit(1);
         }
     }
     public void goToNextLevel() {
@@ -86,19 +88,16 @@ public class MapManager {
     private void addObjectToMap(GameObject gameObject){
         if(gameObject == null) return;
 
-
         if(gameObject instanceof Mario){
             map.addMario((Mario) gameObject);
         } else if (gameObject instanceof Block) {
             map.addBlocks((Block) gameObject);
-        } else if (gameObject instanceof PowerUp) {
-            map.addPowerup((PowerUp) gameObject);
+        } else if (gameObject instanceof PowerUp || gameObject instanceof Coin) {
+            map.addCollectible((Collectible) gameObject);
         } else if (gameObject instanceof Flag) {
             map.addFlag((Flag) gameObject);
         } else if (gameObject instanceof Enemy) {
             map.addEnemy((Enemy) gameObject);
-        } else if (gameObject instanceof Coin) {
-            map.addCoin((Coin) gameObject);
         }
     }
 

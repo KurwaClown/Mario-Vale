@@ -43,23 +43,19 @@ public abstract class GameObject {
 
     // Creating Rectangle to check collisions (cf Game.java => Collisions management)
     public Rectangle getBottomCollision() {
-        int hitboxHeight = isFalling() ? Math.max((int) getVelY(), 1) : 1;
-        return new Rectangle((int) getX(), (int) getY() + getSpriteDimension().height - hitboxHeight, getSpriteDimension().width, hitboxHeight);
+        return new Rectangle((int)x+getSpriteDimension().width/8, (int)getY() + getSpriteDimension().height/2, 3*getSpriteDimension().width/4, getSpriteDimension().height/2);
     }
 
     public Rectangle getTopCollision() {
-        int hitboxHeight = isJumping() ? Math.max((int) getVelY(), 1) : 1;
-        return new Rectangle((int) getX(), (int) getY(), getSpriteDimension().width, hitboxHeight);
+        return new Rectangle((int)getX()+getSpriteDimension().width/8, (int)getY(), (3*getSpriteDimension().width/4), getSpriteDimension().height/2);
     }
 
     public Rectangle getLeftCollision() { //Yellow collision
-        int hitboxWidth = isLookingRight() ? 1 : Math.max((int) getVelX(), 1);
-        return new Rectangle((int) getX(), (int) getY(), hitboxWidth, getSpriteDimension().height);
+        return new Rectangle((int)x, (int)y + getSpriteDimension().height/6, getSpriteDimension().width/4, getSpriteDimension().height/3*2);
     }
 
     public Rectangle getRightCollision() { //Pink collision
-        int hitboxWidth = isLookingRight() ? Math.max((int) getVelX(), 1) : 1;
-        return new Rectangle((int) getX() + getSpriteDimension().width - hitboxWidth, (int) getY(), hitboxWidth, getSpriteDimension().height);
+        return new Rectangle((int)x + 3*getSpriteDimension().width/4, (int)y + getSpriteDimension().height/6, getSpriteDimension().width/4, getSpriteDimension().height/3*2);
     }
 
     public void draw(Graphics g) {

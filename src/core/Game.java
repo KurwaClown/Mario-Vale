@@ -229,12 +229,11 @@ public class Game {
 
             if (marioHitbox.intersects(blockHitbox)) {
                 Rectangle intersection = marioHitbox.intersection(blockHitbox);
-                if (direction == Direction.LEFT && !mario.isLookingRight()) {
-                    mario.setX(mario.getX() + mario.getVelX());
-
-                } else if (direction == Direction.RIGHT && mario.isLookingRight()) {
-                    mario.setX(mario.getX() - mario.getVelX());
-                } else if (direction == Direction.TOP ) {
+                if (direction == Direction.LEFT) {
+                    mario.setX(block.getX() + block.getSpriteDimension().width+1);
+                } else if (direction == Direction.RIGHT) {
+                    mario.setX(block.getX() - mario.getSpriteDimension().getWidth());
+                } else if (direction == Direction.TOP) {
                     if (mario.isFalling()) break;
                     mario.setY(mario.getY() + intersection.height);
                     mario.setVelY(0);
@@ -242,9 +241,8 @@ public class Game {
                     block.hit();
                 } else if (direction == Direction.BOTTOM) {
                     if (mario.isJumping()) break;
-                    mario.setY(block.getY() - mario.getSpriteDimension().height);
+                    mario.setY(block.getY() - mario.getSpriteDimension().height + 1);
                     mario.setVelY(0);
-                    mario.setJumping(false);
                     mario.setFalling(false);
                     mario.canJump = true;
                 }

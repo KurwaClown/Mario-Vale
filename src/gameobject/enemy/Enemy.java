@@ -16,8 +16,6 @@ public abstract class Enemy extends GameObject {
         this.disappear();
     }
 
-    public void update(){}
-
     public void inverseVelX(){
         setLookingRight(!isLookingRight());
     }

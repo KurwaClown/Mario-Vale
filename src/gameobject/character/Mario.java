@@ -175,9 +175,6 @@ public class Mario extends GameObject {
         map.addProjectile(new Projectile((int) getX(), (int) getY(), isLookingRight()));
     }
 
-    public void finish() {
-    }
-
 
 
     public void update() {

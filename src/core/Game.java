@@ -99,9 +99,11 @@ public class Game {
 
             if (sleepTime > 0) {
                 try {
+                    //noinspection BusyWait
                     Thread.sleep(sleepTime);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    System.out.println("Error while sleeping thread");
+
                 }
             }
         }

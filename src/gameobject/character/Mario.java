@@ -7,7 +7,6 @@ import view.Resource;
 
 import java.awt.image.BufferedImage;
 
-
 public class Mario extends GameObject {
 
     private Mode mode = Mode.NORMAL;
@@ -50,23 +49,23 @@ public class Mario extends GameObject {
         sprites = new BufferedImage[2];
         sprites[0] = Resource.getImage("mario");
         sprites[1] = Resource.getImage("mario1");
-        currentSpriteIndex = 0;
+        setCurrentSpriteIndex(0);
         lastSpriteChangeTime = System.currentTimeMillis();
         setFalling(true);
     }
 
     //For testing purposes only
     public void rotatePowerUp() {
-        if (mode == Mode.NORMAL) {
-            mode = Mode.JERSEY;
-        } else if (mode == Mode.JERSEY) {
-            mode = Mode.THROWER;
-        } else if (mode == Mode.THROWER) {
-            mode = Mode.BRENNUS;
-        } else if (mode == Mode.BRENNUS) {
-            mode = Mode.WINNER;
-        } else if (mode == Mode.WINNER) {
-            mode = Mode.NORMAL;
+        if (getMode() == Mode.NORMAL) {
+            setMode(Mode.JERSEY);
+        } else if (getMode() == Mode.JERSEY) {
+            setMode(Mode.THROWER);
+        } else if (getMode() == Mode.THROWER) {
+            setMode(Mode.BRENNUS);
+        } else if(getMode() == Mode.BRENNUS){
+            setMode(Mode.WINNER);
+        } else {
+            setMode(Mode.NORMAL);
         }
     }
 
@@ -76,7 +75,7 @@ public class Mario extends GameObject {
         setVelX(0);
         setVelY(0);
         this.hp = 1;
-        mode = Mode.NORMAL;
+        setMode(Mode.NORMAL);
         setLookingRight(true);
         setFalling(true);
         setJumping(false);
@@ -102,24 +101,24 @@ public class Mario extends GameObject {
     }
 
     public BufferedImage getCurrentSprite() {
-        return sprites[currentSpriteIndex];
+        return sprites[getCurrentSpriteIndex()];
     }
 
     public void stop(boolean toRight) {
-        if(toRight == isLookingRight()) setVelX(0);
+        if (toRight == isLookingRight()) setVelX(0);
     }
 
 
     public void powerup(PowerUp powerUp) {
         audioManager.playSound("power-up.wav");
         if (powerUp instanceof Jersey) {
-            this.mode = Mode.JERSEY;
+            setMode(Mode.JERSEY);
             new java.util.Timer().schedule(
                     new java.util.TimerTask() {
                         @Override
                         public void run() {
-                            if (mode == Mode.JERSEY) {
-                                mode = Mode.NORMAL;
+                            if (getMode() == Mode.JERSEY) {
+                                setMode(Mode.NORMAL);
                             }
                         }
                     },
@@ -127,20 +126,20 @@ public class Mario extends GameObject {
             );
 
         } else if (powerUp instanceof Ball) {
-            this.mode = Mode.THROWER;
+            setMode(Mode.THROWER);
         } else if (powerUp instanceof Brennus) {
-            this.mode = Mode.BRENNUS;
+            setMode(Mode.BRENNUS);
             this.hp = 2;
         } else if (powerUp instanceof Trophy) {
-            this.mode = Mode.WINNER;
+            setMode(Mode.WINNER);
             hp = 1000;
             new java.util.Timer().schedule(
                     new java.util.TimerTask() {
                         @Override
                         public void run() {
-                            if (mode == Mode.WINNER) {
-                                mode = Mode.NORMAL;
-                                hp =1;
+                            if (getMode() == Mode.WINNER) {
+                                setMode(Mode.NORMAL);
+                                hp = 1;
                             }
                         }
                     },
@@ -148,13 +147,13 @@ public class Mario extends GameObject {
             );
 
         }
-        System.out.printf("Mario is now in %s mode\n", mode);
+        System.out.printf("Mario is now in %s getMode()\n", getMode());
     }
 
     public void attack(view.Map map) {
-        if (this.mode == Mode.JERSEY) {
+        if (this.getMode() == Mode.JERSEY) {
             this.isCharging = regenCharge == 300;
-        } else if (this.mode == Mode.THROWER) {
+        } else if (this.getMode() == Mode.THROWER) {
             if (regenCharge >= 30) {
                 throwBall(map);
                 regenCharge -= 30;
@@ -164,9 +163,8 @@ public class Mario extends GameObject {
 
     public void attacked() {
         this.hp--;
-        if (this.hp == 1 && this.mode == Mode.BRENNUS) {
-            this.mode = Mode.NORMAL;
-            System.out.println(this.mode);
+        if (this.hp == 1 && this.getMode() == Mode.BRENNUS) {
+            setMode(Mode.NORMAL);
         }
 
     }
@@ -175,59 +173,74 @@ public class Mario extends GameObject {
         map.addProjectile(new Projectile((int) getX(), (int) getY(), isLookingRight()));
     }
 
-
-
     public void update() {
         if (regenCharge < 300) regenCharge++;
-        if (this.isCharging && this.counterCharge>0){
+        if (this.isCharging && this.counterCharge > 0) {
             setVelX(10);
             regenCharge = 0;
             counterCharge--;
+        } else if (!this.isCharging && this.counterCharge < 15) {
+            counterCharge++;
+            setVelX(3.5);
+        } else {
+            this.isCharging = false;
         }
-        else if (!this.isCharging && this.counterCharge<15){
-             counterCharge++;
-             setVelX(3.5);
-        }
-        else {
-            this.isCharging=false;
-        }
-    if (this.mode == Mode.JERSEY) {
+        if (this.getMode() == Mode.JERSEY) {
             setSprite(Resource.getImage("marioStade"));
-        } else if (this.mode == Mode.BRENNUS) {
+        } else if (this.getMode() == Mode.BRENNUS) {
             setSprite(Resource.getImage("marioBrennus"));
-        } else if (this.mode == Mode.WINNER) {
+        } else if (this.getMode() == Mode.WINNER) {
             setSprite(Resource.getImage("marioDore"));
         } else {
             setSprite(getCurrentSprite());
         }
-            if (getVelX() != 0) {
-                long currentTime = System.currentTimeMillis();
-                long timeSinceLastChange = currentTime - lastSpriteChangeTime;
+        if (getVelX() != 0) {
+            long currentTime = System.currentTimeMillis();
+            long timeSinceLastChange = currentTime - lastSpriteChangeTime;
 
-                if (timeSinceLastChange > ANIMATION_TIME) {
-                    currentSpriteIndex = (currentSpriteIndex + 1) % sprites.length;
-                    lastSpriteChangeTime = currentTime - (timeSinceLastChange - ANIMATION_TIME);
+            if (timeSinceLastChange > ANIMATION_TIME) {
+                setCurrentSpriteIndex((getCurrentSpriteIndex() + 1) % getSprites().length);
+                lastSpriteChangeTime = System.currentTimeMillis();
 
-                }
-            } else {
-                currentSpriteIndex = 0;
             }
+        } else {
+            setCurrentSpriteIndex(0);
         }
+    }
 
-    public void addCoin(){
+    public void addCoin() {
         audioManager.playSound("piece.wav");
         coins++;
         System.out.println("Score: " + this.getScore());
         System.out.println("Coins: " + this.getCoins());
     }
 
-            public int getCoins () {
-                return coins;
-            }
+    public int getCoins() {
+        return coins;
+    }
 
-            public int getHp () {
-                return hp;
-            }
+    public int getHp() {
+        return hp;
+    }
 
-        }
+    private void setMode(Mode mode) {
+        this.mode = mode;
+    }
+
+    private Mode getMode() {
+        return mode;
+    }
+
+    private BufferedImage[] getSprites(){
+        return sprites;
+    }
+
+    private int getCurrentSpriteIndex() {
+        return currentSpriteIndex;
+    }
+
+    private void setCurrentSpriteIndex(int currentSpriteIndex) {
+        this.currentSpriteIndex = currentSpriteIndex;
+    }
+}
 

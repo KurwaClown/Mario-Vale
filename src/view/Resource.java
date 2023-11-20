@@ -62,6 +62,7 @@ public class Resource {
             images.put("map", ImageIO.read(Objects.requireNonNull(Resource.class.getResource("../resource/img/map.jpg"))));
             images.put("shell", ImageIO.read(Objects.requireNonNull(Resource.class.getResource("../resource/img/shell.png"))));
             images.put("ball", ImageIO.read(Objects.requireNonNull(Resource.class.getResource("../resource/img/ball.png"))));
+            images.put("ballSmall", ImageIO.read(Objects.requireNonNull(Resource.class.getResource("../resource/img/ballSmall.png"))));
             images.put("littlecoin", ImageIO.read(Objects.requireNonNull(Resource.class.getResource("../resource/img/littlecoin.png"))));
             images.put("fondmenu", ImageIO.read(Objects.requireNonNull(Resource.class.getResource("../resource/img/fond_menu.png"))));
             images.put("groundBrick", ImageIO.read(Objects.requireNonNull(Resource.class.getResource("../resource/img/ground.png"))));

@@ -20,15 +20,15 @@ import java.util.concurrent.CopyOnWriteArrayList;
 // creating List to stocks the objects that will be paint on the map
 public class Map {
     private Mario mario;
-    private final List<Enemy> enemies = new ArrayList<>();
-    private final List<Block> blocks = new ArrayList<>();
-    private final List<PowerUp> powerups = new ArrayList<>();
+    private final List<Enemy> enemies = new CopyOnWriteArrayList<>();
+    private final List<Block> blocks = new CopyOnWriteArrayList<>();
+    private final List<PowerUp> powerups = new CopyOnWriteArrayList<>();
 
-    private List<Missile> missiles = new ArrayList<>();
+    private List<Missile> missiles = new CopyOnWriteArrayList<>();
 
-    private List<Canon> canons = new ArrayList<>();
+    private List<Canon> canons = new CopyOnWriteArrayList<>();
     private Flag flag = new Flag(1600);
-    private final List<Coin> coins = new ArrayList<>();
+    private final List<Coin> coins =new CopyOnWriteArrayList<>();
 
     private final List<Projectile> projectiles = new CopyOnWriteArrayList<>();
     private final BufferedImage backgroundImage = Ressource.getImage("map");

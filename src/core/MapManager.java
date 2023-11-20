@@ -120,8 +120,8 @@ public class MapManager {
 
     }
 
-    public void toggleHitboxes(){
-        this.map.toggleHitboxes();
+    public void toggleDebugMode(){
+        this.map.toggleDebugMode();
     }
 }
 

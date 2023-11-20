@@ -173,8 +173,8 @@ public class Game {
         mapManager.removeUnusedObjects();
     }
 
-    public void toggleHitboxes(){
-        this.mapManager.toggleHitboxes();
+    public void toggleDebugMode(){
+        this.mapManager.toggleDebugMode();
     }
 
     private void checkForMapBoundaries() {

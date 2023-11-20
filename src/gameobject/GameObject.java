@@ -170,4 +170,7 @@ public abstract class GameObject {
     public Rectangle getHitbox() {
         return new Rectangle((int) getX(), (int) getY(), getSprite().getWidth(), getSprite().getHeight());
     }
+
+    public void update() {
+    }
 }

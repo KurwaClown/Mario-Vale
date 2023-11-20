@@ -1,10 +1,8 @@
 package gameobject.collectible;
 
 import gameobject.GameObject;
-import gameobject.character.Mario;
 import gameobject.block.Block;
-
-import java.awt.*;
+import gameobject.character.Mario;
 
 public abstract class PowerUp extends GameObject implements Collectible{
 

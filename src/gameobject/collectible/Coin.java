@@ -1,10 +1,9 @@
 package gameobject.collectible;
 
 import gameobject.GameObject;
+import gameobject.block.Block;
 import gameobject.character.Mario;
 import view.Ressource;
-
-import java.awt.*;
 
 public class Coin extends GameObject implements Collectible{
 
@@ -19,5 +18,11 @@ public class Coin extends GameObject implements Collectible{
         mario.addCoin();
         mario.addScore(200);
         disappear();
+    }
+
+    @Override
+    public void setLocation(Block Block) {
+        setX(Block.getX());
+        setY(Block.getY() - this.getSpriteDimension().getHeight());
     }
 }

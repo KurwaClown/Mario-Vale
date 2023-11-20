@@ -5,8 +5,6 @@ import core.GameState;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 // Base window, painting all the elements of the map
 public class UserInterface extends JPanel {
@@ -50,7 +48,7 @@ public class UserInterface extends JPanel {
         }
 
     public void drawFlagCount(Graphics g) {
-        g.setFont(Ressource.getMarioFont().deriveFont(60f));
+        g.setFont(Resource.getMarioFont().deriveFont(60f));
         g.setColor(Color.WHITE);
         g.drawString(String.valueOf(game.getFlagCount()), (int)game.getCamera().getX()+(getWidth()/2),  400);
     }

@@ -1,7 +1,7 @@
 package gameobject.enemy;
 
 import view.AudioManager;
-import view.Ressource;
+import view.Resource;
 
 import java.awt.*;
 import java.util.Random;
@@ -16,7 +16,7 @@ public class Champi extends Enemy {
         super(x, y, "champi");
         if (getRandom()<3){
             setRugbyman(true);
-            setSprite(Ressource.getImage("champiRugby"));
+            setSprite(Resource.getImage("champiRugby"));
         }
     }
     // Implementing the automatic moves and the ability to charge

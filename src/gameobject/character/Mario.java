@@ -3,6 +3,7 @@ package gameobject.character;
 import gameobject.GameObject;
 import gameobject.collectible.*;
 import view.AudioManager;
+import view.Resource;
 
 import java.awt.image.BufferedImage;
 
@@ -47,8 +48,8 @@ public class Mario extends GameObject {
     public Mario() {
         super(50, 476, "mario");
         sprites = new BufferedImage[2];
-        sprites[0] = view.Ressource.getImage("mario");
-        sprites[1] = view.Ressource.getImage("mario1");
+        sprites[0] = Resource.getImage("mario");
+        sprites[1] = Resource.getImage("mario1");
         currentSpriteIndex = 0;
         lastSpriteChangeTime = System.currentTimeMillis();
         setFalling(true);
@@ -194,11 +195,11 @@ public class Mario extends GameObject {
             this.isCharging=false;
         }
     if (this.mode == Mode.JERSEY) {
-            setSprite(view.Ressource.getImage("marioStade"));
+            setSprite(Resource.getImage("marioStade"));
         } else if (this.mode == Mode.BRENNUS) {
-            setSprite(view.Ressource.getImage("marioBrennus"));
+            setSprite(Resource.getImage("marioBrennus"));
         } else if (this.mode == Mode.WINNER) {
-            setSprite(view.Ressource.getImage("marioDore"));
+            setSprite(Resource.getImage("marioDore"));
         } else {
             setSprite(getCurrentSprite());
         }

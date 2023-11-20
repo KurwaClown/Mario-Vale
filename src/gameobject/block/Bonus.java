@@ -1,7 +1,7 @@
 package gameobject.block;
 
 import gameobject.collectible.Collectible;
-import view.Ressource;
+import view.Resource;
 
 public class Bonus extends Block {
 
@@ -23,7 +23,7 @@ public class Bonus extends Block {
         if(isDeadBlock()) return;
         displayBonus(getContainedCollectible());
         setDeadBlock(true);
-        setSprite(Ressource.getImage("deadBrick"));
+        setSprite(Resource.getImage("deadBrick"));
     }
 
     public Collectible getContainedCollectible() {

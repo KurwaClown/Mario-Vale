@@ -1,6 +1,6 @@
 package gameobject.enemy;
 
-import view.Ressource;
+import view.Resource;
 
 public class Turtle extends Enemy{
     private boolean isShell = false;
@@ -23,7 +23,7 @@ public class Turtle extends Enemy{
     }
 
     public void transformInShell(){
-        setSprite( Ressource.getImage("shell"));
+        setSprite( Resource.getImage("shell"));
         isShell = true;
         setVelX(0);
     }

@@ -1,6 +1,6 @@
 package gameobject;
 
-import view.Ressource;
+import view.Resource;
 
 import java.awt.*;
 
@@ -8,11 +8,11 @@ import java.awt.*;
 public class Flag extends GameObject {
     public Flag(double xLocation) {
         super(xLocation, 576, "flag");
-        setSprite(Ressource.getImage("flag"));
+        setSprite(Resource.getImage("flag"));
         setY(getY()-getSpriteDimension().height);
     }
     public void flagBreak(){
-        setSprite(Ressource.getImage("flagBroken"));
+        setSprite(Resource.getImage("flagBroken"));
         setY(650 - getSpriteDimension().height);
     }
 

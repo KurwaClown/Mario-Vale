@@ -3,13 +3,13 @@ package gameobject.collectible;
 import gameobject.GameObject;
 import gameobject.block.Block;
 import gameobject.character.Mario;
-import view.Ressource;
+import view.Resource;
 
 public class Coin extends GameObject implements Collectible{
 
     public Coin(double xLocation, double yLocation) {
         super(xLocation, yLocation, "coin");
-        setSprite(Ressource.getImage("coin"));
+        setSprite(Resource.getImage("coin"));
     }
 
 

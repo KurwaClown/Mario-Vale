@@ -1,20 +1,17 @@
 package view;
 
-import gameobject.*;
+import gameobject.Flag;
 import gameobject.block.Block;
 import gameobject.character.Mario;
 import gameobject.character.Projectile;
 import gameobject.collectible.Coin;
+import gameobject.collectible.Collectible;
 import gameobject.collectible.PowerUp;
-import gameobject.enemy.Canon;
 import gameobject.enemy.Enemy;
-import gameobject.enemy.Missile;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.List;
-import java.awt.Graphics;
-import java.awt.Color;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 // creating List to stocks the objects that will be paint on the map
@@ -24,15 +21,12 @@ public class Map {
     private final List<Block> blocks = new CopyOnWriteArrayList<>();
     private final List<PowerUp> powerups = new CopyOnWriteArrayList<>();
 
-    private List<Missile> missiles = new CopyOnWriteArrayList<>();
-
-    private List<Canon> canons = new CopyOnWriteArrayList<>();
     private Flag flag = new Flag(1600);
     private final List<Coin> coins =new CopyOnWriteArrayList<>();
 
     private final List<Projectile> projectiles = new CopyOnWriteArrayList<>();
-    private final BufferedImage backgroundImage = Ressource.getImage("map");
-    private final BufferedImage littlecoin = Ressource.getImage("littlecoin");
+    private final BufferedImage backgroundImage = Resource.getImage("map");
+    private final BufferedImage littlecoin = Resource.getImage("littlecoin");
     private final Camera camera;
 
     private boolean drawHitboxes = false;
@@ -51,8 +45,9 @@ public class Map {
         blocks.add(block);
     }
 
-    public void addPowerup(PowerUp powerup) {
-        powerups.add(powerup);
+    public void addCollectible(Collectible collectible) {
+        if(collectible instanceof PowerUp powerup) powerups.add(powerup);
+        else if(collectible instanceof Coin coin) coins.add(coin);
     }
 
     public void addFlag(Flag flag) {
@@ -63,17 +58,12 @@ public class Map {
         enemies.add(enemy);
     }
 
-    public void addCoin(Coin coin) {
-        coins.add(coin);
-    }
 
     public void addProjectile(Projectile projectile) {
         projectiles.add(projectile);
     }
 
-    public void addCanon(Canon canon){canons.add(canon);}
 
-    public void addMissile(Missile missile){missiles.add(missile);}
 
     // draw objects in the lists
     public void draw(Graphics g) {
@@ -82,7 +72,7 @@ public class Map {
             g.drawImage(backgroundImage, i * backgroundImage.getWidth(), -150, null);
         }
 
-        g.setFont(Ressource.getMarioFont());
+        g.setFont(Resource.getMarioFont());
         g.setColor(Color.white);
 
 
@@ -117,12 +107,6 @@ public class Map {
         for (Projectile projectile : projectiles) {
             projectile.draw(g);
         }
-        for  (Canon canon : canons){
-            canon.draw(g);
-        }
-        for  (Missile missile : missiles){
-            missile.draw(g);
-        }
 
 
     }
@@ -147,12 +131,6 @@ public class Map {
         }
         for (Projectile projectile : projectiles) {
             projectile.moveObject();
-        }
-        for  (Canon canon : canons){
-            canon.moveObject();
-        }
-        for  (Missile missile : missiles){
-            missile.moveObject();
         }
 
     }
@@ -184,13 +162,6 @@ public class Map {
 
     public void toggleHitboxes() {
         this.drawHitboxes = !this.drawHitboxes;
-    }
-    public List<Canon> getCanons() {
-        return canons;
-    }
-
-    public List<Missile> getMissiles() {
-        return missiles;
     }
 
     public void reset(){

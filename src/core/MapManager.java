@@ -11,7 +11,7 @@ import gameobject.enemy.Enemy;
 import gameobject.enemy.Turtle;
 import view.Camera;
 import view.Map;
-import view.Ressource;
+import view.Resource;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -28,7 +28,7 @@ public class MapManager {
         this.map = new Map(camera);
         this.mario = mario;
         map.addMario(mario);
-        this.csvFilePath = Ressource.getMap("map1");
+        this.csvFilePath = Resource.getMap("map1");
     }
 
     public void loadMapFromCSV() {
@@ -57,7 +57,7 @@ public class MapManager {
 
         currentLevel++;
         map.reset();
-        csvFilePath = Ressource.getMap("map" + currentLevel);
+        csvFilePath = Resource.getMap("map" + currentLevel);
         loadMapFromCSV();
 
     }

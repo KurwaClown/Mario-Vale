@@ -1,35 +1,32 @@
 package view;
 
-import core.Game;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public class Menu {
     private int selectedOption = 0;
 
-    private String[] options = {"Start", "Quit"};
+    private final String[] options = {"Start", "Quit"};
 
-    private Game game;
-
-    private Camera camera;
+    private final Camera camera;
     private final AudioManager audioManager = new AudioManager();
-    private final BufferedImage backgroundImage = Ressource.getImage("fondmenu");
+    private final BufferedImage backgroundImage = Resource.getImage("fondmenu");
 
-    public Menu(Game game){
-    this.game = game;
-    camera = this.game.getCamera();
+    public Menu(Camera camera){
+        this.camera = camera;
     }
     public void drawMainMenu(Graphics g) {
-        audioManager.playLoopSound("./src/ressource/sound/haka.wav");
+        audioManager.playLoopSound("./src/resource/sound/haka.wav");
         String[] options = {"Start", "Quit"};
         g.drawImage(backgroundImage, 0, 0, null);
 
         drawMenuTitle("Mario'Vale", 400, g);
 
-        g.setFont(Ressource.getMarioFont());
+        drawMenu(g, options);
+    }
+
+    private void drawMenu(Graphics g, String[] options) {
+        g.setFont(Resource.getMarioFont());
         for (int i = 0; i < options.length; i++) {
             if (i == selectedOption) {
                 g.setColor(Color.RED);
@@ -49,25 +46,14 @@ public class Menu {
 
         drawMenuTitle("Pause", 500, g);
 
-        g.setFont(Ressource.getMarioFont());
-        for (int i = 0; i < options.length; i++) {
-            if (i == selectedOption) {
-                g.setColor(Color.RED);
-                int stringWidth = g.getFontMetrics().stringWidth(options[i]);
-                int stringHeight = g.getFontMetrics().getHeight();
-                g.drawRect(640, 450 + i * 100 - stringHeight, stringWidth + 20, stringHeight + 10);
-            } else {
-                g.setColor(Color.WHITE);
-            }
-            g.drawString(options[i], 650, 450 + i * 100);
-        }
+        drawMenu(g, options);
     }
     public void drawGameOver (Graphics g){
 
         drawMenuTitle("Game Over", 400, g);
 
         String[] options = {"Restart", "Quit"};
-        g.setFont(Ressource.getMarioFont());
+        g.setFont(Resource.getMarioFont());
         g.setColor(Color.white);
 
         for (int i = 0; i < options.length; i++) {
@@ -87,7 +73,7 @@ public class Menu {
 
         drawMenuTitle("Bravo !", (int)camera.getX()+400, g);
         System.out.println(camera.getX());
-        g.setFont(Ressource.getMarioFont());
+        g.setFont(Resource.getMarioFont());
         for (int i = 0; i < options.length; i++) {
             if (i == selectedOption) {
                 g.setColor(Color.RED);
@@ -102,7 +88,7 @@ public class Menu {
     }
 
     public void drawMenuTitle(String title, int xStart, Graphics g){
-        g.setFont(Ressource.getMarioFont().deriveFont(100f));
+        g.setFont(Resource.getMarioFont().deriveFont(100f));
         Color[] colors = {Color.RED, Color.GREEN, Color.YELLOW, Color.BLUE};
         for (int i = 0; i < title.length(); i++) {
             // Use modulo to cycle through the array of colors

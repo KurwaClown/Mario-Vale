@@ -36,7 +36,8 @@ public class AudioManager {
                     }
                 });
             } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-                e.printStackTrace();
+                System.out.println("Error while loading sound");
+                System.out.println("Skipping sound");
             }
         }
     }
@@ -44,11 +45,12 @@ public class AudioManager {
     public void playSound(String soundFileName) {
         try {
             Clip clip = AudioSystem.getClip();
-            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File("./src/ressource/sound/" + soundFileName));
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File("./src/resource/sound/" + soundFileName));
             clip.open(inputStream);
             clip.start();
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-            e.printStackTrace();
+            System.out.println("Error while playing sound");
+            System.out.println("Skipping sound");
         }
     }
 

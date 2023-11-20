@@ -1,6 +1,6 @@
 package gameobject;
 
-import view.Ressource;
+import view.Resource;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -16,7 +16,7 @@ public abstract class GameObject {
     public GameObject(double xLocation, double yLocation, String name) {
         setX(xLocation);
         setY(yLocation);
-        setSprite(Ressource.getImage(name)); //picking the Sprite in Resource.java
+        setSprite(Resource.getImage(name)); //picking the Sprite in Resource.java
         setVelX(0);
         setVelY(0);
     }
@@ -63,7 +63,7 @@ public abstract class GameObject {
     }
 
     public void draw(Graphics g) {
-        BufferedImage style = isLookingRight() ? getSprite() : Ressource.getFlippedImage(getSprite());
+        BufferedImage style = isLookingRight() ? getSprite() : Resource.getFlippedImage(getSprite());
         if (style != null) g.drawImage(style, (int) getX(), (int) getY(), null);
     }
 

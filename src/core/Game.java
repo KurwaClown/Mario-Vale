@@ -53,7 +53,7 @@ public class Game {
         this.mario = new Mario();
         this.mapManager = new MapManager(camera, mario);
         this.userInterface = new UserInterface(this);
-        this.menu = new view.Menu(this);
+        this.menu = new view.Menu(this.getCamera());
 
         mapManager.loadMapFromCSV();
 

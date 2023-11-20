@@ -17,6 +17,7 @@ public class Canon extends Enemy {
     public Canon(int x, int y, Map map){
         super(x,y,"canon");
         setVelX(0);
+        setFalling(false);
         shootingTimer = new Timer(randomNumber(), new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

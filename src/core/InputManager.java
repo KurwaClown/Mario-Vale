@@ -59,9 +59,13 @@ public class InputManager implements KeyListener {
                 game.getMenu().setSelectedOption((game.getMenu().getSelectedOption() - 1 + game.getMenu().getOption().length) % game.getMenu().getOption().length);
             } else if (keyCode == KeyEvent.VK_ENTER) {
                 if (game.getMenu().getSelectedOption() == 0) {
+                    game.getMenu().setIsEndurance(false);
+                    game.getMapManager().choosedMap();
                     game.startGame();
                 } else if (game.getMenu().getSelectedOption() == 1) {
-                    System.exit(1);
+                    game.getMenu().setIsEndurance(true);
+                    game.getMapManager().choosedMap();
+                    game.startGame();
                 }
             }
             else if (keyCode == KeyEvent.VK_ESCAPE) {

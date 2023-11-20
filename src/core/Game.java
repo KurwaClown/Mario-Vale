@@ -8,6 +8,7 @@ import gameobject.character.Mario;
 import gameobject.character.Projectile;
 import gameobject.collectible.Coin;
 import gameobject.collectible.PowerUp;
+import gameobject.enemy.Canon;
 import gameobject.enemy.Enemy;
 import gameobject.enemy.Missile;
 import gameobject.enemy.Turtle;
@@ -51,11 +52,10 @@ public class Game {
         this.gameState = GameState.MENU;
         this.camera = new Camera();
         this.mario = new Mario();
-        this.mapManager = new MapManager(camera, mario);
-        this.userInterface = new UserInterface(this);
         this.menu = new view.Menu(this);
-
-        mapManager.loadMapFromCSV();
+        this.mapManager = new MapManager(camera, mario, menu);
+        this.userInterface = new UserInterface(this);
+        System.out.println(menu.getIsEndurance());
 
         JFrame frame = new JFrame("Mario'Vale");
         frame.add(userInterface);
@@ -318,7 +318,7 @@ public class Game {
 
     private void checkEnnemyBlockCollisions(Direction direction) {
         for (Enemy enemy : mapManager.getMap().getEnemies()) {
-            if (!enemy.isJumping() && !(enemy instanceof Missile)) {
+            if (!enemy.isJumping() && !(enemy instanceof Missile) && !(enemy instanceof Canon)) {
                 enemy.setFalling(true);
             }
             Rectangle enemyHitbox = getGameObjectHitbox(enemy, direction, false);
@@ -408,5 +408,7 @@ public class Game {
     public view.Camera getCamera() {
         return camera;
     }
+
+    public MapManager getMapManager(){return mapManager;}
 
 }

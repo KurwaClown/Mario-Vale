@@ -1,32 +1,40 @@
 package gameobject.block;
 
-import gameobject.collectible.PowerUp;
+import gameobject.collectible.Collectible;
 import view.Ressource;
 
 public class Bonus extends Block {
 
-    private final PowerUp containedPowerUp;
+    private final Collectible containedCollectible;
 
-    private boolean isDeadBlock = false;
+    private boolean deadBlock = false;
 
-    public Bonus(double xLocation, double yLocation, PowerUp containedPowerUp) {
+    public Bonus(double xLocation, double yLocation, Collectible containedCollectible) {
         super(xLocation, yLocation, "bonus");
-        this.containedPowerUp = containedPowerUp;
+        this.containedCollectible = containedCollectible;
     }
 
-    public void displayBonus(PowerUp powerUp) {
-        powerUp.setLocation(this);
+    public void displayBonus(Collectible collectible) {
+        collectible.setLocation(this);
     }
 
     @Override
     public void hit() {
-        if(isDeadBlock) return;
-        displayBonus(containedPowerUp);
-        isDeadBlock = true;
+        if(isDeadBlock()) return;
+        displayBonus(getContainedCollectible());
+        setDeadBlock(true);
         setSprite(Ressource.getImage("deadBrick"));
     }
 
-    public PowerUp getContainedPowerUp() {
-        return containedPowerUp;
+    public Collectible getContainedCollectible() {
+        return containedCollectible;
+    }
+
+    public boolean isDeadBlock() {
+        return deadBlock;
+    }
+
+    public void setDeadBlock(boolean deadBlock) {
+        this.deadBlock = deadBlock;
     }
 }

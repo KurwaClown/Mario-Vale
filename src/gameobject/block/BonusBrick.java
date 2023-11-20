@@ -1,9 +1,13 @@
 package gameobject.block;
 
-public class BonusBrick extends Block {
+import gameobject.collectible.Collectible;
+import view.Ressource;
 
-    public BonusBrick(double xLocation, double yLocation) {
-        super(xLocation, yLocation, "brick");
+public class BonusBrick extends Bonus {
+
+    public BonusBrick(double xLocation, double yLocation, Collectible containedPowerUp) {
+        super(xLocation, yLocation, containedPowerUp);
+        this.setSprite(Ressource.getImage("bonusBrick"));
     }
 
     @Override

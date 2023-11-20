@@ -10,7 +10,6 @@ import gameobject.collectible.Coin;
 import gameobject.collectible.PowerUp;
 import gameobject.enemy.Enemy;
 import gameobject.enemy.Missile;
-import gameobject.enemy.Turtle;
 import view.*;
 
 import javax.swing.*;
@@ -235,7 +234,7 @@ public class Game {
                     if (mario.isFalling()) break;
                     mario.setY(mario.getY() + intersection.height);
                     mario.setVelY(0);
-                    if (block instanceof Bonus bonus) mapManager.getMap().addPowerup(bonus.getContainedPowerUp());
+                    if (block instanceof Bonus bonus) mapManager.getMap().addPowerup(bonus.getContainedCollectible());
                     block.hit();
                 } else if (direction == Direction.BOTTOM) {
                     if (mario.isJumping()) break;
@@ -338,7 +337,7 @@ public class Game {
                         if (enemy.isFalling()) break;
                         enemy.setY(enemy.getY() + intersection.height);
                         enemy.setVelY(0);
-                        if (block instanceof Bonus bonus) mapManager.getMap().addPowerup(bonus.getContainedPowerUp());
+                        if (block instanceof Bonus bonus) mapManager.getMap().addPowerup(bonus.getContainedCollectible());
                         block.hit();
                     } else if (direction == Direction.BOTTOM && enemy.isFalling()) {
                         if(block instanceof Pipe) System.out.println(enemy + " from bottom");

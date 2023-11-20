@@ -178,8 +178,8 @@ public class GameObject {
     public void drawData(Graphics g) {
         g.setColor(Color.BLACK);
 
-        g.setFont(Font.getFont("defaultFont").deriveFont(8f));
-        g.drawString("X: " + (int)getX() + " Y: " + (int)getY(), (int)getX(), (int)getY()-20);
-        g.drawString("VelX: " + (int)getVelX() + " VelY: " + (int)getVelY(), (int)getX(), (int)getY()-10);
+        g.setFont(new Font("Arial", Font.BOLD, 12));
+        g.drawString(String.format("x: %.02f | y: %.02f", getX(), getY()), (int)getX(), (int)getY()-20);
+        g.drawString(String.format("velX: %.02f | velY: %.02f", getVelX(), getVelY()), (int)getX(), (int)getY()-10);
     }
 }

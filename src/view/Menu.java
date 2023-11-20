@@ -25,7 +25,7 @@ public class Menu {
     }
     public void drawMainMenu(Graphics g) {
         audioManager.playLoopSound("./src/ressource/sound/haka.wav");
-        String[] options = {"Classic","Endurance","Quit"};
+        String[] options = {"Classic","Endurance"};
         g.drawImage(backgroundImage, 0, 0, null);
 
         drawMenuTitle("Mario'Vale", 400, g);
@@ -45,7 +45,7 @@ public class Menu {
     }
 
     public void drawPauseMenu(Graphics g) {
-        String[] options = {"Resume", "Quit"};
+        String[] options = {"Resume", "Menu"};
         //g.drawImage(backgroundImage, 0, 0, null);
 
         drawMenuTitle("Pause", 500, g);

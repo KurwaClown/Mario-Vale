@@ -1,9 +1,9 @@
 package gameobject;
 
+import view.Ressource;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
-
-import view.Ressource;
 
 public abstract class GameObject {
     private double x, y;

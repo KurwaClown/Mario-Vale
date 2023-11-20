@@ -119,6 +119,9 @@ public class Game {
                 moveCanonsWithCamera(cameraOffset);
                 audioManager.playLoopSound("./src/ressource/sound/playingmusic.wav");
                 mapManager.generateGroundIfNecessary(getCamera());
+                if(mario.getY()<0){
+                    mario.setY(0);
+                }
             }
         }
 

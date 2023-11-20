@@ -367,7 +367,6 @@ public class Game {
 
     public void increaseNumClicks() {
         numClicks++;
-        getMap().getFlag().increaseCount();
     }
 
     private Rectangle getGameObjectHitbox(GameObject object, Direction direction, boolean isOpposite) {

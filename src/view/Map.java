@@ -78,6 +78,7 @@ public class Map {
 
         mario.draw(g);
         if(drawHitboxes){
+            this.drawLocation(g);
             mario.drawHitboxes(g);
             mario.drawData(g);
         }
@@ -108,6 +109,13 @@ public class Map {
             projectile.draw(g);
         }
 
+
+    }
+
+    private void drawLocation(Graphics g) {
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("Arial", Font.BOLD, 14));
+        g.drawString("Camera Coordinates : " + "X: " + (int)camera.getX() + " | Y: " + (int) camera.getY(), (int)camera.getX() + 10, 20);
 
     }
 

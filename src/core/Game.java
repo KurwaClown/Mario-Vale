@@ -9,6 +9,7 @@ import gameobject.character.Projectile;
 import gameobject.collectible.Coin;
 import gameobject.collectible.PowerUp;
 import gameobject.enemy.Enemy;
+import gameobject.enemy.Missile;
 import gameobject.enemy.Turtle;
 import view.*;
 
@@ -200,7 +201,7 @@ public class Game {
 
                 if (projectileHitbox.intersects(blockHitbox)) {
                     Rectangle intersection = projectileHitbox.intersection(blockHitbox);
-                    if (direction == Direction.RIGHT || direction == Direction.LEFT) {
+                    if (direction == Direction.RIGHT || direction == Direction.LEFT || direction == Direction.TOP) {
                         projectile.disappear();
                     } else if (direction == Direction.BOTTOM) {
                         projectile.setY(projectile.getY() - intersection.height);
@@ -317,7 +318,7 @@ public class Game {
 
     private void checkEnnemyBlockCollisions(Direction direction) {
         for (Enemy enemy : mapManager.getMap().getEnemies()) {
-            if (!enemy.isJumping()) {
+            if (!enemy.isJumping() && !(enemy instanceof Missile)) {
                 enemy.setFalling(true);
             }
             Rectangle enemyHitbox = getGameObjectHitbox(enemy, direction, false);

@@ -76,7 +76,10 @@ public class Map {
 
 
         mario.draw(g);
-        if(drawHitboxes)mario.drawHitboxes(g);
+        if(drawHitboxes){
+            mario.drawHitboxes(g);
+            mario.drawData(g);
+        }
         g.drawString(String.valueOf(mario.getCoins()), (int) camera.getX() + 1270, (int) camera.getY() + 30);
         g.drawImage(littlecoin, (int) camera.getX() + 1230, (int) camera.getY() + 8, null);
 
@@ -92,7 +95,10 @@ public class Map {
 
         for (Enemy enemy : enemies) {
             enemy.draw(g);
-            if(drawHitboxes)enemy.drawHitboxes(g);
+            if(drawHitboxes){
+                enemy.drawHitboxes(g);
+                enemy.drawData(g);
+            }
         }
         for (Coin coin : coins) {
             coin.draw(g);

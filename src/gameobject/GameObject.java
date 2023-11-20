@@ -174,4 +174,12 @@ public class GameObject {
         y = 3000;
         setFalling(false);
     }
+
+    public void drawData(Graphics g) {
+        g.setColor(Color.BLACK);
+
+        g.setFont(Font.getFont("defaultFont").deriveFont(8f));
+        g.drawString("X: " + (int)getX() + " Y: " + (int)getY(), (int)getX(), (int)getY()-20);
+        g.drawString("VelX: " + (int)getVelX() + " VelY: " + (int)getVelY(), (int)getX(), (int)getY()-10);
+    }
 }

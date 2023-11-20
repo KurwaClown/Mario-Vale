@@ -286,10 +286,11 @@ public class Game {
                 Rectangle intersection = marioHitbox.intersection(enemyHitbox);
                 if (direction == Direction.TOP || direction == Direction.LEFT || direction == Direction.RIGHT)
 
-                    if ((mario.getVelX() > enemy.getVelX() && mario.getVelX()>5) || mario.getHp() >1) {
+                    if (mario.getVelX() > enemy.getVelX() && mario.getVelX()>5) {
                         enemy.disappear();
                     } else {
                         System.out.println(direction);
+                        if(mario.getHp() > 1) enemy.attacked();
                         mario.attacked();
                     }
                 else {

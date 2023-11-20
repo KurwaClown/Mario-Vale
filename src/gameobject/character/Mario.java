@@ -57,15 +57,15 @@ public class Mario extends GameObject {
     //For testing purposes only
     public void rotatePowerUp() {
         if (getMode() == Mode.NORMAL) {
-            setMode(Mode.JERSEY);
+            powerup(new Jersey());
         } else if (getMode() == Mode.JERSEY) {
-            setMode(Mode.THROWER);
+            powerup(new Ball());
         } else if (getMode() == Mode.THROWER) {
-            setMode(Mode.BRENNUS);
+            powerup(new Brennus());
         } else if(getMode() == Mode.BRENNUS){
-            setMode(Mode.WINNER);
+            powerup(new Trophy());
         } else {
-            setMode(Mode.NORMAL);
+            powerup(null);
         }
     }
 
@@ -146,8 +146,12 @@ public class Mario extends GameObject {
                     12000
             );
 
+        } else if (powerUp == null) {
+            setMode(Mode.NORMAL);
+            hp = 1;
         }
-        System.out.printf("Mario is now in %s getMode()\n", getMode());
+        System.out.printf("Mario is now in %s mode\n", getMode());
+        System.out.println("HP: " + this.getHp());
     }
 
     public void attack(view.Map map) {
@@ -163,7 +167,7 @@ public class Mario extends GameObject {
 
     public void attacked() {
         this.hp--;
-        if (this.hp == 1 && this.getMode() == Mode.BRENNUS) {
+        if (this.hp == 1 && this.getMode() != Mode.NORMAL) {
             setMode(Mode.NORMAL);
         }
 

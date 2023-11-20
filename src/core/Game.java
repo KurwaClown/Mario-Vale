@@ -27,6 +27,7 @@ public class Game {
     private final static int HEIGHT = 730;
     private GameState gameState;
 
+    private double previousCameraX = 0;
     private AudioManager audioManager = new AudioManager();
     private final UserInterface userInterface;
     private final view.Camera camera;
@@ -35,6 +36,7 @@ public class Game {
 
     private view.Menu menu;
     private int numClicks;
+
 
     public void startGame() {
         gameState = GameState.PLAYING;
@@ -55,7 +57,6 @@ public class Game {
         this.menu = new view.Menu(this);
         this.mapManager = new MapManager(camera, mario, menu);
         this.userInterface = new UserInterface(this);
-        System.out.println(menu.getIsEndurance());
 
         JFrame frame = new JFrame("Mario'Vale");
         frame.add(userInterface);
@@ -106,12 +107,21 @@ public class Game {
 
     // Logics of the Game
     private void updateGameLogic() {
+        double currentCameraX = camera.getX();
+        double cameraOffset = currentCameraX - previousCameraX;
+
         if (gameState == GameState.PLAYING) {
             userInterface.updateGame();
             checkCollisions();
             updateCamera();
-            audioManager.playLoopSound("./src/ressource/sound/playingmusic.wav");
+
+            if (menu.getIsEndurance()) {
+                moveCanonsWithCamera(cameraOffset);
+                audioManager.playLoopSound("./src/ressource/sound/playingmusic.wav");
+            }
         }
+
+        previousCameraX = currentCameraX;
         userInterface.repaint();
     }
 
@@ -410,5 +420,14 @@ public class Game {
     }
 
     public MapManager getMapManager(){return mapManager;}
+
+    public void moveCanonsWithCamera(double offset) {
+        System.out.println("Canons to move: " + getMap().getEnemies().size());
+        for (Enemy enemy : mapManager.getMap().getEnemies()) {
+            if(enemy instanceof Canon) {
+                enemy.setX(enemy.getX() + offset);
+            }
+        }
+    }
 
 }

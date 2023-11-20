@@ -33,4 +33,5 @@ public class Canon extends Enemy {
         Random random = new Random();
         return random.nextInt(1000,3000);
     }
+
 }

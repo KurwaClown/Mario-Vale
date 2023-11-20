@@ -18,7 +18,26 @@ public class InputManager implements KeyListener {
         GameState gameState = game.getGameState();
 
 
-        if (gameState == GameState.PLAYING) {
+        if (gameState == GameState.PLAYING && game.getMenu().getIsEndurance()) {
+            if (keyCode == KeyEvent.VK_Q) {
+                game.getMario().move(false);
+            } else if (keyCode == KeyEvent.VK_D) {
+                game.getMario().move(true);
+            } else if (keyCode == KeyEvent.VK_Z) {
+                game.getMario().setVelY(-7);
+            } else if (keyCode == KeyEvent.VK_ESCAPE) {
+                game.pauseGame();
+            } else if (keyCode == KeyEvent.VK_F) {
+                game.getMario().finish();
+            } else if (keyCode == KeyEvent.VK_R) {
+                game.reset();
+            } else if (keyCode == KeyEvent.VK_P) {
+                game.getMario().rotatePowerUp();
+            }else if (keyCode == KeyEvent.VK_O) {
+                game.toggleHitboxes();
+            }
+        }
+        else if(gameState == GameState.PLAYING) {
             if (keyCode == KeyEvent.VK_SPACE) {
                 game.getMario().jump();
             } else if (keyCode == KeyEvent.VK_Q) {
@@ -38,7 +57,7 @@ public class InputManager implements KeyListener {
             }else if (keyCode == KeyEvent.VK_O) {
                 game.toggleHitboxes();
             }
-        } else if (gameState == GameState.PAUSED) {
+        }else if (gameState == GameState.PAUSED) {
             if (keyCode == KeyEvent.VK_Z) {
                 game.getMenu().setSelectedOption((game.getMenu().getSelectedOption() - 1 + game.getMenu().getOption().length) % game.getMenu().getOption().length);
             } else if (keyCode == KeyEvent.VK_S) {

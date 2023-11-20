@@ -10,8 +10,4 @@ public class BonusBrick extends Bonus {
         this.setSprite(Ressource.getImage("bonusBrick"));
     }
 
-    @Override
-    public void hit() {
-        super.hit();
-    }
 }

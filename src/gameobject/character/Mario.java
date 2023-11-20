@@ -3,7 +3,6 @@ package gameobject.character;
 import gameobject.GameObject;
 import gameobject.collectible.*;
 import view.AudioManager;
-import view.Ressource;
 
 import java.awt.image.BufferedImage;
 
@@ -19,7 +18,7 @@ public class Mario extends GameObject {
     private int regenCharge = 300;
     private int counterCharge = 15;
 
-    private AudioManager audioManager = new AudioManager();
+    private final AudioManager audioManager = new AudioManager();
     private boolean isCharging = false;
 
     public boolean canJump = true;
@@ -44,8 +43,6 @@ public class Mario extends GameObject {
         NORMAL, JERSEY, THROWER, WINNER, BRENNUS
     }
 
-
-    private boolean readytoFly = false;
 
     public Mario() {
         super(50, 476, "mario");
@@ -155,11 +152,7 @@ public class Mario extends GameObject {
 
     public void attack(view.Map map) {
         if (this.mode == Mode.JERSEY) {
-            if (regenCharge == 300) {
-                this.isCharging=true;
-            } else {
-                isCharging = false;
-            }
+            this.isCharging = regenCharge == 300;
         } else if (this.mode == Mode.THROWER) {
             if (regenCharge >= 30) {
                 throwBall(map);
@@ -182,7 +175,6 @@ public class Mario extends GameObject {
     }
 
     public void finish() {
-        readytoFly = true;
     }
 
 
@@ -223,10 +215,6 @@ public class Mario extends GameObject {
                 currentSpriteIndex = 0;
             }
         }
-
-    public boolean getReadyToFly(){
-        return readytoFly;
-    }
 
     public void addCoin(){
         audioManager.playSound("piece.wav");

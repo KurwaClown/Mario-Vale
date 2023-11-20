@@ -2,10 +2,7 @@ package gameobject.character;
 
 import gameobject.GameObject;
 
-import javax.swing.*;
-
 public class Projectile extends GameObject {
-    private final int LIFETIME = 2000;
 
     public Projectile(int x, int y, boolean toRight) {
         super(x, y, "ball");
@@ -13,7 +10,5 @@ public class Projectile extends GameObject {
         setVelY(3);
         setLookingRight(toRight);
         setFalling(true);
-
     }
-
 }

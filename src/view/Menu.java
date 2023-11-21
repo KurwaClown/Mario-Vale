@@ -10,9 +10,9 @@ public class Menu {
 
     private final String[] options = {"Start", "Quit"};
 
-    private Game game;
+    private final Game game;
 
-    private Boolean isEndurance =false;
+    private boolean endurance =false;
 
     private final BufferedImage coin = Resource.getImage("coin");
 
@@ -84,7 +84,7 @@ public class Menu {
         g.drawString(String.valueOf(game.getMario().getCoins()), (int) camera.getX() + 850, 450);
         g.drawImage(coin, (int) camera.getX() + 780, 398, null);
         g.drawString("Score : "+game.getMario().getScore(), (int) camera.getX() + 780, 550);
-        g.setFont(Resource.getMarioFont());;
+        g.setFont(Resource.getMarioFont());
         for (int i = 0; i < options.length; i++) {
             if (i == selectedOption) {
                 g.setColor(Color.RED);
@@ -120,11 +120,11 @@ public class Menu {
     public void setSelectedOption(int value) {
         selectedOption = value;
     }
-    public void setIsEndurance(boolean value){
-        this.isEndurance=value;
+    public void setEndurance(boolean value){
+        this.endurance=value;
     }
-    public boolean getIsEndurance(){
-        return this.isEndurance;
+    public boolean IsEndurance(){
+        return this.endurance;
     }
 }
 

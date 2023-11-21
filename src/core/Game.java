@@ -121,7 +121,7 @@ public class Game {
             checkCollisions();
             updateCamera();
 
-            if (getMenu().getIsEndurance()) {
+            if (getMenu().IsEndurance()) {
                 moveCanonsWithCamera(cameraOffset);
                 getMapManager().generateGroundIfNecessary(getCamera());
                 if (getMario().getY() < 0) {

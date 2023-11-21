@@ -46,7 +46,7 @@ public class UserInterface extends JPanel {
 
     public void updateGame() {
             game.getMap().update();
-        }
+    }
 
     public void drawFlagCount(Graphics g) {
         g.setFont(Resource.getMarioFont().deriveFont(60f));

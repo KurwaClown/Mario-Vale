@@ -7,7 +7,7 @@ public class BonusBrick extends Bonus {
 
     public BonusBrick(double xLocation, double yLocation, Collectible containedPowerUp) {
         super(xLocation, yLocation, containedPowerUp);
-        this.setSprite(Resource.getImage("bonusBrick"));
+        this.setSprite(Resource.getImage("brick"));
     }
 
 }

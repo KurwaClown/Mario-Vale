@@ -147,7 +147,8 @@ public abstract class GameObject {
         return lookingRight;
     }
     public void setSprite(BufferedImage sprite) {
-        this.sprite = sprite;
+        if (sprite == null) return;
+        else this.sprite = sprite;
         updateSpriteDimension();
     }
 

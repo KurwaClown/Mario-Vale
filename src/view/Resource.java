@@ -45,6 +45,7 @@ public class Resource {
 
     private static void loadImages() {
         try {
+            images.put("noSprite", ImageIO.read(Objects.requireNonNull(Resource.class.getResource("../resource/img/noSprite.png"))));
             images.put("mario", ImageIO.read(Objects.requireNonNull(Resource.class.getResource("../resource/img/mario_running1.png"))));
             images.put("mario1", ImageIO.read(Objects.requireNonNull(Resource.class.getResource("../resource/img/mario_running2.png"))));
             images.put("champi", ImageIO.read(Objects.requireNonNull(Resource.class.getResource("../resource/img/champi.png"))));
@@ -84,7 +85,8 @@ public class Resource {
     }
 
     public static BufferedImage getImage(String name) {
-        return images.get(name);
+        BufferedImage image = images.get(name);
+        return image == null ? images.get("noSprite") : image;
     }
 
     public static BufferedImage getFlippedImage(BufferedImage image) {

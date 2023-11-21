@@ -13,7 +13,7 @@ public class Menu {
     private Game game;
 
     private Boolean isEndurance =false;
-    private Camera camera;
+
     private final BufferedImage coin = Resource.getImage("coin");
 
     private final Camera camera;

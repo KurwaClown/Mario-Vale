@@ -12,10 +12,7 @@ import gameobject.collectible.PowerUp;
 import gameobject.enemy.Canon;
 import gameobject.enemy.Enemy;
 import gameobject.enemy.Missile;
-import view.AudioManager;
-import view.Camera;
-import view.Map;
-import view.UserInterface;
+import view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,6 +33,8 @@ public class Game {
     private final Mario mario;
     private final MapManager mapManager;
 
+    private view.Shoot shoot;
+
     private final view.Menu menu;
     private int numClicks;
 
@@ -54,6 +53,7 @@ public class Game {
     // Management of the game and adding object on the map
     public Game() {
         setGameState(GameState.MENU);
+        this.shoot = new Shoot();
         this.camera = new Camera();
         this.mario = new Mario();
         this.menu = new view.Menu(getCamera(), this);
@@ -379,11 +379,17 @@ public class Game {
         Timer timer = new Timer(5000, e -> {
             getMario().setX(getMario().getX() + numClicks * 10);
             System.out.println("Number of presses : " + numClicks);
-            gameState = GameState.TRANSFORMATION;
+            gameState = GameState.TRANSITION;
             audioManager.playSound("niveau-termine.wav");
         });
         timer.setRepeats(false);
         timer.start();
+    }
+    public void readyToShoot(){
+        gameState=GameState.TRANSFORMATION;
+    }
+    public void gameShoot(){
+        shoot.start();
     }
 
     public void increaseNumClicks() {
@@ -464,5 +470,12 @@ public class Game {
             return score = mario.getScore();
         }
     }
+    public Shoot getShoot(){
+        return shoot;
+    }
+//    public void transformation(){
+//        ball.setVelX((int) -getShoot().getPower()*(int) (length * Math.cos(Math.toRadians(getShoot().getAngle()))));
+//        ball.setVelY((int) -getShoot().getPower()*(int) (length * Math.sin(Math.toRadians(getShoot().getAngle()))));
+//    }
 
 }

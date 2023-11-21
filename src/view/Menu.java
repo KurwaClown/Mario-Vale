@@ -65,7 +65,7 @@ public class Menu {
         String[] options = {"Restart", "Quit"};
         g.setFont(Resource.getMarioFont());
         g.setColor(Color.white);
-        if (this.isEndurance=true){
+        if (this.isEndurance()){
             g.drawString("Score : "+game.Score(), 600, 400);
         }
         for (int i = 0; i < options.length; i++) {
@@ -127,8 +127,9 @@ public class Menu {
     public void setEndurance(boolean value){
         this.endurance=value;
     }
-    public boolean IsEndurance(){
+    public boolean isEndurance(){
         return this.endurance;
     }
+
 }
 

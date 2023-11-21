@@ -27,6 +27,8 @@ public class Game {
     private final static int HEIGHT = 730;
     private GameState gameState;
 
+    private int score;
+
     private final AudioManager audioManager = new AudioManager();
     private double previousCameraX = 0;
     private final UserInterface userInterface;
@@ -121,7 +123,7 @@ public class Game {
             checkCollisions();
             updateCamera();
 
-            if (getMenu().IsEndurance()) {
+            if (getMenu().isEndurance()) {
                 moveCanonsWithCamera(cameraOffset);
                 getMapManager().generateGroundIfNecessary(getCamera());
                 if (getMario().getY() < 0) {
@@ -454,5 +456,12 @@ public class Game {
         return userInterface;
     }
 
+    public int Score(){
+        if(menu.isEndurance()){
+            return score = (int)camera.getX()*10;
+        } else{
+            return score = mario.getScore();
+        }
+    }
 
 }

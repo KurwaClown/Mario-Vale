@@ -42,7 +42,7 @@ public class MapManager {
 
     }
     public void choosedMap() {
-        if (menu.IsEndurance()) {
+        if (menu.isEndurance()) {
             this.csvFilePath = Resource.getMap("endurance");
         } else {
             this.csvFilePath = Resource.getMap("map1");

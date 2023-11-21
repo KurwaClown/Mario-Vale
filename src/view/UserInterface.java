@@ -21,38 +21,44 @@ public class UserInterface extends JPanel {
             game.getMenu().drawMainMenu(g);
             repaint();
 
-        }
-        else if (game.getGameState() == GameState.GAMEOVER){
+        } else if (game.getGameState() == GameState.GAMEOVER) {
             game.getMenu().drawGameOver(g);
         } else if (game.getGameState() == GameState.FLAG) {
             game.getMap().draw(g);
             addGreyMask(g);
             drawFlagCount(g);
-        }else if (game.getGameState() == GameState.PAUSED){
+        } else if (game.getGameState() == GameState.PAUSED) {
             game.getMap().draw(g);
             game.getMenu().drawPauseMenu(g);
             addGreyMask(g);
             repaint();
-        }else if (game.getGameState()==GameState.WIN){
+        } else if (game.getGameState() == GameState.WIN) {
             game.getMap().draw(g);
             game.getMenu().drawWinMenu(g);
-        }else if (game.getGameState()==GameState.TRANSFORMATION){
-            if(game.getMario().getX()< game.getCamera().getX()+1310){
-                game.getMario().setVelX(1);
-            } else {
-                game.getMario().setX(game.getMapManager().getMap().getFlag().getX()+800);
+        } else if (game.getGameState() == GameState.TRANSFORMATION) {
+            game.getMario().moveObject();
+            game.getMario().update();
+            game.getMap().draw(g);
+            if (!game.getMario().getReadyToKick()) {
+                game.getMario().setVelX(3);
+                game.getMario().setFalling(false);
             }
-            if(game.getMario().getX()== game.getMapManager().getMap().getFlag().getX()+800){
-                if (game.getCamera().getX()< game.getMario().getX()-50){
-                    game.getCamera().moveCam(1,0);
-                }
+            if ((game.getMario().getX() > (game.getCamera().getX() + 1310))&& !game.getMario().getDontMove()) {
+                game.getMario().setX(game.getMapManager().getMap().getFlag().getX() + 800);
+                game.getMario().setReadyToKick(true);
+                game.getMario().setDontMove(true);
+                game.getMario().setVelX(0);
+            }
+            if (game.getMario().getReadyToKick()&& game.getCamera().getX()<game.getMario().getX()-50) {
+                game.getCamera().moveCam(3, 0);
+            }
+        } else {
+                game.getMap().draw(g);
             }
 
-        } else {
-            game.getMap().draw(g);
         }
 
-    }
+
 
     public void updateGame() {
             game.getMap().update();

@@ -6,5 +6,6 @@ public enum GameState {
     PAUSED,
     GAMEOVER,
     FLAG,
+    TRANSFORMATION,
     WIN
 }

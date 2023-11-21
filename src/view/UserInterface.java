@@ -36,9 +36,20 @@ public class UserInterface extends JPanel {
         }else if (game.getGameState()==GameState.WIN){
             game.getMap().draw(g);
             game.getMenu().drawWinMenu(g);
-        }else {
-            game.getMap().draw(g);
+        }else if (game.getGameState()==GameState.TRANSFORMATION){
+            if(game.getMario().getX()< game.getCamera().getX()+1310){
+                game.getMario().setVelX(1);
+            } else {
+                game.getMario().setX(game.getMapManager().getMap().getFlag().getX()+800);
+            }
+            if(game.getMario().getX()== game.getMapManager().getMap().getFlag().getX()+800){
+                if (game.getCamera().getX()< game.getMario().getX()-50){
+                    game.getCamera().moveCam(1,0);
+                }
+            }
 
+        } else {
+            game.getMap().draw(g);
         }
 
     }

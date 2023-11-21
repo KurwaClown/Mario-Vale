@@ -379,7 +379,7 @@ public class Game {
         Timer timer = new Timer(5000, e -> {
             getMario().setX(getMario().getX() + numClicks * 10);
             System.out.println("Number of presses : " + numClicks);
-            victory();
+            gameState = GameState.TRANSFORMATION;
             audioManager.playSound("niveau-termine.wav");
         });
         timer.setRepeats(false);

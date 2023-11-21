@@ -1,5 +1,7 @@
 package view;
 
+import core.Game;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -7,6 +9,10 @@ public class Menu {
     private int selectedOption = 0;
 
     private final String[] options = {"Start", "Quit"};
+
+    private Game game;
+
+    private final BufferedImage coin = Ressource.getImage("coin");
 
     private final Camera camera;
     private final AudioManager audioManager = new AudioManager();
@@ -55,7 +61,6 @@ public class Menu {
         String[] options = {"Restart", "Quit"};
         g.setFont(Resource.getMarioFont());
         g.setColor(Color.white);
-
         for (int i = 0; i < options.length; i++) {
             if (i == selectedOption) {
                 g.setColor(Color.RED);
@@ -72,8 +77,11 @@ public class Menu {
         String[] options = {"Next", "Quit"};
 
         drawMenuTitle("Bravo !", (int)camera.getX()+400, g);
-        System.out.println(camera.getX());
-        g.setFont(Resource.getMarioFont());
+        g.setFont(Resource.getMarioFont().deriveFont(60f));
+        g.drawString(String.valueOf(game.getMario().getCoins()), (int) camera.getX() + 850, 450);
+        g.drawImage(coin, (int) camera.getX() + 780, 398, null);
+        g.drawString("Score : "+game.getMario().getScore(), (int) camera.getX() + 780, 550);
+        g.setFont(Resource.getMarioFont());;
         for (int i = 0; i < options.length; i++) {
             if (i == selectedOption) {
                 g.setColor(Color.RED);
@@ -85,7 +93,9 @@ public class Menu {
             }
             g.drawString(options[i], (int)camera.getX()+650, 450 + i * 100);
         }
+
     }
+
 
     public void drawMenuTitle(String title, int xStart, Graphics g){
         g.setFont(Resource.getMarioFont().deriveFont(100f));

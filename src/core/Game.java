@@ -318,7 +318,6 @@ public class Game {
                 }
                 if (mario.getHp() <= 0) {
                     gameOver();
-                    audioManager.playSound("game-over.wav");
                 }
             }
         }
@@ -435,6 +434,10 @@ public class Game {
     }
     public void resetPreviousCameraX(){
         previousCameraX =0;
+    }
+
+    public AudioManager getAudioManager(){
+        return this.audioManager;
     }
 
 }

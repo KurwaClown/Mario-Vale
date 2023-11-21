@@ -24,6 +24,7 @@ public class UserInterface extends JPanel {
         }
         else if (game.getGameState() == GameState.GAMEOVER){
             game.getMenu().drawGameOver(g);
+            game.getAudioManager().playSound("game-over.wav");
         } else if (game.getGameState() == GameState.FLAG) {
             game.getMap().draw(g);
             addGreyMask(g);

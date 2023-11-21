@@ -12,14 +12,15 @@ public class Menu {
 
     private Game game;
 
-    private final BufferedImage coin = Ressource.getImage("coin");
+    private final BufferedImage coin = Resource.getImage("coin");
 
     private final Camera camera;
     private final AudioManager audioManager = new AudioManager();
     private final BufferedImage backgroundImage = Resource.getImage("fondmenu");
 
-    public Menu(Camera camera){
+    public Menu(Camera camera, Game game){
         this.camera = camera;
+        this.game = game;
     }
     public void drawMainMenu(Graphics g) {
         audioManager.playLoopSound("./src/resource/sound/haka.wav");

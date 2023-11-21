@@ -41,11 +41,11 @@ public class Menu {
                 g.setColor(Color.RED);
                 int stringWidth = g.getFontMetrics().stringWidth(options[i]);
                 int stringHeight = g.getFontMetrics().getHeight();
-                g.drawRect(640, 450 + i * 100 - stringHeight, stringWidth + 20, stringHeight + 10);
+                g.drawRect((int)game.getCamera().getX()+640, 450 + i * 100 - stringHeight, stringWidth + 20, stringHeight + 10);
             } else {
                 g.setColor(Color.WHITE);
             }
-            g.drawString(options[i], 650, 450 + i * 100);
+            g.drawString(options[i], (int)game.getCamera().getX()+650, 450 + i * 100);
         }
     }
 
@@ -53,7 +53,7 @@ public class Menu {
         String[] options = {"Resume", "Menu"};
         //g.drawImage(backgroundImage, 0, 0, null);
 
-        drawMenuTitle("Pause", 500, g);
+        drawMenuTitle("Pause", (int)game.getCamera().getX()+500, g);
 
         drawMenu(g, options);
     }

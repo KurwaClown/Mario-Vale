@@ -12,6 +12,8 @@ import gameobject.enemy.Turtle;
 import view.Camera;
 import view.Map;
 import view.Resource;
+import view.Menu;
+
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -21,14 +23,29 @@ public class MapManager {
     private final Mario mario;
     private Map map;
 
+    private int lastGeneratedX = 0;
+    private final int BLOCK_WIDTH = 64;
+    private final int GENERATION_THRESHOLD = 1;
+
+    private Menu menu;
+
     private int currentLevel = 1;
     String csvFilePath;
 
-    public MapManager(Camera camera, Mario mario) {
+    public MapManager(Camera camera, Mario mario, Menu menu) {
+        this.menu = menu;
         this.map = new Map(camera);
         this.mario = mario;
         map.addMario(mario);
-        this.csvFilePath = Resource.getMap("map1");
+
+    }
+    public void choosedMap() {
+        if (menu.getIsEndurance()) {
+            this.csvFilePath = Resource.getMap("endurance");
+        } else {
+            this.csvFilePath = Resource.getMap("map1");
+        }
+        loadMapFromCSV();
     }
 
     public void loadMapFromCSV() {
@@ -51,6 +68,16 @@ public class MapManager {
             System.out.println("Error while loading map, check the csv file");
             System.out.println("Closing game");
             System.exit(1);
+        }
+    }
+    public void generateGroundIfNecessary(Camera camera) {
+        int generationPointX = (int)camera.getX()  + 1300+ GENERATION_THRESHOLD * BLOCK_WIDTH;
+        if (lastGeneratedX + BLOCK_WIDTH <= generationPointX) {
+            for (int x = lastGeneratedX; x < generationPointX; x += BLOCK_WIDTH) {
+                Block groundBlock = new GroundBrick(x, 700 - BLOCK_WIDTH);
+                map.addBlocks(groundBlock);
+            }
+            lastGeneratedX = generationPointX;
         }
     }
     public void goToNextLevel() {
@@ -112,11 +139,13 @@ public class MapManager {
     }
 
     public void reset(Camera camera) {
+        camera.reset();
         this.map = new Map(camera);
+        lastGeneratedX =0;
+        loadMapFromCSV();
+        generateGroundIfNecessary(camera);
         mario.reset();
         map.addMario(mario);
-        camera.reset();
-        loadMapFromCSV();
 
     }
 

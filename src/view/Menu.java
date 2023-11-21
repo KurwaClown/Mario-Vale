@@ -12,6 +12,8 @@ public class Menu {
 
     private Game game;
 
+    private Boolean isEndurance =false;
+    private Camera camera;
     private final BufferedImage coin = Resource.getImage("coin");
 
     private final Camera camera;
@@ -24,7 +26,7 @@ public class Menu {
     }
     public void drawMainMenu(Graphics g) {
         audioManager.playLoopSound("./src/resource/sound/haka.wav");
-        String[] options = {"Start", "Quit"};
+        String[] options = {"Classic","Endurance"};
         g.drawImage(backgroundImage, 0, 0, null);
 
         drawMenuTitle("Mario'Vale", 400, g);
@@ -48,7 +50,7 @@ public class Menu {
     }
 
     public void drawPauseMenu(Graphics g) {
-        String[] options = {"Resume", "Quit"};
+        String[] options = {"Resume", "Menu"};
         //g.drawImage(backgroundImage, 0, 0, null);
 
         drawMenuTitle("Pause", 500, g);
@@ -117,6 +119,12 @@ public class Menu {
     }
     public void setSelectedOption(int value) {
         selectedOption = value;
+    }
+    public void setIsEndurance(boolean value){
+        this.isEndurance=value;
+    }
+    public boolean getIsEndurance(){
+        return this.isEndurance;
     }
 }
 

@@ -9,6 +9,7 @@ import gameobject.character.Mario;
 import gameobject.character.Projectile;
 import gameobject.collectible.Coin;
 import gameobject.collectible.PowerUp;
+import gameobject.enemy.Canon;
 import gameobject.enemy.Enemy;
 import gameobject.enemy.Missile;
 import view.AudioManager;
@@ -27,6 +28,7 @@ public class Game {
     private GameState gameState;
 
     private final AudioManager audioManager = new AudioManager();
+    private double previousCameraX = 0;
     private final UserInterface userInterface;
     private final view.Camera camera;
     private final Mario mario;
@@ -34,6 +36,7 @@ public class Game {
 
     private final view.Menu menu;
     private int numClicks;
+
 
     public void startGame() {
         gameState = GameState.PLAYING;
@@ -51,11 +54,9 @@ public class Game {
         this.gameState = GameState.MENU;
         this.camera = new Camera();
         this.mario = new Mario();
-        this.mapManager = new MapManager(camera, mario);
-        this.userInterface = new UserInterface(this);
         this.menu = new view.Menu(this.getCamera(),this);
-
-        mapManager.loadMapFromCSV();
+        this.mapManager = new MapManager(camera, mario, menu);
+        this.userInterface = new UserInterface(this);
 
         JFrame frame = new JFrame("Mario'Vale");
         frame.add(userInterface);
@@ -111,12 +112,26 @@ public class Game {
 
     // Logics of the Game
     private void updateGameLogic() {
+        double currentCameraX = camera.getX();
+        double cameraOffset = currentCameraX - previousCameraX;
+
         if (gameState == GameState.PLAYING) {
+            audioManager.playLoopSound("./src/resource/sound/playingmusic.wav");
             userInterface.updateGame();
             checkCollisions();
             updateCamera();
-            audioManager.playLoopSound("./src/resource/sound/playingmusic.wav");
+
+            if (menu.getIsEndurance()) {
+                moveCanonsWithCamera(cameraOffset);
+                mapManager.generateGroundIfNecessary(getCamera());
+                if(mario.getY()<0){
+                    mario.setY(0);
+                }
+            }
         }
+
+
+        previousCameraX = currentCameraX;
         userInterface.repaint();
     }
 
@@ -320,7 +335,7 @@ public class Game {
 
     private void checkEnemyBlockCollisions(Direction direction) {
         for (Enemy enemy : mapManager.getMap().getEnemies()) {
-            if (!enemy.isJumping() && !(enemy instanceof Missile)) {
+            if (!enemy.isJumping() && !(enemy instanceof Missile) && !(enemy instanceof Canon)) {
                 enemy.setFalling(true);
             }
             Rectangle enemyHitbox = getGameObjectHitbox(enemy, direction, false);
@@ -406,6 +421,19 @@ public class Game {
 
     public view.Camera getCamera() {
         return camera;
+    }
+
+    public MapManager getMapManager(){return mapManager;}
+
+    public void moveCanonsWithCamera(double offset) {
+        for (Enemy enemy : mapManager.getMap().getEnemies()) {
+            if(enemy instanceof Canon) {
+                enemy.setX(enemy.getX() + offset);
+            }
+        }
+    }
+    public void resetPreviousCameraX(){
+        previousCameraX =0;
     }
 
 }

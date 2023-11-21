@@ -18,7 +18,26 @@ public class InputManager implements KeyListener {
         GameState gameState = game.getGameState();
 
 
-        if (gameState == GameState.PLAYING) {
+        if (gameState == GameState.PLAYING && game.getMenu().getIsEndurance()) {
+            if (keyCode == KeyEvent.VK_Q) {
+                game.getMario().move(false);
+            } else if (keyCode == KeyEvent.VK_D) {
+                game.getMario().move(true);
+            } else if (keyCode == KeyEvent.VK_Z) {
+                game.getMario().setVelY(-7);
+            } else if (keyCode == KeyEvent.VK_ESCAPE) {
+                game.pauseGame();
+            } else if (keyCode == KeyEvent.VK_F) {
+                game.getMario().finish();
+            } else if (keyCode == KeyEvent.VK_R) {
+                game.reset();
+            } else if (keyCode == KeyEvent.VK_P) {
+                game.getMario().rotatePowerUp();
+            }else if (keyCode == KeyEvent.VK_O) {
+                game.toggleHitboxes();
+            }
+        }
+        else if(gameState == GameState.PLAYING) {
             if (keyCode == KeyEvent.VK_SPACE) {
                 game.getMario().jump();
             } else if (keyCode == KeyEvent.VK_Q) {
@@ -36,7 +55,7 @@ public class InputManager implements KeyListener {
             }else if (keyCode == KeyEvent.VK_O) {
                 game.toggleDebugMode();
             }
-        } else if (gameState == GameState.PAUSED) {
+        }else if (gameState == GameState.PAUSED) {
             if (keyCode == KeyEvent.VK_Z) {
                 game.getMenu().setSelectedOption((game.getMenu().getSelectedOption() - 1 + game.getMenu().getOption().length) % game.getMenu().getOption().length);
             } else if (keyCode == KeyEvent.VK_S) {
@@ -57,9 +76,13 @@ public class InputManager implements KeyListener {
                 game.getMenu().setSelectedOption((game.getMenu().getSelectedOption() - 1 + game.getMenu().getOption().length) % game.getMenu().getOption().length);
             } else if (keyCode == KeyEvent.VK_ENTER) {
                 if (game.getMenu().getSelectedOption() == 0) {
+                    game.getMenu().setIsEndurance(false);
+                    game.getMapManager().choosedMap();
                     game.startGame();
                 } else if (game.getMenu().getSelectedOption() == 1) {
-                    System.exit(1);
+                    game.getMenu().setIsEndurance(true);
+                    game.getMapManager().choosedMap();
+                    game.startGame();
                 }
             }
             else if (keyCode == KeyEvent.VK_ESCAPE) {
@@ -74,6 +97,7 @@ public class InputManager implements KeyListener {
             } else if (keyCode == KeyEvent.VK_ENTER) {
                 if (game.getMenu().getSelectedOption() == 0) {
                     if (gameState == GameState.GAMEOVER) {
+                        game.resetPreviousCameraX();
                         game.reset();
                     }
                     else if (gameState == GameState.WIN){

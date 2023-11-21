@@ -11,6 +11,7 @@ public class Canon extends Enemy {
     public Canon(int x, int y, Map map){
         super(x,y,"canon");
         setVelX(0);
+        setFalling(false);
         Timer shootingTimer = new Timer(randomNumber(), e -> missile(map));
         shootingTimer.start();
     }
@@ -21,4 +22,5 @@ public class Canon extends Enemy {
         Random random = new Random();
         return random.nextInt(1000,3000);
     }
+
 }

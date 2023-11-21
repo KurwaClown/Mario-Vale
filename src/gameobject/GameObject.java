@@ -1,5 +1,15 @@
 package gameobject;
 
+import core.Game;
+import core.GameState;
+import gameobject.block.Block;
+import gameobject.block.Bonus;
+import gameobject.character.Mario;
+import gameobject.character.Projectile;
+import gameobject.collectible.Coin;
+import gameobject.collectible.PowerUp;
+import gameobject.enemy.Enemy;
+import view.Map;
 import view.Resource;
 
 import java.awt.*;
@@ -12,6 +22,8 @@ public abstract class GameObject {
     private final Dimension spriteDimension = new Dimension(0, 0); // Dimension encapsulate width and height
     protected BufferedImage sprite;
     protected boolean jumping, falling;
+
+    protected boolean canJump = false;
 
     public GameObject(double xLocation, double yLocation, String name) {
         setX(xLocation);
@@ -41,21 +53,100 @@ public abstract class GameObject {
         else setX(getX() - getVelX());
     }
 
+    public void checkCollisions(Map map) {
+        Rectangle verticalHitbox = isJumping() ? getTopCollision() : getBottomCollision();
+        Rectangle horizontalHitbox = isLookingRight() ? getRightCollision() : getLeftCollision();
+        if (!this.isJumping()) {
+            this.setFalling(true);
+        }
+        checkBlockCollisions(map, horizontalHitbox, verticalHitbox);
+        checkEnemyCollisions(map, horizontalHitbox, verticalHitbox);
+        checkFlagCollisions(map);
+    }
+
+
+    protected void checkFlagCollisions(Map map) {
+        Flag flag = map.getFlag();
+        if (flag == null) return;
+
+        if (this.getHitbox().intersects(flag.getHitbox())) {
+            this.setX(flag.getX() - this.getSpriteDimension().getWidth());
+            if(this instanceof Mario) flag.flagBreak();
+            if(this instanceof Projectile) this.disappear();
+        }
+    }
+
+    protected void checkEnemyCollisions(Map map, Rectangle horizontalHitbox, Rectangle verticalHitbox) {
+        for (Enemy enemy : map.getEnemies()) {
+            Rectangle blockVerticalHitbox = isJumping() ? enemy.getBottomCollision() : enemy.getTopCollision();
+            Rectangle enemyHorizontalHitbox = isLookingRight() ? enemy.getLeftCollision() : enemy.getRightCollision();
+            if (horizontalHitbox.intersects(enemyHorizontalHitbox)) {
+                if (this.getVelX() > enemy.getVelX() && this.getVelX() > 5) {
+                    enemy.disappear();
+                } else {
+                    if (this instanceof Mario mario && mario.getHp() > 1) enemy.attacked();
+                    this.attacked();
+
+                }
+            } else if (verticalHitbox.intersects(blockVerticalHitbox)) {
+                this.setY(enemy.getY() - this.getSpriteDimension().height);
+                enemy.attacked();
+                this.setFalling(false);
+                this.setCanJump(true);
+                if (this instanceof Mario mario) {
+                    mario.addScore(300);
+                    mario.jump();
+                }
+            }
+        }
+    }
+
+    protected void checkBlockCollisions(Map map, Rectangle marioHorizontalHitbox, Rectangle marioVerticalHitbox) {
+        for (Block block : map.getBlocks()) {
+            Rectangle blockVerticalHitbox = isJumping() ? block.getBottomCollision() : block.getTopCollision();
+            Rectangle blockHorizontalHitbox = isLookingRight() ? block.getLeftCollision() : block.getRightCollision();
+
+
+            if (marioHorizontalHitbox.intersects(blockHorizontalHitbox)) {
+                if (isLookingRight()) this.setX(block.getX() - this.getSpriteDimension().getWidth());
+                else this.setX(block.getX() + block.getSpriteDimension().width + 1);
+            }
+            if (marioVerticalHitbox.intersects(blockVerticalHitbox)) {
+                if (isJumping()) {
+                    this.setY(block.getY() + block.getSpriteDimension().height + 1);
+                    this.setVelY(0);
+                    if (block instanceof Bonus bonus) map.addCollectible(bonus.getContainedCollectible());
+                    block.hit();
+                } else {
+                    this.setY(block.getY() - this.getSpriteDimension().height + 1);
+                    this.setVelY(0);
+                    this.setFalling(false);
+                    if (this instanceof Mario mario) mario.canJump = true;
+                }
+            }
+        }
+    }
+
+
     // Creating Rectangle to check collisions (cf Game.java => Collisions management)
     public Rectangle getBottomCollision() {
-        return new Rectangle((int)x+getSpriteDimension().width/8, (int)getY() + getSpriteDimension().height/2, 3*getSpriteDimension().width/4, getSpriteDimension().height/2);
+        return new Rectangle((int) x + getSpriteDimension().width / 8, (int) getY() + getSpriteDimension().height / 2, 3 * getSpriteDimension().width / 4, getSpriteDimension().height / 2);
     }
 
     public Rectangle getTopCollision() {
-        return new Rectangle((int)getX()+getSpriteDimension().width/8, (int)getY(), (3*getSpriteDimension().width/4), getSpriteDimension().height/2);
+        return new Rectangle((int) getX() + getSpriteDimension().width / 8, (int) getY(), (3 * getSpriteDimension().width / 4), getSpriteDimension().height / 2);
     }
 
     public Rectangle getLeftCollision() { //Yellow collision
-        return new Rectangle((int)x, (int)y + getSpriteDimension().height/6, getSpriteDimension().width/4, getSpriteDimension().height/3*2);
+        return new Rectangle((int) x, (int) y + getSpriteDimension().height / 6, getSpriteDimension().width / 4, getSpriteDimension().height / 3 * 2);
     }
 
     public Rectangle getRightCollision() { //Pink collision
-        return new Rectangle((int)x + 3*getSpriteDimension().width/4, (int)y + getSpriteDimension().height/6, getSpriteDimension().width/4, getSpriteDimension().height/3*2);
+        return new Rectangle((int) x + 3 * getSpriteDimension().width / 4, (int) y + getSpriteDimension().height / 6, getSpriteDimension().width / 4, getSpriteDimension().height / 3 * 2);
+    }
+
+    public void attacked() {
+        this.disappear();
     }
 
     public void draw(Graphics g) {
@@ -132,9 +223,11 @@ public abstract class GameObject {
     public boolean isJumping() {
         return jumping;
     }
+
     public void setFalling(boolean falling) {
         this.falling = falling;
     }
+
     public boolean isFalling() {
         return falling;
     }
@@ -146,6 +239,7 @@ public abstract class GameObject {
     public boolean isLookingRight() {
         return lookingRight;
     }
+
     public void setSprite(BufferedImage sprite) {
         if (sprite == null) return;
         else this.sprite = sprite;
@@ -166,6 +260,10 @@ public abstract class GameObject {
 
     public Rectangle getHitbox() {
         return new Rectangle((int) getX(), (int) getY(), getSprite().getWidth(), getSprite().getHeight());
+    }
+
+    public void setCanJump(boolean canJump) {
+        this.canJump = canJump;
     }
 
     public void update() {

@@ -27,7 +27,7 @@ public class Resource {
     private static void loadMaps() {
         maps.put("endurance", Objects.requireNonNull(Resource.class.getResource("../resource/map/endurance.csv")).getFile());
         maps.put("map1", Objects.requireNonNull(Resource.class.getResource("../resource/map/map1.csv")).getFile());
-        maps.put("map2", Objects.requireNonNull(Resource.class.getResource("../resource/map/map2.csv")).getFile());
+        maps.put("map2", Objects.requireNonNull(Resource.class.getResource("../resource/map/Map2.csv")).getFile());
     }
 
     private static void loadFont() {

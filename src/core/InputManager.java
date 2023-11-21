@@ -120,7 +120,7 @@ public class InputManager implements KeyListener {
                 }
             }
             else if(gameState == GameState.FLAG){
-                if (keyCode == KeyEvent.VK_B) {
+                if (keyCode == KeyEvent.VK_SPACE) {
                     game.increaseNumClicks();
                 }
             }

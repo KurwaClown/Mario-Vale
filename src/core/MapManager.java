@@ -23,6 +23,7 @@ public class MapManager {
     private final Mario mario;
     private Map map;
 
+    private int score;
     private int lastGeneratedX = 0;
     private final int BLOCK_WIDTH = 64;
     private final int GENERATION_THRESHOLD = 1;
@@ -41,7 +42,7 @@ public class MapManager {
 
     }
     public void choosedMap() {
-        if (menu.IsEndurance()) {
+        if (menu.isEndurance()) {
             this.csvFilePath = Resource.getMap("endurance");
         } else {
             this.csvFilePath = Resource.getMap("map1");
@@ -153,5 +154,6 @@ public class MapManager {
     public void toggleDebugMode(){
         this.map.toggleDebugMode();
     }
+
 }
 

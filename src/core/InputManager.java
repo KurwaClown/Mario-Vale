@@ -18,7 +18,7 @@ public class InputManager implements KeyListener {
         GameState gameState = game.getGameState();
 
 
-        if (gameState == GameState.PLAYING && game.getMenu().IsEndurance()) {
+        if (gameState == GameState.PLAYING && game.getMenu().isEndurance()) {
             if (keyCode == KeyEvent.VK_Q) {
                 game.getMario().move(false);
             } else if (keyCode == KeyEvent.VK_D) {

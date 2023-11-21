@@ -58,12 +58,16 @@ public class Menu {
         drawMenu(g, options);
     }
     public void drawGameOver (Graphics g){
-
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, 1300, 730);
         drawMenuTitle("Game Over", 400, g);
 
         String[] options = {"Restart", "Quit"};
         g.setFont(Resource.getMarioFont());
         g.setColor(Color.white);
+        if (this.isEndurance()){
+            g.drawString("Score : "+game.Score(), 600, 400);
+        }
         for (int i = 0; i < options.length; i++) {
             if (i == selectedOption) {
                 g.setColor(Color.RED);
@@ -123,8 +127,9 @@ public class Menu {
     public void setEndurance(boolean value){
         this.endurance=value;
     }
-    public boolean IsEndurance(){
+    public boolean isEndurance(){
         return this.endurance;
     }
+
 }
 

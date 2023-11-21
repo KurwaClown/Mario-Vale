@@ -152,6 +152,7 @@ public class Game {
     }
 
     public void gameOver() {
+        audioManager.playSound("game-over.wav");
         setGameState(GameState.GAMEOVER);
         System.out.println("Game over!");
         System.out.println("Score: " + getMario().getScore());

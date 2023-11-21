@@ -369,6 +369,28 @@ public class Game {
                     }
                 }
             }
+
+            for (Enemy enemy2 : getMapManager().getMap().getEnemies()) {
+                if (enemy == enemy2) continue;
+                Rectangle enemy2Hitbox = getGameObjectHitbox(enemy2, direction, true);
+                if (enemyHitbox.intersects(enemy2Hitbox)) {
+                    Rectangle intersection = enemyHitbox.intersection(enemy2Hitbox);
+                    if (enemy.getVelX() > enemy2.getVelX() && enemy.getVelX() > 3.5) {
+                        enemy2.disappear();
+                    } else if(enemy.getVelX() < enemy2.getVelX() && enemy2.getVelX() > 3.5) {
+                        enemy.disappear();
+                    }
+                    else if (direction == Direction.LEFT && !enemy.isLookingRight()) {
+                        enemy.setX(enemy.getX() + intersection.width);
+                        enemy.inverseVelX();
+                        enemy2.inverseVelX();
+                    } else if (direction == Direction.RIGHT && enemy.isLookingRight()) {
+                        enemy.setX(enemy.getX() - intersection.width);
+                        enemy.inverseVelX();
+                        enemy2.inverseVelX();
+                    }
+                }
+            }
         }
     }
 

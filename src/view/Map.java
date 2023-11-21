@@ -21,7 +21,7 @@ public class Map {
     private final List<Block> blocks = new CopyOnWriteArrayList<>();
     private final List<PowerUp> powerups = new CopyOnWriteArrayList<>();
 
-    private Flag flag = new Flag(1600);
+    private Flag flag;
     private final List<Coin> coins =new CopyOnWriteArrayList<>();
 
     private final List<Projectile> projectiles = new CopyOnWriteArrayList<>();
@@ -93,7 +93,7 @@ public class Map {
             powerup.draw(g);
         }
 
-        flag.draw(g);
+        if(this.flag != null) flag.draw(g);
 
         for (Enemy enemy : enemies) {
             enemy.draw(g);
@@ -130,7 +130,7 @@ public class Map {
         for (PowerUp powerup : powerups) {
             powerup.moveObject();
         }
-            flag.moveObject();
+            if(this.flag != null)flag.moveObject();
 
         for (Enemy enemy : enemies) {
             if (enemy instanceof gameobject.enemy.Champi champi) champi.update(mario.getHitbox());

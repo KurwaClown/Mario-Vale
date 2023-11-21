@@ -8,6 +8,7 @@ import java.awt.*;
 public class Flag extends GameObject {
     public Flag(double xLocation) {
         super(xLocation, 576, "flag");
+        System.out.println("Flag created");
         setSprite(Resource.getImage("flag"));
         setY(getY()-getSpriteDimension().height);
     }

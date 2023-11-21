@@ -271,6 +271,7 @@ public class Game {
         if(gameState == GameState.FLAG) return;
         Rectangle marioHitbox = getGameObjectHitbox(mario, direction, false);
         Flag flag = mapManager.getMap().getFlag();
+        if(flag == null) return;
             Rectangle flagHitbox = getGameObjectHitbox(flag, direction, true);
 
             if (marioHitbox.intersects(flagHitbox)) {

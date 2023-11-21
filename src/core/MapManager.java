@@ -34,6 +34,7 @@ public class MapManager {
 
     public MapManager(Camera camera, Mario mario, Menu menu) {
         this.menu = menu;
+
         this.map = new Map(camera);
         this.mario = mario;
         map.addMario(mario);

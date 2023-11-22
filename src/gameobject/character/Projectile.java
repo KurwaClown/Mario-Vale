@@ -28,7 +28,7 @@ public class Projectile extends GameObject {
 
                 Rectangle intersection = blockVerticalHitbox.intersection(projectileVerticalHitbox);
                 this.setY(this.getY() - intersection.height);
-                this.setVelY(7.5);
+                this.setVelY(5);
                 this.setJumping(true);
                 this.setFalling(false);
                 }

@@ -41,8 +41,6 @@ public class Game {
     }
 
 
-    private enum Direction {BOTTOM, TOP, LEFT, RIGHT}
-
     // Management of the game and adding object on the map
     public Game() {
         setGameState(GameState.MENU);

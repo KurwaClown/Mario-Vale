@@ -1,6 +1,5 @@
 package gameobject.enemy;
 
-import core.Game;
 import gameobject.GameObject;
 import gameobject.block.Block;
 import gameobject.block.Bonus;

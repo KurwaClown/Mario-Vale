@@ -1,9 +1,7 @@
 package gameobject.character;
 
-import core.Game;
 import gameobject.GameObject;
 import gameobject.block.Block;
-import gameobject.block.Bonus;
 import gameobject.enemy.Enemy;
 import view.Map;
 

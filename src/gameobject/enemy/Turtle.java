@@ -1,8 +1,7 @@
 package gameobject.enemy;
 
-import gameobject.block.Block;
-import view.Resource;
 import gameobject.character.Mario;
+import view.Resource;
 
 public class Turtle extends Enemy {
     private boolean isShell = false;

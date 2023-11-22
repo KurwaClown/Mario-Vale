@@ -1,13 +1,9 @@
 package gameobject;
 
-import core.Game;
-import core.GameState;
 import gameobject.block.Block;
 import gameobject.block.Bonus;
 import gameobject.character.Mario;
 import gameobject.character.Projectile;
-import gameobject.collectible.Coin;
-import gameobject.collectible.PowerUp;
 import gameobject.enemy.Enemy;
 import view.Map;
 import view.Resource;

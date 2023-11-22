@@ -1,17 +1,9 @@
 package core;
 
-import gameobject.Flag;
-import gameobject.GameObject;
-import gameobject.block.Block;
-import gameobject.block.Bonus;
-import gameobject.block.Pipe;
 import gameobject.character.Mario;
 import gameobject.character.Projectile;
-import gameobject.collectible.Coin;
-import gameobject.collectible.PowerUp;
 import gameobject.enemy.Canon;
 import gameobject.enemy.Enemy;
-import gameobject.enemy.Missile;
 import view.AudioManager;
 import view.Camera;
 import view.Map;

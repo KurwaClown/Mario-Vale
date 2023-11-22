@@ -1,6 +1,5 @@
 package gameobject.collectible;
 
-import gameobject.GameObject;
 import gameobject.block.Block;
 import gameobject.character.Mario;
 

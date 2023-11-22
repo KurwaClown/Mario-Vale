@@ -11,9 +11,8 @@ import gameobject.enemy.Enemy;
 import gameobject.enemy.Turtle;
 import view.Camera;
 import view.Map;
-import view.Resource;
 import view.Menu;
-
+import view.Resource;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

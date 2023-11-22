@@ -86,6 +86,8 @@ public class InputManager implements KeyListener {
                     game.resetMap();
                 } else if (game.getMenu().getSelectedOption() == 1) {
                     game.getMenu().setEndurance(true);
+                    game.getMario().setPigglet(false);
+                    game.getMario().setBigPig(false);
                     game.resetPreviousCameraX();
                     game.getMapManager().resetLastGeneratedX();
                     game.getMapManager().choosedMap();
@@ -110,6 +112,8 @@ public class InputManager implements KeyListener {
                     if (gameState == GameState.GAMEOVER) {
                         game.resetPreviousCameraX();
                         game.resetMap();
+                        game.getMario().setPigglet(false);
+                        game.getMario().setBigPig(false);
                     }
                     else if (gameState == GameState.WIN){
                         game.nextLevel();

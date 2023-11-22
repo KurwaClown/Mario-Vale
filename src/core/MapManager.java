@@ -15,6 +15,7 @@ import view.Resource;
 import view.Menu;
 
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -44,6 +45,7 @@ public class MapManager {
     public void choosedMap() {
         if (menu.isEndurance()) {
             this.csvFilePath = Resource.getMap("endurance");
+
         } else {
             this.csvFilePath = Resource.getMap("map2");
         }

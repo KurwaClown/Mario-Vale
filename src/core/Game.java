@@ -12,10 +12,7 @@ import gameobject.collectible.PowerUp;
 import gameobject.enemy.Canon;
 import gameobject.enemy.Enemy;
 import gameobject.enemy.Missile;
-import view.AudioManager;
-import view.Camera;
-import view.Map;
-import view.UserInterface;
+import view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -126,6 +123,7 @@ public class Game {
             if (getMenu().isEndurance()) {
                 moveCanonsWithCamera(cameraOffset);
                 getMapManager().generateGroundIfNecessary(getCamera());
+                mario.updatePig();
                 if (getMario().getY() < 0) {
                     getMario().setY(0);
                 }

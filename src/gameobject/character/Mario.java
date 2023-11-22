@@ -21,6 +21,10 @@ public class Mario extends GameObject {
     private final AudioManager audioManager = new AudioManager();
     private boolean isCharging = false;
 
+    private boolean bigPig = false;
+
+    private boolean pigglet = false;
+
     public boolean canJump = true;
 
     private int coins = 0;
@@ -146,14 +150,29 @@ public class Mario extends GameObject {
                     12000
             );
 
-        } else if (powerUp == null) {
+        } else if(powerUp instanceof GreenMissile){
+            pigglet = true;
+            bigPig = false;
+        }else if(powerUp instanceof RedMissile){
+            pigglet = false;
+            bigPig = true;
+        }else if (powerUp == null) {
             setMode(Mode.NORMAL);
             hp = 1;
         }
         System.out.printf("Mario is now in %s mode\n", getMode());
         System.out.println("HP: " + this.getHp());
     }
-
+    public void updatePig(){
+        if (pigglet){
+            setSprite(Resource.getImage("pigglet"));
+        } else if (bigPig){
+            setSprite(Resource.getImage("bigpig"));
+        }
+        else {
+            setSprite(Resource.getImage("pig"));
+        }
+    }
     public void attack(view.Map map) {
         if (this.getMode() == Mode.JERSEY) {
             this.isCharging = regenCharge == 300;
@@ -245,6 +264,12 @@ public class Mario extends GameObject {
 
     private void setCurrentSpriteIndex(int currentSpriteIndex) {
         this.currentSpriteIndex = currentSpriteIndex;
+    }
+    public void setPigglet(boolean value){
+        this.pigglet = value;
+    }
+    public void setBigPig(boolean value){
+        this.bigPig = value;
     }
 }
 

@@ -20,7 +20,7 @@ public class Shoot {
     public void start() {
         timer = new Timer(10, e -> {
             if(!angleLocked) {
-                angle += 1;
+                angle += 2.5;
                 if (angle > 90) {
                     angle = 0;
                 }

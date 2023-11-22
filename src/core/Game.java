@@ -31,12 +31,12 @@ public class Game {
 
     private final AudioManager audioManager = new AudioManager();
     private double previousCameraX = 0;
-    private final UserInterface userInterface;
-    private final view.Camera camera;
-    private final Mario mario;
-    private final MapManager mapManager;
+    private UserInterface userInterface;
+    private view.Camera camera;
+    private Mario mario;
+    private MapManager mapManager;
 
-    private final view.Menu menu;
+    private view.Menu menu;
     private int numClicks;
 
 
@@ -433,7 +433,7 @@ public class Game {
         this.gameState = gameState;
     }
 
-    public void reset() {
+    public void resetMap() {
         getMapManager().reset(getCamera());
         setGameState(GameState.PLAYING);
     }
@@ -444,6 +444,9 @@ public class Game {
 
     public static void main(String[] args) {
         new Game();
+    }
+    public void goToMainMenu(){
+        gameState = GameState.MENU;
     }
 
 
@@ -485,6 +488,14 @@ public class Game {
         } else{
             return score = mario.getScore();
         }
+    }
+    public void reset(){
+        setGameState(GameState.MENU);
+        this.camera = new Camera();
+        this.mario = new Mario();
+        this.menu = new view.Menu(getCamera(), this);
+        this.mapManager = new MapManager(getCamera(), getMario(), menu);
+        this.userInterface = new UserInterface(this);
     }
 
 }

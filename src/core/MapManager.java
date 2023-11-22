@@ -138,8 +138,7 @@ public class MapManager {
     public void removeUnusedObjects() {
         this.map.getEnemies().removeIf(enemy -> enemy.getY() > 2999 || enemy.getX() < -2999);
         this.map.getBlocks().removeIf(block -> block.getY() > 2999 || block.getX() < -2999);
-        this.map.getPowerUps().removeIf(powerup -> powerup.getY() > 2999 || powerup.getX() < -2999);
-        this.map.getCoins().removeIf(coin -> coin.getY() > 2999 || coin.getX() < -2999);
+        this.map.getCollectibles().removeIf(powerup -> ((GameObject)powerup).getY() > 2999 || ((GameObject) powerup).getX() < -2999);
     }
 
     public Map getMap() {

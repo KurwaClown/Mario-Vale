@@ -25,6 +25,7 @@ public abstract class GameObject {
 
     protected boolean canJump = false;
 
+
     public GameObject(double xLocation, double yLocation, String name) {
         setX(xLocation);
         setY(yLocation);
@@ -71,26 +72,33 @@ public abstract class GameObject {
 
         if (this.getHitbox().intersects(flag.getHitbox())) {
             this.setX(flag.getX() - this.getSpriteDimension().getWidth());
-            if(this instanceof Mario) flag.flagBreak();
-            if(this instanceof Projectile) this.disappear();
+            if (this instanceof Mario) flag.flagBreak();
+            if (this instanceof Projectile) this.disappear();
         }
     }
 
     protected void checkEnemyCollisions(Map map, Rectangle horizontalHitbox, Rectangle verticalHitbox) {
+
         for (Enemy enemy : map.getEnemies()) {
+            if (this == enemy) continue;
             Rectangle blockVerticalHitbox = isJumping() ? enemy.getBottomCollision() : enemy.getTopCollision();
             Rectangle enemyHorizontalHitbox = isLookingRight() ? enemy.getLeftCollision() : enemy.getRightCollision();
             if (horizontalHitbox.intersects(enemyHorizontalHitbox)) {
                 if (this.getVelX() > enemy.getVelX() && this.getVelX() > 5) {
                     enemy.disappear();
                 } else {
-                    if (this instanceof Mario mario && mario.getHp() > 1) enemy.attacked();
-                    this.attacked();
+                    if (this instanceof Mario mario && mario.getHp() > 1) enemy.attacked(this.getClass());
+                    else if (this instanceof Enemy) {
+                        ((Enemy) this).inverseVelX();
+                        enemy.inverseVelX();
+                        continue;
+                    }
+                    this.attacked(enemy.getClass());
 
                 }
             } else if (verticalHitbox.intersects(blockVerticalHitbox)) {
                 this.setY(enemy.getY() - this.getSpriteDimension().height);
-                enemy.attacked();
+                enemy.attacked(this.getClass());
                 this.setFalling(false);
                 this.setCanJump(true);
                 if (this instanceof Mario mario) {
@@ -103,6 +111,7 @@ public abstract class GameObject {
 
     protected void checkBlockCollisions(Map map, Rectangle marioHorizontalHitbox, Rectangle marioVerticalHitbox) {
         for (Block block : map.getBlocks()) {
+
             Rectangle blockVerticalHitbox = isJumping() ? block.getBottomCollision() : block.getTopCollision();
             Rectangle blockHorizontalHitbox = isLookingRight() ? block.getLeftCollision() : block.getRightCollision();
 
@@ -145,7 +154,7 @@ public abstract class GameObject {
         return new Rectangle((int) x + 3 * getSpriteDimension().width / 4, (int) y + getSpriteDimension().height / 6, getSpriteDimension().width / 4, getSpriteDimension().height / 3 * 2);
     }
 
-    public void attacked() {
+    public void attacked(Class<?> attacker) {
         this.disappear();
     }
 

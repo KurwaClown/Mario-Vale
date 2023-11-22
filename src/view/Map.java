@@ -4,9 +4,7 @@ import gameobject.Flag;
 import gameobject.block.Block;
 import gameobject.character.Mario;
 import gameobject.character.Projectile;
-import gameobject.collectible.Coin;
 import gameobject.collectible.Collectible;
-import gameobject.collectible.PowerUp;
 import gameobject.enemy.Enemy;
 
 import java.awt.*;
@@ -19,10 +17,9 @@ public class Map {
     private Mario mario;
     private final List<Enemy> enemies = new CopyOnWriteArrayList<>();
     private final List<Block> blocks = new CopyOnWriteArrayList<>();
-    private final List<PowerUp> powerups = new CopyOnWriteArrayList<>();
+    private final List<Collectible> collectibles = new CopyOnWriteArrayList<>();
 
     private Flag flag;
-    private final List<Coin> coins =new CopyOnWriteArrayList<>();
 
     private final List<Projectile> projectiles = new CopyOnWriteArrayList<>();
     private final BufferedImage backgroundImage = Resource.getImage("map");
@@ -46,8 +43,7 @@ public class Map {
     }
 
     public void addCollectible(Collectible collectible) {
-        if(collectible instanceof PowerUp powerup) powerups.add(powerup);
-        else if(collectible instanceof Coin coin) coins.add(coin);
+        collectibles.add(collectible);
     }
 
     public void addFlag(Flag flag) {
@@ -89,8 +85,8 @@ public class Map {
             block.draw(g);
             if(debugMode)block.drawHitboxes(g);
         }
-        for (PowerUp powerup : powerups) {
-            powerup.draw(g);
+        for (Collectible collectible : collectibles) {
+            collectible.draw(g);
         }
 
         if(this.flag != null) flag.draw(g);
@@ -102,9 +98,7 @@ public class Map {
                 enemy.drawData(g);
             }
         }
-        for (Coin coin : coins) {
-            coin.draw(g);
-        }
+
         for (Projectile projectile : projectiles) {
             projectile.draw(g);
         }
@@ -127,9 +121,7 @@ public class Map {
         for (Block block : blocks) {
             block.moveObject();
         }
-        for (PowerUp powerup : powerups) {
-            powerup.moveObject();
-        }
+
             if(this.flag != null)flag.moveObject();
 
         for (Enemy enemy : enemies) {
@@ -148,8 +140,8 @@ public class Map {
     }
 
 
-    public List<PowerUp> getPowerUps() {
-        return powerups;
+    public List<Collectible> getCollectibles() {
+        return collectibles;
     }
 
     public Flag getFlag() {
@@ -160,9 +152,7 @@ public class Map {
         return enemies;
     }
 
-    public List<Coin> getCoins() {
-        return coins;
-    }
+
 
     public List<Projectile> getProjectiles() {
         return projectiles;
@@ -175,8 +165,7 @@ public class Map {
     public void reset(){
         enemies.clear();
         blocks.clear();
-        powerups.clear();
-        coins.clear();
+        collectibles.clear();
         projectiles.clear();
         camera.reset();
     }

@@ -1,15 +1,11 @@
 package gameobject.character;
 
-import core.Game;
 import gameobject.GameObject;
-import gameobject.block.Block;
-import gameobject.block.Bonus;
 import gameobject.collectible.*;
 import view.AudioManager;
 import view.Map;
 import view.Resource;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Mario extends GameObject {
@@ -180,15 +176,12 @@ public class Mario extends GameObject {
     @Override
     public void checkCollisions(Map map) {
         super.checkCollisions(map);
-        checkPowerupCollisions(map);
+        checkCollectibleCollisions(map);
     }
 
-    protected void checkPowerupCollisions(Map map){
-        for (PowerUp powerup : map.getPowerUps()) {
-            if (this.getHitbox().intersects(powerup.getHitbox())) powerup.onTouch(this);
-        }
-        for (Coin coin : map.getCoins()) {
-            if (this.getHitbox().intersects(coin.getHitbox())) coin.onTouch(this);
+    protected void checkCollectibleCollisions(Map map){
+        for (Collectible collectible : map.getCollectibles()) {
+            if (this.getHitbox().intersects(collectible.getHitbox())) collectible.onTouch(this);
         }
     }
 

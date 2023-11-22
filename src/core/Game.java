@@ -191,11 +191,8 @@ public class Game {
             gameOver();
         }
         checkForMapBoundaries();
-
         checkProjectileCollisions();
-        for (Direction direction : Direction.values()) {
-            checkEnemyBlockCollisions(direction);
-        }
+        checkEnemyBlockCollisions();
         getMapManager().removeUnusedObjects();
     }
 
@@ -219,62 +216,9 @@ public class Game {
         }
     }
 
-
-    private void checkEnemyBlockCollisions(Direction direction) {
+    private void checkEnemyBlockCollisions() {
         for (Enemy enemy : getMapManager().getMap().getEnemies()) {
-            if (!enemy.isJumping() && !(enemy instanceof Missile) && !(enemy instanceof Canon)) {
-                enemy.setFalling(true);
-            }
-            Rectangle enemyHitbox = getGameObjectHitbox(enemy, direction, false);
-
-            for (Block block : getMapManager().getMap().getBlocks()) {
-                Rectangle blockHitbox = getGameObjectHitbox(block, direction, true);
-
-                if (enemyHitbox.intersects(blockHitbox)) {
-                    Rectangle intersection = enemyHitbox.intersection(blockHitbox);
-                    if (direction == Direction.LEFT && !enemy.isLookingRight()) {
-                        enemy.setX(enemy.getX() + enemy.getVelX());
-                        enemy.inverseVelX();
-                    } else if (direction == Direction.RIGHT && enemy.isLookingRight()) {
-                        enemy.setX(enemy.getX() - enemy.getVelX());
-                        enemy.inverseVelX();
-                    } else if (direction == Direction.TOP && enemy.isJumping()) {
-                        if (enemy.isFalling()) break;
-                        enemy.setY(enemy.getY() + intersection.height);
-                        enemy.setVelY(0);
-                        if (block instanceof Bonus bonus)
-                            getMapManager().getMap().addCollectible(bonus.getContainedCollectible());
-                        block.hit();
-                    } else if (direction == Direction.BOTTOM && enemy.isFalling()) {
-                        if (block instanceof Pipe) System.out.println(enemy + " from bottom");
-                        enemy.setY(block.getY() - enemy.getSpriteDimension().height);
-                        enemy.setVelY(0);
-                        enemy.setJumping(false);
-                        enemy.setFalling(false);
-                    }
-                }
-            }
-
-            for (Enemy enemy2 : getMapManager().getMap().getEnemies()) {
-                if (enemy == enemy2) continue;
-                Rectangle enemy2Hitbox = getGameObjectHitbox(enemy2, direction, true);
-                if (enemyHitbox.intersects(enemy2Hitbox)) {
-                    Rectangle intersection = enemyHitbox.intersection(enemy2Hitbox);
-                    if (enemy.getVelX() > enemy2.getVelX() && enemy.getVelX() > 3.5) {
-                        enemy2.disappear();
-                    } else if (enemy.getVelX() < enemy2.getVelX() && enemy2.getVelX() > 3.5) {
-                        enemy.disappear();
-                    } else if (direction == Direction.LEFT && !enemy.isLookingRight()) {
-                        enemy.setX(enemy.getX() + intersection.width);
-                        enemy.inverseVelX();
-                        enemy2.inverseVelX();
-                    } else if (direction == Direction.RIGHT && enemy.isLookingRight()) {
-                        enemy.setX(enemy.getX() - intersection.width);
-                        enemy.inverseVelX();
-                        enemy2.inverseVelX();
-                    }
-                }
-            }
+            enemy.checkCollisions(getMapManager().getMap());
         }
     }
 
@@ -293,14 +237,6 @@ public class Game {
         numClicks++;
     }
 
-    private Rectangle getGameObjectHitbox(GameObject object, Direction direction, boolean isOpposite) {
-        return switch (direction) {
-            case LEFT -> isOpposite ? object.getRightCollision() : object.getLeftCollision();
-            case RIGHT -> isOpposite ? object.getLeftCollision() : object.getRightCollision();
-            case BOTTOM -> isOpposite ? object.getTopCollision() : object.getBottomCollision();
-            case TOP -> isOpposite ? object.getBottomCollision() : object.getTopCollision();
-        };
-    }
 
     public Mario getMario() {
         return mario;

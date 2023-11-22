@@ -1,7 +1,9 @@
 package gameobject.enemy;
 
+import core.Game;
 import gameobject.GameObject;
 import gameobject.block.Block;
+import gameobject.block.Bonus;
 import gameobject.character.Mario;
 import view.Map;
 
@@ -17,28 +19,49 @@ public abstract class Enemy extends GameObject {
         setFalling(true);
     }
 
-    public void attacked(){
-        this.disappear();
+    public void inverseVelX(){
+        setLookingRight(!isLookingRight());
     }
 
     @Override
-    protected void checkEnemyCollisions(Map map, Rectangle horizontalHitbox, Rectangle verticalHitbox) {
-        super.checkEnemyCollisions(map, horizontalHitbox, verticalHitbox);
-        for (Enemy enemy : map.getEnemies()) {
-            Rectangle enemyHorizontalHitbox = isLookingRight() ? enemy.getLeftCollision() : enemy.getRightCollision();
-            if (horizontalHitbox.intersects(enemyHorizontalHitbox)) {
-                inverseVelX();
-            }
-        }
-        for(Block block : map.getBlocks()){
+    protected void checkBlockCollisions(Map map, Rectangle marioHorizontalHitbox, Rectangle marioVerticalHitbox) {
+        for (Block block : map.getBlocks()) {
+            Rectangle blockVerticalHitbox = isJumping() ? block.getBottomCollision() : block.getTopCollision();
             Rectangle blockHorizontalHitbox = isLookingRight() ? block.getLeftCollision() : block.getRightCollision();
-            if (horizontalHitbox.intersects(blockHorizontalHitbox)) {
-                inverseVelX();
+
+
+            if (marioHorizontalHitbox.intersects(blockHorizontalHitbox)) {
+                if (isLookingRight()) {
+                    this.setX(block.getX() - this.getSpriteDimension().getWidth());
+                    inverseVelX();
+                }
+                else {
+                    this.setX(block.getX() + block.getSpriteDimension().width + 1);
+                    inverseVelX();
+                }
+            }
+            if (marioVerticalHitbox.intersects(blockVerticalHitbox)) {
+                if (isJumping()) {
+                    this.setY(block.getY() + block.getSpriteDimension().height + 1);
+                    this.setVelY(0);
+                    if (block instanceof Bonus bonus) map.addCollectible(bonus.getContainedCollectible());
+                    block.hit();
+                } else {
+                    this.setY(block.getY() - this.getSpriteDimension().height + 1);
+                    this.setVelY(0);
+                    this.setFalling(false);
+                }
             }
         }
     }
 
-    public void inverseVelX(){
-        setLookingRight(!isLookingRight());
+    @Override
+    public void attacked(Class<?> attacker) {
+        if(attacker == Mario.class){
+            this.disappear();
+        } else if (attacker == Missile.class){
+            this.disappear();
+        }
+
     }
 }

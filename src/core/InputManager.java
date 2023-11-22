@@ -126,6 +126,14 @@ public class InputManager implements KeyListener {
                         game.getMario().setBigPig(false);
                     }
                     else if (gameState == GameState.WIN){
+                        game.resetPreviousCameraX();
+                        game.resetMap();
+                        game.getMario().setReadyToKick(false);
+                        game.getMario().setDontMove(false);
+                        game.getShoot().setAngleLocked(false);
+                        game.getShoot().setPowerLocked(false);
+                        game.getShoot().setTransformed(false);
+                        game.setNumClicks(0);
                         game.nextLevel();
                     }
                 } else if (game.getMenu().getSelectedOption() == 1) {

@@ -350,5 +350,8 @@ public class Game {
         this.mapManager = new MapManager(getCamera(), getMario(), menu);
         this.userInterface = new UserInterface(this);
     }
+    public void setNumClicks(int value){
+        this.numClicks=value;
+    }
 
 }

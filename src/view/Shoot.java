@@ -71,6 +71,13 @@ public class Shoot {
     public void setTransformed(boolean value){
         this.transformed= value;
     }
+
+    public void setAngleLocked (boolean value){
+        this.angleLocked=value;
+    }
+    public void setPowerLocked (boolean value){
+        this.powerLocked=value;
+    }
 }
 
 

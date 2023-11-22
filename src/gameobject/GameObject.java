@@ -4,7 +4,9 @@ import gameobject.block.Block;
 import gameobject.block.Bonus;
 import gameobject.character.Mario;
 import gameobject.character.Projectile;
+import gameobject.enemy.Canon;
 import gameobject.enemy.Enemy;
+import gameobject.enemy.Missile;
 import view.Map;
 import view.Resource;
 
@@ -230,6 +232,7 @@ public abstract class GameObject {
     }
 
     public void setFalling(boolean falling) {
+        if(this instanceof Canon || this instanceof Missile) return;
         this.falling = falling;
     }
 

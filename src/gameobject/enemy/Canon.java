@@ -37,7 +37,7 @@ public class Canon extends Enemy {
     }
 
     @Override
-    public void attacked() {
+    public void attacked(Class<?> attacker) {
         return;
     }
 }

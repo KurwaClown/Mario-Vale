@@ -5,6 +5,9 @@ import gameobject.block.Block;
 import gameobject.character.Mario;
 import gameobject.character.Projectile;
 import gameobject.collectible.Collectible;
+import gameobject.collectible.GreenMissile;
+import gameobject.collectible.PowerUp;
+import gameobject.collectible.RedMissile;
 import gameobject.enemy.Enemy;
 import gameobject.KickBall;
 
@@ -137,6 +140,12 @@ public class Map {
 
         if (this.flag != null) flag.moveObject();
 
+        for (Collectible collectible : collectibles) {
+            if(collectible instanceof GreenMissile || collectible instanceof RedMissile) {
+                ((PowerUp) collectible).update();
+                ((PowerUp) collectible).moveObject();
+            }
+        }
         for (Enemy enemy : enemies) {
             if (enemy instanceof gameobject.enemy.Champi champi) champi.update(mario.getHitbox());
             else enemy.update();

@@ -138,7 +138,6 @@ public class Game {
             getUI().updateGame();
             if(getMap().getKickBall().getY() > 540) victory();
         }
-        System.out.println(getGameState());
         previousCameraX = currentCameraX;
         getUI().repaint();
     }

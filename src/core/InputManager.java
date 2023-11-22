@@ -67,7 +67,15 @@ public class InputManager implements KeyListener {
                     System.exit(1);
                 }
             }
-        } else if (gameState == GameState.MENU) {
+        } else if(gameState == GameState.TRANSFORMATION){
+            if (keyCode == KeyEvent.VK_SPACE) {
+                if (!game.getShoot().isAngleLocked()) {
+                    game.getShoot().lockAngle();
+                } else if (!game.getShoot().isPowerLocked()) {
+                    game.getShoot().lockPower();
+                }
+            }
+        }else if (gameState == GameState.MENU) {
             if (keyCode == KeyEvent.VK_Z) {
                 game.getMenu().setSelectedOption((game.getMenu().getSelectedOption() - 1 + game.getMenu().getOption().length) % game.getMenu().getOption().length);
             } else if (keyCode == KeyEvent.VK_S) {

@@ -5,6 +5,7 @@ import core.GameState;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 
 // Base window, painting all the elements of the map
 public class UserInterface extends JPanel {
@@ -21,41 +22,64 @@ public class UserInterface extends JPanel {
             game.getMenu().drawMainMenu(g);
             repaint();
 
-        }
-        else if (game.getGameState() == GameState.GAMEOVER){
+        } else if (game.getGameState() == GameState.GAMEOVER) {
             game.getMenu().drawGameOver(g);
         } else if (game.getGameState() == GameState.FLAG) {
             game.getMap().draw(g);
             addGreyMask(g);
             drawFlagCount(g);
-        }else if (game.getGameState() == GameState.PAUSED){
+        } else if (game.getGameState() == GameState.PAUSED) {
             game.getMap().draw(g);
             game.getMenu().drawPauseMenu(g);
             addGreyMask(g);
             repaint();
-        }else if (game.getGameState()==GameState.WIN){
+        } else if (game.getGameState() == GameState.WIN) {
             game.getMap().draw(g);
             game.getMenu().drawWinMenu(g);
-        }else {
+        } else if (game.getGameState() == GameState.TRANSITION) {
             game.getMap().draw(g);
+        } else if (game.getGameState() == GameState.TRANSFORMATION) {
+            game.getMap().draw(g);
+            drawTransformation(g);
 
+        } else {
+            game.getMap().draw(g);
         }
 
     }
 
+    private void drawTransformation(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        float thickness = 4.0f;
+        g2d.setStroke(new BasicStroke(thickness));
+        int x = (int) game.getMario().getX() + 64;
+        int y = (int) game.getMario().getY() + 95;
+        int length = 50;
+        if (!game.getShoot().isAngleLocked()) {
+            g2d.drawLine(x, y, x + (int) (length * Math.cos(Math.toRadians(game.getShoot().getAngle()))), y - (int) (length * Math.sin(Math.toRadians(game.getShoot().getAngle()))));
+        } else if (!game.getShoot().isPowerLocked() && game.getShoot().isAngleLocked()) {
+            g2d.fillRect(x, ((int) (y - game.getShoot().getPower() * 100 / 25)), 10, (int) (game.getShoot().getPower()) * 100 / 25);
+        } else if (game.getShoot().isPowerLocked() && game.getShoot().isAngleLocked() && !game.getShoot().getTransformed()) {
+            game.transformation();
+            game.getShoot().setTransformed(true);
+
+        }
+    }
+
+
     public void updateGame() {
-            game.getMap().update();
+        game.getMap().update();
     }
 
     public void drawFlagCount(Graphics g) {
         g.setFont(Resource.getMarioFont().deriveFont(60f));
         g.setColor(Color.WHITE);
-        g.drawString(String.valueOf(game.getFlagCount()), (int)game.getCamera().getX()+(getWidth()/2),  400);
+        g.drawString(String.valueOf(game.getFlagCount()), (int) game.getCamera().getX() + (getWidth() / 2), 400);
     }
 
     private void addGreyMask(Graphics g) {
         g.setColor(new Color(128, 128, 128, 128));
-        g.fillRect((int)game.getCamera().getX(), (int)game.getCamera().getY(), 1300, 800);
+        g.fillRect((int) game.getCamera().getX(), (int) game.getCamera().getY(), 1300, 800);
     }
 }
     

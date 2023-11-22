@@ -15,12 +15,15 @@ public class Mario extends GameObject {
     private int currentSpriteIndex;
     private long lastSpriteChangeTime;
     private static final long ANIMATION_TIME = 500;
+    private boolean readyToKick = false;
 
     private int regenCharge = 300;
     private int counterCharge = 15;
 
     private final AudioManager audioManager = new AudioManager();
     private boolean isCharging = false;
+
+    private boolean dontMove = false;
 
 
     private int coins = 0;
@@ -227,7 +230,12 @@ public class Mario extends GameObject {
         }
     }
 
-
+    public void transformationAnimation() {
+        if (!this.getReadyToKick()) {
+            this.setVelX(3);
+            this.setFalling(false);
+        }
+    }
 
     public void addCoin() {
         audioManager.playSound("piece.wav");
@@ -262,6 +270,18 @@ public class Mario extends GameObject {
 
     private void setCurrentSpriteIndex(int currentSpriteIndex) {
         this.currentSpriteIndex = currentSpriteIndex;
+    }
+    public boolean getReadyToKick(){
+        return this.readyToKick;
+    }
+    public void setReadyToKick(boolean value){
+        this.readyToKick= value;
+    }
+    public boolean getDontMove(){
+        return this.dontMove;
+    }
+    public void setDontMove(boolean value){
+        this.dontMove= value;
     }
 }
 

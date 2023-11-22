@@ -2,13 +2,11 @@ package core;
 
 import gameobject.Flag;
 import gameobject.GameObject;
+import gameobject.KickBall;
 import gameobject.block.*;
 import gameobject.character.Mario;
 import gameobject.collectible.*;
-import gameobject.enemy.Canon;
-import gameobject.enemy.Champi;
-import gameobject.enemy.Enemy;
-import gameobject.enemy.Turtle;
+import gameobject.enemy.*;
 import view.Camera;
 import view.Map;
 import view.Menu;
@@ -25,6 +23,7 @@ public class MapManager {
     private int lastGeneratedX = 0;
 
     private final Menu menu;
+
 
     private int currentLevel = 1;
     String csvFilePath;
@@ -120,6 +119,9 @@ public class MapManager {
     private void addObjectToMap(GameObject gameObject){
         if(gameObject == null) return;
 
+        if(gameObject instanceof KickBall){
+            map.addKickBall((KickBall) gameObject);
+        }
         if(gameObject instanceof Mario){
             map.addMario((Mario) gameObject);
         } else if (gameObject instanceof Block) {
@@ -137,6 +139,21 @@ public class MapManager {
         this.map.getEnemies().removeIf(enemy -> enemy.getY() > 2999 || enemy.getX() < -2999);
         this.map.getBlocks().removeIf(block -> block.getY() > 2999 || block.getX() < -2999);
         this.map.getCollectibles().removeIf(powerup -> ((GameObject)powerup).getY() > 2999 || ((GameObject) powerup).getX() < -2999);
+    }
+
+    public void transformation(){
+
+        System.out.println((mario.getX() > (getMap().getCamera().getX() + 1310)));
+        if ((mario.getX() > (getMap().getCamera().getX() + 1310)) && !mario.getDontMove()) {
+            mario.setX(getMap().getFlag().getX() + 800);
+            if(getMap().getKickBall() == null){
+                getMap().addKickBall(new KickBall(mario.getX() + 64, mario.getY() + mario.getSpriteDimension().getHeight()/2));
+
+            }
+            mario.setReadyToKick(true);
+            mario.setDontMove(true);
+            mario.setVelX(0);
+        }
     }
 
     public Map getMap() {

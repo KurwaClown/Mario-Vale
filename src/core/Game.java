@@ -8,6 +8,9 @@ import view.AudioManager;
 import view.Camera;
 import view.Map;
 import view.UserInterface;
+import gameobject.KickBall;
+import gameobject.enemy.Missile;
+import view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +29,10 @@ public class Game {
     private final UserInterface userInterface;
     private final view.Camera camera;
     private final Mario mario;
+
     private final MapManager mapManager;
+
+    private view.Shoot shoot;
 
     private final view.Menu menu;
     private int numClicks;
@@ -44,6 +50,7 @@ public class Game {
     // Management of the game and adding object on the map
     public Game() {
         setGameState(GameState.MENU);
+        this.shoot = new Shoot();
         this.camera = new Camera();
         this.mario = new Mario();
         this.menu = new view.Menu(getCamera(), this);
@@ -127,6 +134,15 @@ public class Game {
                 }
             }
         }
+        if (getGameState() == GameState.TRANSITION){
+            transition();
+            getUI().updateGame();
+        }
+        if (gameState==GameState.TRANSFORMATION){
+            getMap().getKickBall().moveObject();
+            getUI().updateGame();
+            if(getMap().getKickBall().getY() > 540) victory();
+        }
 
 
         previousCameraX = currentCameraX;
@@ -154,6 +170,8 @@ public class Game {
         System.out.println("Score: " + getMario().getScore());
         System.out.println("Coins: " + getMario().getCoins());
     }
+
+
 
 
     private void updateCamera() {
@@ -219,11 +237,17 @@ public class Game {
         Timer timer = new Timer(5000, e -> {
             getMario().setX(getMario().getX() + numClicks * 10);
             System.out.println("Number of presses : " + numClicks);
-            victory();
+            gameState = GameState.TRANSITION;
             audioManager.playSound("niveau-termine.wav");
         });
         timer.setRepeats(false);
         timer.start();
+    }
+    public void readyToShoot(){
+        gameState=GameState.TRANSFORMATION;
+    }
+    public void gameShoot(){
+        shoot.start();
     }
 
     public void increaseNumClicks() {
@@ -295,6 +319,27 @@ public class Game {
         } else {
             return score = mario.getScore();
         }
+    }
+    public Shoot getShoot(){
+        return shoot;
+    }
+
+    public void transition(){
+        mario.transformationAnimation();
+        mapManager.transformation();
+
+        if (mario.getReadyToKick() && getCamera().getX() < mario.getX() - 50) {
+            getCamera().moveCam(3, 0);
+        }
+        if (getCamera().getX() > mario.getX() - 50 && getCamera().getX() < mario.getX() - 47) {
+            readyToShoot();
+            gameShoot();
+        }
+    }
+    public void transformation(){
+        getMap().getKickBall().setVelX(getShoot().getPower()* (Math.cos(Math.toRadians(getShoot().getAngle()))));
+        getMap().getKickBall().setVelY(getShoot().getPower()*(Math.sin(Math.toRadians(getShoot().getAngle()))));
+        getMap().getKickBall().setJumping(true);
     }
 
 }

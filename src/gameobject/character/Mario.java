@@ -93,6 +93,7 @@ public class Mario extends GameObject {
     }
 
     public void jump() {
+        System.out.println(canJump);
         if (canJump) {
             setJumping(true);
             setFalling(false);

@@ -98,8 +98,8 @@ public abstract class GameObject {
                 this.setY(enemy.getY() - this.getSpriteDimension().height);
                 enemy.attacked(this.getClass());
                 this.setFalling(false);
-                this.setCanJump(true);
                 if (this instanceof Mario mario) {
+                    mario.canJump = true;
                     mario.addScore(300);
                     mario.jump();
                 }

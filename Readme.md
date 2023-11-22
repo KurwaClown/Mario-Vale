@@ -12,7 +12,8 @@ Tired of the traditional adventures, Mario has decided to hang up his iconic plu
 
 ### How to run
 - Download the latest version by cloning the repository
-- Run the main method within the `Game.java` file
+- Compile every `.java` file within the `src` folder
+- Run the main method within the `Game.java` file using `java` command
 
 ## Controls
 

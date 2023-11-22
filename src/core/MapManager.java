@@ -22,12 +22,9 @@ public class MapManager {
     private final Mario mario;
     private Map map;
 
-    private int score;
     private int lastGeneratedX = 0;
-    private final int BLOCK_WIDTH = 64;
-    private final int GENERATION_THRESHOLD = 1;
 
-    private Menu menu;
+    private final Menu menu;
 
     private int currentLevel = 1;
     String csvFilePath;
@@ -72,6 +69,8 @@ public class MapManager {
         }
     }
     public void generateGroundIfNecessary(Camera camera) {
+        int BLOCK_WIDTH = 64;
+        int GENERATION_THRESHOLD = 1;
         int generationPointX = (int)camera.getX()  + 1300+ GENERATION_THRESHOLD * BLOCK_WIDTH;
         if (lastGeneratedX + BLOCK_WIDTH <= generationPointX) {
             for (int x = lastGeneratedX; x < generationPointX; x += BLOCK_WIDTH) {

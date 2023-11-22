@@ -182,8 +182,11 @@ public class Game {
         if (getMario().getHp() <= 0) {
             gameOver();
         }
+
         checkForMapBoundaries();
+
         checkProjectileCollisions();
+
         checkEnemyBlockCollisions();
         getMapManager().removeUnusedObjects();
     }

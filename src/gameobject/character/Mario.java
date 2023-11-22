@@ -165,7 +165,8 @@ public class Mario extends GameObject {
         }
     }
 
-    public void attacked() {
+    @Override
+    public void attacked(Class<?> attacker) {
         this.hp--;
         if (this.hp == 1 && this.getMode() != Mode.NORMAL) {
             setMode(Mode.NORMAL);

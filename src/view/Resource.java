@@ -75,6 +75,14 @@ public class Resource {
             images.put("pipeTop", ImageIO.read(Objects.requireNonNull(Resource.class.getResource("../resource/img/pipetop.png"))));
             images.put("missile", ImageIO.read(Objects.requireNonNull(Resource.class.getResource("../resource/img/missile.png"))));
             images.put("canon", ImageIO.read(Objects.requireNonNull(Resource.class.getResource("../resource/img/canon.png"))));
+            images.put("pig", ImageIO.read(Objects.requireNonNull(Resource.class.getResource("../resource/img/pig.png"))));
+            images.put("pigglet", ImageIO.read(Objects.requireNonNull(Resource.class.getResource("../resource/img/pigglet.png"))));
+            images.put("bigpig", ImageIO.read(Objects.requireNonNull(Resource.class.getResource("../resource/img/bigpig.png"))));
+            images.put("redmissile", ImageIO.read(Objects.requireNonNull(Resource.class.getResource("../resource/img/redmissile.png"))));
+            images.put("greenmissile", ImageIO.read(Objects.requireNonNull(Resource.class.getResource("../resource/img/greenmissile.png"))));
+
+
+
             System.out.println("Images loaded");
 
         } catch (IOException e) {

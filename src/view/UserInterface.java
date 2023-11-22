@@ -36,29 +36,7 @@ public class UserInterface extends JPanel {
             game.getMap().draw(g);
             game.getMenu().drawWinMenu(g);
         } else if (game.getGameState() == GameState.TRANSITION) {
-            game.getMario().moveObject();
-            game.getMario().update();
             game.getMap().draw(g);
-            if (!game.getMario().getReadyToKick()) {
-                game.getMario().setVelX(3);
-                game.getMario().setFalling(false);
-            }
-            if ((game.getMario().getX() > (game.getCamera().getX() + 1310)) && !game.getMario().getDontMove()) {
-                game.getMario().setX(game.getMapManager().getMap().getFlag().getX() + 800);
-                game.getKickball().setX(game.getMapManager().getMap().getFlag().getX() + 800+64);
-                game.getKickball().setY(game.getMario().getY() + 50);
-                game.getMario().setReadyToKick(true);
-                game.getMario().setDontMove(true);
-                game.getMario().setVelX(0);
-            }
-            if (game.getMario().getReadyToKick() && game.getCamera().getX() < game.getMario().getX() - 50) {
-                game.getCamera().moveCam(3, 0);
-            }
-            if (game.getCamera().getX() > game.getMario().getX() -50 && game.getCamera().getX() < game.getMario().getX() - 47) {
-                game.readyToShoot();
-                game.gameShoot();
-            }
-
         } else if (game.getGameState() == GameState.TRANSFORMATION){
             game.getMap().draw(g);
             Graphics2D g2d = (Graphics2D) g;
@@ -69,17 +47,14 @@ public class UserInterface extends JPanel {
             int length = 50;
             if (!game.getShoot().isAngleLocked()) {
                 g2d.drawLine(x, y, x + (int) (length * Math.cos(Math.toRadians(game.getShoot().getAngle()))), y - (int) (length * Math.sin(Math.toRadians(game.getShoot().getAngle()))));
-                System.out.println(1);
             }
             else if (!game.getShoot().isPowerLocked() && game.getShoot().isAngleLocked()){
                 g2d.fillRect(x, y, 10, (int) game.getShoot().getPower());
-                System.out.println(2);
             }
             else if (game.getShoot().isPowerLocked()&& game.getShoot().isAngleLocked() && !game.getShoot().getTransformed()){
                game.transformation();
                game.getShoot().setTransformed(true);
 
-                System.out.println("transformation");
             }
 
         } else {

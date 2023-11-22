@@ -215,6 +215,13 @@ public class Mario extends GameObject {
         }
     }
 
+    public void transformationAnimation() {
+        if (!this.getReadyToKick()) {
+            this.setVelX(3);
+            this.setFalling(false);
+        }
+    }
+
     public void addCoin() {
         audioManager.playSound("piece.wav");
         coins++;

@@ -11,14 +11,12 @@ import gameobject.collectible.Coin;
 import gameobject.collectible.PowerUp;
 import gameobject.enemy.Canon;
 import gameobject.enemy.Enemy;
-import gameobject.enemy.KickBall;
+import gameobject.KickBall;
 import gameobject.enemy.Missile;
 import view.*;
 
-import javax.sound.midi.Soundbank;
 import javax.swing.*;
 import java.awt.*;
-import java.sql.SQLOutput;
 
 // initializing the window and base variables
 public class Game {
@@ -35,7 +33,6 @@ public class Game {
     private final view.Camera camera;
     private final Mario mario;
 
-    private final KickBall kickball;
     private final MapManager mapManager;
 
     private view.Shoot shoot;
@@ -60,11 +57,9 @@ public class Game {
         setGameState(GameState.MENU);
         this.shoot = new Shoot();
         this.camera = new Camera();
-        this.kickball = new KickBall();
         this.mario = new Mario();
         this.menu = new view.Menu(getCamera(), this);
         this.mapManager = new MapManager(getCamera(), getMario(), menu);
-        mapManager.getMap().addKickBall(kickball);
         this.userInterface = new UserInterface(this);
 
         JFrame frame = new JFrame("Mario'Vale");
@@ -138,10 +133,14 @@ public class Game {
                 }
             }
         }
-        if (gameState==GameState.TRANSFORMATION){
-            kickball.moveObject();
+        if (getGameState() == GameState.TRANSITION){
+            transition();
             getUI().updateGame();
-            System.out.println(kickball.getY());
+        }
+        if (gameState==GameState.TRANSFORMATION){
+            getMap().getKickBall().moveObject();
+            getUI().updateGame();
+            if(getMap().getKickBall().getY() > 540) victory();
         }
 
 
@@ -170,6 +169,8 @@ public class Game {
         System.out.println("Score: " + getMario().getScore());
         System.out.println("Coins: " + getMario().getCoins());
     }
+
+
 
 
     private void updateCamera() {
@@ -482,18 +483,26 @@ public class Game {
             return score = mario.getScore();
         }
     }
-    public KickBall getKickball(){
-        return this.kickball;
-    }
     public Shoot getShoot(){
         return shoot;
     }
+
+    public void transition(){
+        mario.transformationAnimation();
+        mapManager.transformation();
+
+        if (mario.getReadyToKick() && getCamera().getX() < mario.getX() - 50) {
+            getCamera().moveCam(3, 0);
+        }
+        if (getCamera().getX() > mario.getX() - 50 && getCamera().getX() < mario.getX() - 47) {
+            readyToShoot();
+            gameShoot();
+        }
+    }
     public void transformation(){
-        this.kickball.setVelX(getShoot().getPower()* (Math.cos(Math.toRadians(getShoot().getAngle()))));
-        this.kickball.setVelY(getShoot().getPower()*(Math.sin(Math.toRadians(getShoot().getAngle()))));
-        System.out.println("velY"+kickball.getVelY());
-        System.out.println("velX"+kickball.getVelX());
-        kickball.setJumping(true);
+        getMap().getKickBall().setVelX(getShoot().getPower()* (Math.cos(Math.toRadians(getShoot().getAngle()))));
+        getMap().getKickBall().setVelY(getShoot().getPower()*(Math.sin(Math.toRadians(getShoot().getAngle()))));
+        getMap().getKickBall().setJumping(true);
     }
 
 }

@@ -2,6 +2,7 @@ package core;
 
 import gameobject.Flag;
 import gameobject.GameObject;
+import gameobject.KickBall;
 import gameobject.block.*;
 import gameobject.character.Mario;
 import gameobject.collectible.*;
@@ -26,6 +27,7 @@ public class MapManager {
     private final int GENERATION_THRESHOLD = 1;
 
     private Menu menu;
+
 
     private int currentLevel = 1;
     String csvFilePath;
@@ -134,6 +136,21 @@ public class MapManager {
         this.map.getBlocks().removeIf(block -> block.getY() > 2999 || block.getX() < -2999);
         this.map.getPowerUps().removeIf(powerup -> powerup.getY() > 2999 || powerup.getX() < -2999);
         this.map.getCoins().removeIf(coin -> coin.getY() > 2999 || coin.getX() < -2999);
+    }
+
+    public void transformation(){
+
+        System.out.println((mario.getX() > (getMap().getCamera().getX() + 1310)));
+        if ((mario.getX() > (getMap().getCamera().getX() + 1310)) && !mario.getDontMove()) {
+            mario.setX(getMap().getFlag().getX() + 800);
+            if(getMap().getKickBall() == null){
+                getMap().addKickBall(new KickBall(mario.getX() + 64, mario.getY() + mario.getSpriteDimension().getHeight()/2));
+
+            }
+            mario.setReadyToKick(true);
+            mario.setDontMove(true);
+            mario.setVelX(0);
+        }
     }
 
     public Map getMap() {

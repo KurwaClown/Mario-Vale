@@ -8,9 +8,10 @@ import gameobject.collectible.Coin;
 import gameobject.collectible.Collectible;
 import gameobject.collectible.PowerUp;
 import gameobject.enemy.Enemy;
-import gameobject.enemy.KickBall;
+import gameobject.KickBall;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -35,6 +36,7 @@ public class Map {
     private boolean debugMode = false;
 
 
+    private int radians = 0;
     public Map(Camera camera) {
         this.camera = camera;
     }
@@ -61,6 +63,10 @@ public class Map {
         this.kickBall=kickBall;
     }
 
+    public KickBall getKickBall(){
+        return kickBall;
+    }
+
     public void addEnemy(Enemy enemy) {
         enemies.add(enemy);
     }
@@ -74,46 +80,52 @@ public class Map {
 
     // draw objects in the lists
     public void draw(Graphics g) {
-        g.translate(-(int) camera.getX(), -(int) camera.getY());
+        Graphics2D g2d = ((Graphics2D) g);
+        g2d.translate(-(int) camera.getX(), -(int) camera.getY());
         for (int i = 0; i < 10; i++) {
-            g.drawImage(backgroundImage, i * backgroundImage.getWidth(), -150, null);
+            g2d.drawImage(backgroundImage, i * backgroundImage.getWidth(), -150, null);
         }
 
-        g.setFont(Resource.getMarioFont());
-        g.setColor(Color.white);
+        g2d.setFont(Resource.getMarioFont());
+        g2d.setColor(Color.white);
+        if(kickBall != null) {
+            AffineTransform transform = g2d.getTransform();
+            if(kickBall.getY() < 520)g2d.rotate(Math.toRadians(radians = radians-12), kickBall.getX() + (double) kickBall.getSpriteDimension().width /2, kickBall.getY() + (double) kickBall.getSpriteDimension().height /2);
+            kickBall.draw(g2d);
+            g2d.setTransform(transform);
+        }
 
-        kickBall.draw(g);
-        mario.draw(g);
+        mario.draw(g2d);
         if(debugMode){
-            this.drawLocation(g);
-            mario.drawHitboxes(g);
-            mario.drawData(g);
+            this.drawLocation(g2d);
+            mario.drawHitboxes(g2d);
+            mario.drawData(g2d);
         }
-        g.drawString(String.valueOf(mario.getCoins()), (int) camera.getX() + 1270, (int) camera.getY() + 30);
-        g.drawImage(littlecoin, (int) camera.getX() + 1230, (int) camera.getY() + 8, null);
+        g2d.drawString(String.valueOf(mario.getCoins()), (int) camera.getX() + 1270, (int) camera.getY() + 30);
+        g2d.drawImage(littlecoin, (int) camera.getX() + 1230, (int) camera.getY() + 8, null);
 
         for (Block block : blocks) {
-            block.draw(g);
-            if(debugMode)block.drawHitboxes(g);
+            block.draw(g2d);
+            if(debugMode)block.drawHitboxes(g2d);
         }
         for (PowerUp powerup : powerups) {
-            powerup.draw(g);
+            powerup.draw(g2d);
         }
 
-        if(this.flag != null) flag.draw(g);
+        if(this.flag != null) flag.draw(g2d);
 
         for (Enemy enemy : enemies) {
-            enemy.draw(g);
+            enemy.draw(g2d);
             if(debugMode){
-                enemy.drawHitboxes(g);
-                enemy.drawData(g);
+                enemy.drawHitboxes(g2d);
+                enemy.drawData(g2d);
             }
         }
         for (Coin coin : coins) {
-            coin.draw(g);
+            coin.draw(g2d);
         }
         for (Projectile projectile : projectiles) {
-            projectile.draw(g);
+            projectile.draw(g2d);
         }
 
 
@@ -130,8 +142,6 @@ public class Map {
     public void update() {
             mario.moveObject();
             mario.update();
-            kickBall.moveObject();
-            kickBall.update();
         for (Block block : blocks) {
             block.moveObject();
         }
@@ -180,6 +190,9 @@ public class Map {
         this.debugMode = !this.debugMode;
     }
 
+    public Camera getCamera() {
+        return camera;
+    }
     public void reset(){
         enemies.clear();
         blocks.clear();

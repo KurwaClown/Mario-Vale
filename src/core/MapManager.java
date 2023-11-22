@@ -153,6 +153,9 @@ public class MapManager {
             mario.setReadyToKick(true);
             mario.setDontMove(true);
             mario.setVelX(0);
+            for (Enemy enemy : getMap().getEnemies()) {
+                enemy.disappear();
+            }
         }
     }
 

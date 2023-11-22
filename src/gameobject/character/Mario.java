@@ -233,6 +233,7 @@ public class Mario extends GameObject {
     public void transformationAnimation() {
         if (!this.getReadyToKick()) {
             this.setVelX(3);
+            this.setY(479);
             this.setFalling(false);
         }
     }

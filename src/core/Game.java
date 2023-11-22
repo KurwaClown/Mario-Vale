@@ -8,8 +8,6 @@ import view.AudioManager;
 import view.Camera;
 import view.Map;
 import view.UserInterface;
-import gameobject.KickBall;
-import gameobject.enemy.Missile;
 import view.*;
 
 import javax.swing.*;
@@ -120,7 +118,7 @@ public class Game {
             checkCollisions();
             updateCamera();
 
-            if (getMap().getFlag().isFlagBroken()) {
+            if (getMap().getFlag() != null && getMap().getFlag().isFlagBroken()) {
                 setGameState(GameState.FLAG);
                 flagGame();
                 getUI().updateGame();

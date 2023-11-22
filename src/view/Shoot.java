@@ -7,6 +7,8 @@ public class Shoot {
     private Timer timer;
     private double angle = 0;
     private double power = 0;
+
+    private boolean transformed = false;
     private boolean increasingPower = true;
     private boolean angleLocked = false;
     private boolean powerLocked = false;
@@ -23,10 +25,10 @@ public class Shoot {
                     angle = 0;
                 }
             }
-            if (angleLocked) {
+             else {
                 if (increasingPower) {
                     power += 1;
-                    if (power > 100) {
+                    if (power > 25) {
                         increasingPower = false;
                     }
                 } else {
@@ -61,6 +63,13 @@ public class Shoot {
     }
     public boolean isPowerLocked() {
         return powerLocked;
+    }
+
+    public boolean getTransformed(){
+        return this.transformed;
+    }
+    public void setTransformed(boolean value){
+        this.transformed= value;
     }
 }
 

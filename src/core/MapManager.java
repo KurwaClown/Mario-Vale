@@ -5,10 +5,7 @@ import gameobject.GameObject;
 import gameobject.block.*;
 import gameobject.character.Mario;
 import gameobject.collectible.*;
-import gameobject.enemy.Canon;
-import gameobject.enemy.Champi;
-import gameobject.enemy.Enemy;
-import gameobject.enemy.Turtle;
+import gameobject.enemy.*;
 import view.Camera;
 import view.Map;
 import view.Resource;
@@ -116,6 +113,9 @@ public class MapManager {
     private void addObjectToMap(GameObject gameObject){
         if(gameObject == null) return;
 
+        if(gameObject instanceof KickBall){
+            map.addKickBall((KickBall) gameObject);
+        }
         if(gameObject instanceof Mario){
             map.addMario((Mario) gameObject);
         } else if (gameObject instanceof Block) {

@@ -45,6 +45,8 @@ public class UserInterface extends JPanel {
             }
             if ((game.getMario().getX() > (game.getCamera().getX() + 1310)) && !game.getMario().getDontMove()) {
                 game.getMario().setX(game.getMapManager().getMap().getFlag().getX() + 800);
+                game.getKickball().setX(game.getMapManager().getMap().getFlag().getX() + 800+64);
+                game.getKickball().setY(game.getMario().getY() + 50);
                 game.getMario().setReadyToKick(true);
                 game.getMario().setDontMove(true);
                 game.getMario().setVelX(0);
@@ -59,7 +61,6 @@ public class UserInterface extends JPanel {
 
         } else if (game.getGameState() == GameState.TRANSFORMATION){
             game.getMap().draw(g);
-            System.out.println("ready");
             Graphics2D g2d = (Graphics2D) g;
             float thickness = 4.0f;
             g2d.setStroke(new BasicStroke(thickness));
@@ -68,13 +69,19 @@ public class UserInterface extends JPanel {
             int length = 50;
             if (!game.getShoot().isAngleLocked()) {
                 g2d.drawLine(x, y, x + (int) (length * Math.cos(Math.toRadians(game.getShoot().getAngle()))), y - (int) (length * Math.sin(Math.toRadians(game.getShoot().getAngle()))));
+                System.out.println(1);
             }
-            else if (!game.getShoot().isPowerLocked()){
-                g2d.fillRect((int)game.getMario().getX()+64, (int)game.getMario().getY()+95, 10, (int) -game.getShoot().getPower());
+            else if (!game.getShoot().isPowerLocked() && game.getShoot().isAngleLocked()){
+                g2d.fillRect(x, y, 10, (int) game.getShoot().getPower());
+                System.out.println(2);
             }
-            else if (game.getShoot().isPowerLocked()&& game.getShoot().isAngleLocked()){
-//                game.transformation();
+            else if (game.getShoot().isPowerLocked()&& game.getShoot().isAngleLocked() && !game.getShoot().getTransformed()){
+               game.transformation();
+               game.getShoot().setTransformed(true);
+
+                System.out.println("transformation");
             }
+
         } else {
                 game.getMap().draw(g);
             }

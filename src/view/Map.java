@@ -8,6 +8,7 @@ import gameobject.collectible.Coin;
 import gameobject.collectible.Collectible;
 import gameobject.collectible.PowerUp;
 import gameobject.enemy.Enemy;
+import gameobject.enemy.KickBall;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -22,6 +23,8 @@ public class Map {
     private final List<PowerUp> powerups = new CopyOnWriteArrayList<>();
 
     private Flag flag;
+
+    private KickBall kickBall;
     private final List<Coin> coins =new CopyOnWriteArrayList<>();
 
     private final List<Projectile> projectiles = new CopyOnWriteArrayList<>();
@@ -41,6 +44,7 @@ public class Map {
         this.mario = mario;
     }
 
+
     public void addBlocks(Block block) {
         blocks.add(block);
     }
@@ -52,6 +56,9 @@ public class Map {
 
     public void addFlag(Flag flag) {
         this.flag = flag;
+    }
+    public void addKickBall(KickBall kickBall){
+        this.kickBall=kickBall;
     }
 
     public void addEnemy(Enemy enemy) {
@@ -75,7 +82,7 @@ public class Map {
         g.setFont(Resource.getMarioFont());
         g.setColor(Color.white);
 
-
+        kickBall.draw(g);
         mario.draw(g);
         if(debugMode){
             this.drawLocation(g);
@@ -123,7 +130,8 @@ public class Map {
     public void update() {
             mario.moveObject();
             mario.update();
-
+            kickBall.moveObject();
+            kickBall.update();
         for (Block block : blocks) {
             block.moveObject();
         }

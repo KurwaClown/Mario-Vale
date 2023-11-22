@@ -60,7 +60,6 @@ public class Map {
     }
 
 
-
     // draw objects in the lists
     public void draw(Graphics g) {
         g.translate(-(int) camera.getX(), -(int) camera.getY());
@@ -73,7 +72,7 @@ public class Map {
 
 
         mario.draw(g);
-        if(debugMode){
+        if (debugMode) {
             this.drawLocation(g);
             mario.drawHitboxes(g);
             mario.drawData(g);
@@ -83,17 +82,17 @@ public class Map {
 
         for (Block block : blocks) {
             block.draw(g);
-            if(debugMode)block.drawHitboxes(g);
+            if (debugMode) block.drawHitboxes(g);
         }
         for (Collectible collectible : collectibles) {
             collectible.draw(g);
         }
 
-        if(this.flag != null) flag.draw(g);
+        if (this.flag != null) flag.draw(g);
 
         for (Enemy enemy : enemies) {
             enemy.draw(g);
-            if(debugMode){
+            if (debugMode) {
                 enemy.drawHitboxes(g);
                 enemy.drawData(g);
             }
@@ -109,20 +108,16 @@ public class Map {
     private void drawLocation(Graphics g) {
         g.setColor(Color.BLACK);
         g.setFont(new Font("Arial", Font.BOLD, 14));
-        g.drawString("Camera Coordinates : " + "X: " + (int)camera.getX() + " | Y: " + (int) camera.getY(), (int)camera.getX() + 10, 20);
+        g.drawString("Camera Coordinates : " + "X: " + (int) camera.getX() + " | Y: " + (int) camera.getY(), (int) camera.getX() + 10, 20);
 
     }
 
     // Update each map element
     public void update() {
-            mario.moveObject();
-            mario.update();
+        mario.update();
+        mario.moveObject();
 
-        for (Block block : blocks) {
-            block.moveObject();
-        }
-
-            if(this.flag != null)flag.moveObject();
+        if (this.flag != null) flag.moveObject();
 
         for (Enemy enemy : enemies) {
             if (enemy instanceof gameobject.enemy.Champi champi) champi.update(mario.getHitbox());
@@ -153,7 +148,6 @@ public class Map {
     }
 
 
-
     public List<Projectile> getProjectiles() {
         return projectiles;
     }
@@ -162,7 +156,7 @@ public class Map {
         this.debugMode = !this.debugMode;
     }
 
-    public void reset(){
+    public void reset() {
         enemies.clear();
         blocks.clear();
         collectibles.clear();

@@ -138,13 +138,12 @@ public class Game {
             transition();
             getUI().updateGame();
         }
-        if (gameState==GameState.TRANSFORMATION){
+        if (getGameState()==GameState.TRANSFORMATION){
             getMap().getKickBall().moveObject();
             getUI().updateGame();
             if(getMap().getKickBall().getY() > 540) victory();
         }
-
-
+        System.out.println(getGameState());
         previousCameraX = currentCameraX;
         getUI().repaint();
     }
@@ -331,7 +330,7 @@ public class Game {
         if (mario.getReadyToKick() && getCamera().getX() < mario.getX() - 50) {
             getCamera().moveCam(3, 0);
         }
-        if (getCamera().getX() > mario.getX() - 50 && getCamera().getX() < mario.getX() - 47) {
+        if (getCamera().getX() > mario.getX() - 100) {
             readyToShoot();
             gameShoot();
         }
@@ -340,6 +339,11 @@ public class Game {
         getMap().getKickBall().setVelX(getShoot().getPower()* (Math.cos(Math.toRadians(getShoot().getAngle()))));
         getMap().getKickBall().setVelY(getShoot().getPower()*(Math.sin(Math.toRadians(getShoot().getAngle()))));
         getMap().getKickBall().setJumping(true);
+    }
+
+    public void teleportToFlag(){
+        getMario().setX(getMap().getFlag().getX() - 200);
+        getCamera().moveCam(getMap().getFlag().getX() - 400 - getCamera().getX(), 0);
     }
 
 }

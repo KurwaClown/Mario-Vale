@@ -143,9 +143,9 @@ public class MapManager {
 
     public void transformation(){
 
-        System.out.println((mario.getX() > (getMap().getCamera().getX() + 1310)));
         if ((mario.getX() > (getMap().getCamera().getX() + 1310)) && !mario.getDontMove()) {
             mario.setX(getMap().getFlag().getX() + 800);
+
             if(getMap().getKickBall() == null){
                 getMap().addKickBall(new KickBall(mario.getX() + 64, mario.getY() + mario.getSpriteDimension().getHeight()/2));
 

@@ -2,6 +2,7 @@ package core;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Arrays;
 
 public class InputManager implements KeyListener {
     private final Game game;
@@ -28,7 +29,7 @@ public class InputManager implements KeyListener {
             } else if (keyCode == KeyEvent.VK_ESCAPE) {
                 game.pauseGame();
             } else if (keyCode == KeyEvent.VK_R) {
-                game.reset();
+                game.resetMap();
             } else if (keyCode == KeyEvent.VK_F2) {
                 game.getMario().rotatePowerUp();
             }else if (keyCode == KeyEvent.VK_F1) {
@@ -47,7 +48,7 @@ public class InputManager implements KeyListener {
             } else if (keyCode == KeyEvent.VK_ESCAPE) {
                 game.pauseGame();
             } else if (keyCode == KeyEvent.VK_R) {
-                game.reset();
+                game.resetMap();
             } else if (keyCode == KeyEvent.VK_F1) {
                 game.getMario().rotatePowerUp();
             }else if (keyCode == KeyEvent.VK_F2) {
@@ -66,7 +67,10 @@ public class InputManager implements KeyListener {
                 if (game.getMenu().getSelectedOption() == 0) {
                     game.resumeGame();
                 } else if (game.getMenu().getSelectedOption() == 1) {
-                    System.exit(1);
+                    game.getMap().reset();
+                    game.getMario().reset();
+                    game.goToMainMenu();
+
                 }
             }
         } else if(gameState == GameState.TRANSFORMATION){
@@ -81,16 +85,25 @@ public class InputManager implements KeyListener {
             if (keyCode == KeyEvent.VK_Z) {
                 game.getMenu().setSelectedOption((game.getMenu().getSelectedOption() - 1 + game.getMenu().getOption().length) % game.getMenu().getOption().length);
             } else if (keyCode == KeyEvent.VK_S) {
-                game.getMenu().setSelectedOption((game.getMenu().getSelectedOption() - 1 + game.getMenu().getOption().length) % game.getMenu().getOption().length);
+                System.out.println(Arrays.toString(game.getMenu().getOption()));
+                game.getMenu().setSelectedOption((game.getMenu().getSelectedOption() + 1) % game.getMenu().getOption().length);
             } else if (keyCode == KeyEvent.VK_ENTER) {
                 if (game.getMenu().getSelectedOption() == 0) {
                     game.getMenu().setEndurance(false);
                     game.getMapManager().choosedMap();
                     game.startGame();
+                    game.resetPreviousCameraX();
+                    game.resetMap();
                 } else if (game.getMenu().getSelectedOption() == 1) {
                     game.getMenu().setEndurance(true);
+                    game.resetPreviousCameraX();
+                    game.getMapManager().resetLastGeneratedX();
                     game.getMapManager().choosedMap();
                     game.startGame();
+                    game.resetPreviousCameraX();
+                    game.resetMap();
+                } else if (game.getMenu().getSelectedOption() == 2){
+                    System.exit(1);
                 }
             }
             else if (keyCode == KeyEvent.VK_ESCAPE) {
@@ -106,7 +119,7 @@ public class InputManager implements KeyListener {
                 if (game.getMenu().getSelectedOption() == 0) {
                     if (gameState == GameState.GAMEOVER) {
                         game.resetPreviousCameraX();
-                        game.reset();
+                        game.resetMap();
                     }
                     else if (gameState == GameState.WIN){
                         game.nextLevel();

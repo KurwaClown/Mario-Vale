@@ -177,6 +177,9 @@ public class MapManager {
     public void toggleDebugMode(){
         this.map.toggleDebugMode();
     }
+    public void resetLastGeneratedX(){
+        this.lastGeneratedX=0;
+    }
 
 }
 

@@ -16,11 +16,15 @@ public class Canon extends Enemy {
         shootingTimer.start();
     }
     private void missile(view.Map map) {
-        map.addEnemy(new Missile((int) getX(), (int) getY(), isLookingRight()));
+        map.addEnemy(new Missile((int) getX()-50, (int) getY(), isLookingRight()));
     }
     private int randomNumber(){
         Random random = new Random();
         return random.nextInt(1000,3000);
     }
 
+    @Override
+    public void attacked() {
+        return;
+    }
 }

@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 public class Menu {
     private int selectedOption = 0;
 
-    private final String[] options = {"Start", "Quit"};
+    private String[] options;
 
     private final Game game;
 
@@ -26,7 +26,7 @@ public class Menu {
     }
     public void drawMainMenu(Graphics g) {
         audioManager.playLoopSound("./src/resource/sound/haka.wav");
-        String[] options = {"Classic","Endurance"};
+        options = new String[]{"Classic", "Endurance", "Quit"};
         g.drawImage(backgroundImage, 0, 0, null);
 
         drawMenuTitle("Mario'Vale", 400, g);
@@ -50,7 +50,7 @@ public class Menu {
     }
 
     public void drawPauseMenu(Graphics g) {
-        String[] options = {"Resume", "Menu"};
+        options = new String[]{"Resume", "Menu"};
         //g.drawImage(backgroundImage, 0, 0, null);
 
         drawMenuTitle("Pause", (int)game.getCamera().getX()+500, g);
@@ -62,7 +62,7 @@ public class Menu {
         g.fillRect(0, 0, 1300, 730);
         drawMenuTitle("Game Over", 400, g);
 
-        String[] options = {"Restart", "Quit"};
+        options = new String[]{"Restart", "Quit"};
         g.setFont(Resource.getMarioFont());
         g.setColor(Color.white);
         if (this.isEndurance()){
@@ -81,7 +81,7 @@ public class Menu {
         }
     }
     public void drawWinMenu(Graphics g) {
-        String[] options = {"Next", "Quit"};
+        options = new String[]{"Next", "Quit"};
 
         drawMenuTitle("Bravo !", (int)camera.getX()+400, g);
         g.setFont(Resource.getMarioFont().deriveFont(60f));

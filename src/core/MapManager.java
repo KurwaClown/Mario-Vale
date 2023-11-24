@@ -16,6 +16,7 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class MapManager {
     private final Mario mario;
@@ -48,7 +49,9 @@ public class MapManager {
     }
 
     public void loadMapFromCSV() {
-        try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))) {
+        System.out.println("Loading map from " + csvFilePath);
+        try (InputStreamReader isr = new InputStreamReader(MapManager.class.getResourceAsStream(csvFilePath));) {
+            BufferedReader br = new BufferedReader(isr);
             String line;
             int lineCount = 0;
             while ((line = br.readLine()) != null) {

@@ -109,7 +109,7 @@ public class Game {
         double cameraOffset = currentCameraX - previousCameraX;
 
         if (getGameState() == GameState.PLAYING) {
-            getAudioManager().playLoopSound("./src/resource/sound/playingmusic.wav");
+            getAudioManager().playLoopSound("playingmusic.wav");
             getUI().updateGame();
             checkCollisions();
             updateCamera();

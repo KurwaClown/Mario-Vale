@@ -25,7 +25,7 @@ public class Menu {
         this.game = game;
     }
     public void drawMainMenu(Graphics g) {
-        audioManager.playLoopSound("./src/resource/sound/haka.wav");
+        audioManager.playLoopSound("haka.wav");
         options = new String[]{"Classic", "Endurance", "Quit"};
         g.drawImage(backgroundImage, 0, 0, null);
 
